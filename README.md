@@ -1,4 +1,4 @@
-# Presentation Feedback
+# Presentation Feedback Application
 An application kata to apply Flow Design principles to a more elaborate scenario. Implementation in C# using ASP.NET MVC.
 
 ## Scenario
