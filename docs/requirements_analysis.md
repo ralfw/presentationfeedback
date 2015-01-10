@@ -30,4 +30,14 @@ But how about this for a start:
 
 ## Dialogs
 
+### Conference ###
+<img src="images/conference.jpg" width="400" height="400">
+
+### Evaluate session ###
+<img src="images/evaluate_session.jpg" width="400" height="400">
+
+### Attendee registration ###
+<img src="images/attendee_registration.jpg" width="400" height="400">
+
+
 ## Interactions
