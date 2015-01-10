@@ -52,6 +52,15 @@ The first line will be assumed to be column headlines. Columns will be separated
 
 For a start files are assumed to be always wellformed.
 
+Feedback for all sessions of the conference can be downloaded at any time from the conference application by navigating to the URL _/stats/confernceid_.
+
+The feedback file will look like the conference CSV file with additional columns:
+
+* Green: number of attendees who voted with green
+* Yellow: number of attendees who voted with yellow
+* Red: number of attendees who voted with red
+* Comments: All comments concatenated into one string; each comment starts on a new line and is preceded with the email address of the commenter. The contents of this column are enclosed in "".
+
 ### Attendee feedback application
 Attendees enter the website through some root URL, e.g. presentationfeedback.com or presentationfeedback.apphb.com. This root URL will be abbreviated with / from here on.
 
@@ -76,5 +85,12 @@ On the feedback page the attendee identifies himself with his email address, sel
 When calling the page the conference and the session need to be identified. This data could be passed using query params, e.g. _/feedback?conferenceid=dw15&sessionid=t1s1_.
 
 Submitting the feedback leads back to the conference homepage. _A cancel button does not seem to be necessary; the same effect can be reached by backspacing to the previous page._
+
+### Speaker application
+There are no dialogs in the speaker application, because the speaker on interacts through email with the software system. His application is the email client.
+
+An email is sent to the speaker by the software system once the feedback period for a session is over.
+
+_TBD: How does the software system check if feedback periods are over?_
 
 ## Interactions
