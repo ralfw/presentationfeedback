@@ -122,11 +122,24 @@ Give feedback for a session.
 Display the list of sessions of a conference.
 
 	c:> afapp sessions dw15
-	# You can give feedback for:
+	You can give feedback for:
 	+ t1s1: Introduction to Flow Design, Ralf Westphal
 	+ t1s2: TDD done right, Corey Haines
-	# No feedback at this time for:
+	No feedback at this time for:
 	+ Scrum 4 u, Ken Schwaber
 	+ C# 6.0, Anders Hejlsberg
 
+### afapp/speaker notification (command)
+Start a worker to notify speakers of the feedback for their sessions once their feedback period is over.
+
+	c:>afapp speakernotification start
+	Watching session feedback periods for:
+	+ dw15
+	+ sa15
+	Running since 11.01.2015 15:49...
+
+The worker keeps running until stopped by Ctrl-C or closing the terminal window. Alternatively the worker could be stopped by another command, e.g.
+
+	c:>afapp speakernotification stop
+	Stopped watching!
 	
