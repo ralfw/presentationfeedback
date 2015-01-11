@@ -30,7 +30,7 @@ But how about this for a start:
 
 ## Dialogs
 
-### Conference organizer application
+### Conference organizer application (coapp)
 There need only be a very simple way to upload a CSV file. For a start the name of the file can be structured like this:
 
     conferenceId "-" conferenceTitle ".txt"
@@ -61,7 +61,7 @@ The feedback file will look like the conference CSV file with additional columns
 * Red: number of attendees who voted with red
 * Comments: All comments concatenated into one string; each comment starts on a new line and is preceded with the email address of the commenter. The contents of this column are enclosed in "".
 
-### Attendee feedback application
+### Attendee feedback application (afapp)
 Attendees enter the website through some root URL, e.g. presentationfeedback.com or presentationfeedback.apphb.com. This root URL will be abbreviated with / from here on.
 
 ![](images/pagetransitions.png)
@@ -86,7 +86,7 @@ When calling the page the conference and the session need to be identified. This
 
 Submitting the feedback leads back to the conference homepage. _A cancel button does not seem to be necessary; the same effect can be reached by backspacing to the previous page._
 
-### Speaker application
+### Speaker application (sapp)
 There are no dialogs in the speaker application, because the speaker on interacts through email with the software system. His application is the email client.
 
 An email is sent to the speaker by the software system once the feedback period for a session is over.
@@ -94,3 +94,39 @@ An email is sent to the speaker by the software system once the feedback period 
 _TBD: How does the software system check if feedback periods are over?_
 
 ## Interactions
+From the dialogs in the applications a number of interactions (commands, queries) can be derived.
+
+### coapp/upload (command)
+Upload a conference file. Example commands:
+
+	c:> coapp upload "dw15 - DevWeek 2015.txt"
+	Registered DevWeek 2015 (dw15) with 23 sessions
+
+Alternatively the meta data for the conference could be passed separately from the file name, e.g.
+
+	c:> coapp upload dw15 "DevWeek 2015" dw2015.txt
+
+### coapp/download feedback (query)
+Download the feedback for a conference.
+
+	c:> coapp downloadfeedback dw15
+	Created dw15feedback.txt with 9 sessions rated out of 23
+	
+### afapp/give feedback (command)
+Give feedback for a session.
+
+	c:> afapp vote dw15 t1s1 green peter@yahoo.com "A terrific session!"
+	Thank you for your feedback!
+	
+### afapp/session overview (query)
+Display the list of sessions of a conference.
+
+	c:> afapp sessions dw15
+	# You can give feedback for:
+	+ t1s1: Introduction to Flow Design, Ralf Westphal
+	+ t1s2: TDD done right, Corey Haines
+	# No feedback at this time for:
+	+ Scrum 4 u, Ken Schwaber
+	+ C# 6.0, Anders Hejlsberg
+
+	
