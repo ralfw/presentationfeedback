@@ -106,6 +106,12 @@ Alternatively the meta data for the conference could be passed separately from t
 
 	c:> coapp upload dw15 "DevWeek 2015" dw2015.txt
 
+#### Features
+* Reading the file. How is this done in a web app?
+* Storing the conference info (id, title, sessions) in a durable manner to survice application crashes/resets due to redeployment. What should be the persistence paradigm?
+* Transforming the data from the persistence model (PM, lines of text) into some structured form to be persisted.
+* Possibly handling the overwrite case when conference data gets uploaded repeated times.
+
 ### coapp/download feedback (query)
 Download the feedback for a conference.
 
@@ -142,4 +148,6 @@ The worker keeps running until stopped by Ctrl-C or closing the terminal window.
 
 	c:>afapp speakernotification stop
 	Stopped watching!
+
+
 	
