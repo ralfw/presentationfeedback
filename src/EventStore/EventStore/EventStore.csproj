@@ -50,6 +50,7 @@
     <Compile Include="InMemoryEventStore.cs" />
     <Compile Include="Internals\Event.cs" />
     <Compile Include="Internals\File\FileStore.cs" />
+    <Compile Include="Internals\ReaderWriterLockSlimExtensions.cs" />
     <Compile Include="Internals\RecordedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileEventStore.cs" />

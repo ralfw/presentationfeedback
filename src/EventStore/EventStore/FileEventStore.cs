@@ -7,9 +7,12 @@ using System.Linq;
 
 namespace EventStore
 {
+	using System.Threading;
+
 	public class FileEventStore : IEventStore
 	{
 		private readonly FileStore fileStore;
+		private readonly ReaderWriterLockSlim rwLock = new ReaderWriterLockSlim();
 
 		public FileEventStore(string dirPath)
 		{
@@ -18,7 +21,7 @@ namespace EventStore
 
 		public void Record(IEvent @event)
 		{
-			lock (this)
+			using (rwLock.Write())
 			{
 				var sequenceNumber = fileStore.GetNextSequenceNumber();
 				var recordedEvent = new RecordedEvent(sequenceNumber, @event);
@@ -34,7 +37,10 @@ namespace EventStore
 
 		public IEnumerable<IRecordedEvent> Replay()
 		{
-			return fileStore.ReadAll();
+			using (rwLock.Read())
+			{
+				return fileStore.ReadAll();
+			}
 		}
 
 		public IEnumerable<IRecordedEvent> Replay(long firstSequenceNumber)
