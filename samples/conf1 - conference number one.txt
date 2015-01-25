@@ -1,0 +1,3 @@
+s1	session #1	2015-01-23T09:00:00	2015-01-23T10:00:00	speaker #1	speaker1@gmail.com
+s2	session #2	2015-01-23T10:00:00	2015-01-23T11:00:00	speaker #2	speaker2@gmail.com
+s3	session #3	2015-01-24T09:30:00	2015-01-24T10:15:00	speaker #1	speaker1@gmail.com
