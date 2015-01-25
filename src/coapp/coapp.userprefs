@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="coapp.console/coapp.console.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="coapp.console/Head.cs">
+    <Files>
+      <File FileName="coapp.console/Program.cs" Line="20" Column="20" />
+      <File FileName="coapp.body/Body.cs" Line="11" Column="11" />
+      <File FileName="coapp.body/CSVParser.cs" Line="16" Column="16" />
+      <File FileName="coapp.body/Repository.cs" Line="13" Column="13" />
+      <File FileName="coapp.console/Head.cs" Line="50" Column="50" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
