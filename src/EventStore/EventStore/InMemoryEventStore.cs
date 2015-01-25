@@ -18,20 +18,20 @@ namespace EventStore
 
 		public void Record(IEvent @event)
 		{
-			using (rwLock.Write())
-			{
-				var recordedEvent = new RecordedEvent(events.Count, @event);
-				events.Add(recordedEvent);
-				OnRecorded(recordedEvent);
-			}
+			rwLock.Write (() => {
+				var recordedEvent = new RecordedEvent (events.Count, @event);
+				events.Add (recordedEvent);
+				OnRecorded (recordedEvent);
+			});
 		}
 
 		public IEnumerable<IRecordedEvent> Replay()
 		{
-			using (rwLock.Read())
-			{
-				return events;
-			}
+			IRecordedEvent[] snapshot = null;
+			rwLock.Read(() => {
+				snapshot = events.ToArray();
+			});
+			return snapshot;
 		}
 
 		public IEnumerable<IRecordedEvent> Replay(long firstSequenceNumber)

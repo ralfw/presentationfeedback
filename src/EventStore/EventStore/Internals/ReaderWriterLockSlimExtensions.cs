@@ -1,55 +1,28 @@
-﻿
-namespace EventStore.Internals
+﻿namespace EventStore.Internals
 {
 	using System;
 	using System.Threading;
 
 	internal static class ReaderWriterLockSlimExtensions
 	{
-		private sealed class ReadLockToken : IDisposable
+		public static void Read(this ReaderWriterLockSlim rwLock, Action toBeExecuted)
 		{
-			private ReaderWriterLockSlim rwLock;
-
-			public ReadLockToken(ReaderWriterLockSlim rwLock)
-			{
-				this.rwLock = rwLock;
-				rwLock.EnterReadLock();
-			}
-
-			public void Dispose()
-			{
-				if (rwLock == null) return;
-				rwLock.ExitReadLock();
-				rwLock = null;
+			rwLock.EnterReadLock ();
+			try {
+				toBeExecuted();
+			} finally {
+				rwLock.ExitReadLock ();
 			}
 		}
 
-		private sealed class WriteLockToken : IDisposable
+		public static void Write(this ReaderWriterLockSlim rwLock, Action toBeExecuted)
 		{
-			private ReaderWriterLockSlim rwLock;
-
-			public WriteLockToken(ReaderWriterLockSlim rwLock)
-			{
-				this.rwLock = rwLock;
-				rwLock.EnterWriteLock();
+			rwLock.EnterWriteLock ();
+			try {
+				toBeExecuted();
+			} finally {
+				rwLock.ExitWriteLock ();
 			}
-
-			public void Dispose()
-			{
-				if (rwLock == null) return;
-				rwLock.ExitWriteLock();
-				rwLock = null;
-			}
-		}
-
-		public static IDisposable Read(this ReaderWriterLockSlim rwLock)
-		{
-			return new ReadLockToken(rwLock);
-		}
-
-		public static IDisposable Write(this ReaderWriterLockSlim rwLock)
-		{
-			return new WriteLockToken(rwLock);
 		}
 	}
 }

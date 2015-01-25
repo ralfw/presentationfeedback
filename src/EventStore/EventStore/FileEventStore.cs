@@ -21,13 +21,12 @@ namespace EventStore
 
 		public void Record(IEvent @event)
 		{
-			using (rwLock.Write())
-			{
-				var sequenceNumber = fileStore.GetNextSequenceNumber();
-				var recordedEvent = new RecordedEvent(sequenceNumber, @event);
-				fileStore.Write(CreateFileName(sequenceNumber), recordedEvent);
-				OnRecorded(recordedEvent);
-			}
+			rwLock.Write (() => {
+				var sequenceNumber = fileStore.GetNextSequenceNumber ();
+				var recordedEvent = new RecordedEvent (sequenceNumber, @event);
+				fileStore.Write (CreateFileName (sequenceNumber), recordedEvent);
+				OnRecorded (recordedEvent);
+			});
 		}
 
 		private static string CreateFileName(long sequenceNumber)
@@ -37,10 +36,11 @@ namespace EventStore
 
 		public IEnumerable<IRecordedEvent> Replay()
 		{
-			using (rwLock.Read())
-			{
-				return fileStore.ReadAll();
-			}
+			IEnumerable<IRecordedEvent> snapshot = null;
+			rwLock.Read (() => {
+				snapshot = fileStore.ReadAll ();
+			});
+			return snapshot;
 		}
 
 		public IEnumerable<IRecordedEvent> Replay(long firstSequenceNumber)

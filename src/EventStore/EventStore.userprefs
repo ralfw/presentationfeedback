@@ -1,0 +1,15 @@
+﻿<Properties StartupItem="EventStore/EventStore.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="EventStore/Internals/ReaderWriterLockSlimExtensions.cs">
+    <Files>
+      <File FileName="EventStore/FileEventStore.cs" Line="3" Column="3" />
+      <File FileName="EventStore/InMemoryEventStore.cs" Line="36" Column="36" />
+      <File FileName="EventStore.Test/FileEventStoreTests.cs" Line="30" Column="30" />
+      <File FileName="EventStore/Internals/ReaderWriterLockSlimExtensions.cs" Line="4" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
