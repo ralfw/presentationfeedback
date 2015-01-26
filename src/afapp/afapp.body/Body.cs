@@ -17,14 +17,38 @@ namespace afapp.body
 
 
 		public SessionOverviewVM GenerateSessionOverview(string confId) {
-
+			return new SessionOverviewVM{ 
+				ConfId = confId,
+				ConfTitle = "Conference #1",
+				ActiveSessions = new[]{
+					new SessionVM{
+						Id = "s1",
+						Title = "Session #1",
+						Start = new DateTime(2015,1,26, 10,0,0),
+						End = new DateTime(2015,1,26, 10,30,0),
+						SpeakerName = "Speaker #1"
+					},
+					new SessionVM{
+						Id = "s2",
+						Title = "Session #2",
+						Start = new DateTime(2015,1,26, 10,30,0),
+						End = new DateTime(2015,1,26, 11,0,0),
+						SpeakerName = "Speaker #2"
+					}
+				},
+				InactiveSessions = new[]{
+					new SessionVM{
+						Id = "s3",
+						Title = "Session #3",
+						Start = new DateTime(2015,1,26, 15,0,0),
+						End = new DateTime(2015,1,26, 16,30,0),
+						SpeakerName = "Speaker #3"
+					}
+				}
+			};
 		}
 	}
-
-	struct SessionOverviewVM {
-
-	}
-
+		
 
 	public class Conference {
 

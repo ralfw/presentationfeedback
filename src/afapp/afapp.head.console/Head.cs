@@ -1,24 +1,10 @@
-﻿using System;
+using System;
 using afapp.body;
 using EventStore;
 using System.Collections.Generic;
 
 namespace afapp.head.console
 {
-	class MainClass
-	{
-		public static void Main (string[] args)
-		{
-			var es = new FileEventStore ("coapp.events");
-			var repo = new Repository (es);
-			var conf = new Conference ();
-			var map = new Mapper ();
-			var body = new Body (repo, conf, map);
-			var head = new Head (body);
-
-			head.Run (args);
-		}
-	}
 
 	class Head {
 		Body body;
