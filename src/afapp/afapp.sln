@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "afapp.body", "afapp.body\afapp.body.csproj", "{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "afapp.head.console", "afapp.head.console\afapp.head.console.csproj", "{44F76B8A-2290-4385-8174-11A5A972457D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{44F76B8A-2290-4385-8174-11A5A972457D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F76B8A-2290-4385-8174-11A5A972457D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F76B8A-2290-4385-8174-11A5A972457D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F76B8A-2290-4385-8174-11A5A972457D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
