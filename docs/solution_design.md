@@ -41,3 +41,26 @@ Integration is the responsibility of the _Body_.
 _Repository_, _CSVParser_, and _Body_ can go into the _coapp.body_ library.
 
 The _Head_ should be separated into _coapp.head.console_ which can be started from the console.
+
+# afapp/session overview (query)
+Display the list of sessions of a conference. Active sessions are those where feedback can be given currently.
+
+Signature of the interaction function:
+
+	SessionOverviewVM GenerateSessionOverview(string confId)
+	
+	struct SessionOverviewVM {
+	  string ConfId;
+	  string ConferenceTitle;
+	  SessionVM[] ActiveSessions;
+	  SessionVM[] InactiveSessions;
+	}
+	
+	struct SessionVM {
+		string Id;
+		string Title;
+		DateTime Start, End;
+		string SpeakerName;
+	}
+
+The session overview is generated from events recorded during upload.
