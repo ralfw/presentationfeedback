@@ -7,9 +7,9 @@ Persistence of data will be achieved by using an EventStore (ES).
 # coapp/upload (command)
 Uploading a conference stores the data provided in a CSV file in the ES. Events are:
 
-* ConferenceRegistered, context: conference id, payload: conference title
-* SessionRegistered, context: session id, payload: session title, starting time (YYYY-MM-DDTHH:MM:SS), ending time (YYYY-MM-DDTHH:MM:SS), speaker name, speaker email address
-* SessionAssigned, context: conf. id, payload: session id
+* **ConferenceRegistered**, context: conference id, payload: conference title
+* **SessionRegistered**, context: session id, payload: session title, starting time (YYYY-MM-DDTHH:MM:SS), ending time (YYYY-MM-DDTHH:MM:SS), speaker name, speaker email address
+* **SessionAssigned**, context: conf. id, payload: session id
 
 Signature of interaction function:
 
