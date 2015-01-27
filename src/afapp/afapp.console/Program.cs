@@ -11,8 +11,7 @@ namespace afapp.console
 		public static void Main (string[] args)
 		{
 			var es = new FileEventStore ("app.events");
-			var repo = new Repository (es);
-			var body = new Body (repo, BuildCurrentTimeProvider(args));
+			var body = new Body (es, BuildCurrentTimeProvider(args));
 			var head = new Head (body);
 
 			head.Run (args);

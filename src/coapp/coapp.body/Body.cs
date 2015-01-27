@@ -9,9 +9,9 @@ namespace coapp.body
 		CSVParser parser;
 		Repository repo;
 
-		public Body (CSVParser parser, Repository repo)	{
-			this.repo = repo;
-			this.parser = parser;
+		public Body (IEventStore es)	{
+			this.repo = new Repository (es);
+			this.parser = new CSVParser ();
 		}
 
 

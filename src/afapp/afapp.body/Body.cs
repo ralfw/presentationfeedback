@@ -9,8 +9,8 @@ namespace afapp.body
 		private Repository repo;
 		private Func<DateTime> now;
 
-		public Body (Repository repo, Func<DateTime> now) {
-			this.repo = repo;
+		public Body (IEventStore es, Func<DateTime> now) {
+			this.repo = new Repository(es);
 			this.now = now;
 		}
 			
