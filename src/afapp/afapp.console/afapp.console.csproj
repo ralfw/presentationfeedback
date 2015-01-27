@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{44F76B8A-2290-4385-8174-11A5A972457D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>afapp.head.console</RootNamespace>
-    <AssemblyName>afapp.head.console</AssemblyName>
+    <RootNamespace>afapp.console</RootNamespace>
+    <AssemblyName>afapp.console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -18,7 +18,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <Commandlineparameters>conf1</Commandlineparameters>
+    <Commandlineparameters>overview conf1</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>

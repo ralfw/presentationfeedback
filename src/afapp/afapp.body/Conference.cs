@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace afapp.body
 {
-	//TODO: DateTime.Now should not be access here; hard to test.
 	//TODO: What about time zones? This might be checked on a server in a different timezone than the conference.
 	public class Conference {
 		private const int ACTIVE_SESSION_BUFFER_MIN = 20;

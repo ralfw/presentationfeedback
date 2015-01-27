@@ -17,6 +17,4 @@ namespace coapp.console
 			head.Run (args);
 		}
 	}
-
-
 }

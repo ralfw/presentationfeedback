@@ -4,7 +4,7 @@ using EventStore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace afapp.head.console
+namespace afapp.console
 {
 	class MainClass
 	{

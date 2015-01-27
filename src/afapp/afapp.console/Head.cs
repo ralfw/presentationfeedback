@@ -3,7 +3,7 @@ using afapp.body;
 using EventStore;
 using System.Collections.Generic;
 
-namespace afapp.head.console
+namespace afapp.console
 {
 
 	class Head {
