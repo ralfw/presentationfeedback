@@ -37,6 +37,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Body.cs" />
     <Compile Include="SessionOverviewVM.cs" />
+    <Compile Include="ConferenceData.cs" />
+    <Compile Include="Mapper.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Conference.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

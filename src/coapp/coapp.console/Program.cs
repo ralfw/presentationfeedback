@@ -7,7 +7,7 @@ namespace coapp.console
 	{
 		public static void Main (string[] args)
 		{
-			var es = new EventStore.FileEventStore ("coapp.events");
+			var es = new EventStore.FileEventStore ("app.events");
 			var repo = new Repository (es);
 			var parser = new CSVParser ();
 
