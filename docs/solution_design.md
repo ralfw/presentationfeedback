@@ -41,3 +41,46 @@ Integration is the responsibility of the _Body_.
 _Repository_, _CSVParser_, and _Body_ can go into the _coapp.body_ library.
 
 The _Head_ should be separated into _coapp.head.console_ which can be started from the console.
+
+# afapp/session overview (query)
+Display the list of sessions of a conference. Active sessions are those where feedback can be given currently.
+
+Signature of the interaction function:
+
+	SessionOverviewVM GenerateSessionOverview(string confId)
+	
+	struct SessionOverviewVM {
+	  string ConfId;
+	  string ConferenceTitle;
+	  SessionVM[] ActiveSessions;
+	  SessionVM[] InactiveSessions;
+	}
+	
+	struct SessionVM {
+		string Id;
+		string Title;
+		DateTime Start, End;
+		string SpeakerName;
+	}
+
+The session overview is generated from events recorded during upload.
+
+The *VM suffix denotes a ViewModel data structure, i.e. a data structures whose sole purpose is to carry information to be displayed. It's not a "stable" domain data structure.
+
+## Flow Design
+1. Assemble a conference aggregate
+	1. Get the conference title from _ConferenceRegistered_ events.
+	2. Get all sessions from _SessionRegistered_ events.
+	3. Get the conference sessions from _SessionAssigned_ events.
+	4. Weed out irrelevant sessions.
+2. Split sessions into active and inactive
+3. Build ViewModel
+
+## Class Design
+Assembling the _ConferenceData_ aggregate is a matter of a _Repository_ I suppose. Separating active and inactive sessions, though, is domain logic. But it's none pertaining to structural consistency; so it does not belong to the aggregate, which is a data structure. Rather it should go into a domain class of its own, e.g. _Conference_.
+
+Building the ViewModel is a task for a _Mapper_.
+
+## Library Design
+Again I'd split the classes across two assemblies: _afapp.body_ and _afapp.head.console_.
+

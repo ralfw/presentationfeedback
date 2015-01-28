@@ -2,14 +2,14 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{266AD854-9A1E-467F-9A6A-59090F3E64B4}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{44F76B8A-2290-4385-8174-11A5A972457D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>coapp.console</RootNamespace>
-    <AssemblyName>coapp.console</AssemblyName>
+    <RootNamespace>afapp.console</RootNamespace>
+    <AssemblyName>afapp.console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -18,17 +18,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <PlatformTarget>x86</PlatformTarget>
-    <Commandlineparameters>conf1 "conference #1" "conf1 - conference number one.txt"</Commandlineparameters>
+    <Commandlineparameters>overview conf1</Commandlineparameters>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,16 +41,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\coapp.body\coapp.body.csproj">
-      <Project>{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}</Project>
-      <Name>coapp.body</Name>
+    <ProjectReference Include="..\afapp.body\afapp.body.csproj">
+      <Project>{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}</Project>
+      <Name>afapp.body</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\samples\conf1 - conference number one.txt">
-      <Link>conf1 - conference number one.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="..\..\useit.command">
       <Link>useit.command</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
