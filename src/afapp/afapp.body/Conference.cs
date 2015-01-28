@@ -16,12 +16,12 @@ namespace afapp.body
 			this.now = now;
 		}
 
-		public IEnumerable<SessionData> ActiveSessions {get{ 
+		public IEnumerable<SessionData> SelectActiveSessions {get{ 
 				return this.confdata.Sessions.Where (s => s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) <= now() &&
 														  now() <= s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN));
 		}}
 
-		public IEnumerable<SessionData> InactiveSessions {get{ 
+		public IEnumerable<SessionData> SelectInactiveSessions {get{ 
 				return this.confdata.Sessions.Where (s => now() < s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) ||
 														  s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN) < now());
 		}}
