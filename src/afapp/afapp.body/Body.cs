@@ -18,8 +18,8 @@ namespace afapp.body
 			var confdata = this.repo.LoadConference (confId);
 
 			var conf = new Conference (confdata, this.now);
-			var activeSessions = conf.SelectActiveSessions;
-			var inactiveSessions = conf.SelectInactiveSessions;
+			var activeSessions = conf.DetermineActiveSessions;
+			var inactiveSessions = conf.DetermineInactiveSessions;
 
 			return Mapper.Map (confdata.Id, confdata.Title, activeSessions, inactiveSessions);
 		}

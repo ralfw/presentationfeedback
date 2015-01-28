@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="afapp.body/afapp.body.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="afapp.console/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="afapp.console/Head.cs">
     <Files>
-      <File FileName="afapp.body/Body.cs" Line="19" Column="19" />
+      <File FileName="afapp.body/Body.cs" Line="1" Column="1" />
       <File FileName="afapp.body/SessionOverviewVM.cs" Line="1" Column="1" />
       <File FileName="afapp.body/ConferenceData.cs" Line="1" Column="1" />
       <File FileName="afapp.body/Conference.cs" Line="1" Column="1" />
       <File FileName="afapp.body/Mapper.cs" Line="1" Column="1" />
       <File FileName="afapp.body/Repository.cs" Line="1" Column="1" />
-      <File FileName="afapp.console/Program.cs" Line="47" Column="47" />
+      <File FileName="afapp.console/Program.cs" Line="1" Column="1" />
+      <File FileName="afapp.console/Head.cs" Line="31" Column="31" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

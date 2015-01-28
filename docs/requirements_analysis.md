@@ -119,7 +119,7 @@ Download the feedback for a conference.
 	Created dw15feedback.txt with 9 sessions rated out of 23
 	
 ### afapp/give feedback (command)
-Give feedback for a session.
+Give feedback for a session. The comment at the end is optional.
 
 	c:> afapp vote dw15 t1s1 green peter@yahoo.com "A terrific session!"
 	Thank you for your feedback!
@@ -127,7 +127,7 @@ Give feedback for a session.
 ### afapp/session overview (query)
 Display the list of sessions of a conference.
 
-	c:> afapp sessions dw15
+	c:> afapp overview dw15
 	You can give feedback for:
 	+ t1s1: Introduction to Flow Design, Ralf Westphal
 	+ t1s2: TDD done right, Corey Haines
