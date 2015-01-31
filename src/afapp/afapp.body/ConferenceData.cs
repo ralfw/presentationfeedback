@@ -1,5 +1,4 @@
 using System;
-using EventStore.Contract;
 using System.Collections.Generic;
 
 namespace afapp.body

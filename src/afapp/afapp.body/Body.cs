@@ -1,18 +1,17 @@
-﻿using System;
-using EventStore.Contract;
-using System.Collections.Generic;
+﻿using EventStore.Contract;
+using System;
 
 namespace afapp.body
 {
 	public class Body
 	{
-		private Repository repo;
-		private Func<DateTime> now;
+		private readonly Repository repo;
+		private readonly Func<DateTime> now;
 
 		public Body (IEventStore es, Func<DateTime> now) {
 			this.repo = new Repository(es);
 			this.now = now;
-		}
+		} 
 			
 		public SessionOverviewVM GenerateSessionOverview(string confId) {
 			var confdata = this.repo.LoadConference (confId);
@@ -22,6 +21,11 @@ namespace afapp.body
 			var inactiveSessions = conf.DetermineInactiveSessions;
 
 			return Mapper.Map (confdata.Id, confdata.Title, activeSessions, inactiveSessions);
+		}
+
+		public void Store_feedback(FeedbackData data)
+		{
+			repo.Store_feedback(data);
 		}
 	}
 }

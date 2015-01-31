@@ -1,24 +1,20 @@
-using System;
 using afapp.body;
-using EventStore;
-using System.Collections.Generic;
 using CLAP;
+using System;
+using System.Collections.Generic;
 
 namespace afapp.console
 {
-
 	class Head {
-		Body body;
+		readonly Body body;
 
 		public Head(Body body) {
 			this.body = body;
 		}
 
-
 		public void Run(string[] args) {
 			Parser.Run (args, this);
 		}
-
 
 		[Verb]
 		public void Overview(
@@ -33,8 +29,26 @@ namespace afapp.console
 			Display_sessions (vm.InactiveSessions);
 		}
 
+		[Verb(Aliases = "vote")]
+		private void Store_feedback(
+			[Required] string sessionId,
+			[Required] string confId,
+			[Required] string email,
+			[Required] TrafficLightScore score, 
+			string comment)
+		{
+			body.Store_feedback(
+				new FeedbackData {
+					SessionId = sessionId,
+					ConfId = confId, 
+					Email = email, 
+					Score = score, 
+					Comment = comment
+			});
+			Console.WriteLine("Thank you for your feedback!");
+		}
 
-		void Display_sessions(IEnumerable<SessionVM> sessions) {
+		private static void Display_sessions(IEnumerable<SessionVM> sessions) {
 			foreach (var s in sessions)
 				Console.WriteLine("{0}: {1}, {2}-{3}, {4}", s.Id, s.Title, s.Start, s.End, s.SpeakerName);
 		}

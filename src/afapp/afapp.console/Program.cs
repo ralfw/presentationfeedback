@@ -1,7 +1,6 @@
-﻿using System;
-using afapp.body;
+﻿using afapp.body;
 using EventStore;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 
 namespace afapp.console

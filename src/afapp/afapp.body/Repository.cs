@@ -1,12 +1,14 @@
-using System;
 using EventStore.Contract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace afapp.body
 {
+	using EventStore.Internals;
+
 	public class Repository {
-		IEventStore es;
+		readonly IEventStore es;
 
 		public Repository(IEventStore es) {
 			this.es = es;
@@ -44,9 +46,15 @@ namespace afapp.body
 				};
 				confSessions.Add (sessiondata);
 			}
-
+			 
 			confdata.Sessions = confSessions;
 			return confdata;
+		}
+
+		public void Store_feedback(FeedbackData data)
+		{
+			es.Record(new Event(data.SessionId, "FeedbackGiven", string.Format("{0}\t{1}\t{2}\t{3}", 
+				data.ConfId, data.Email, data.Score, data.Comment)));
 		}
 	}
 }

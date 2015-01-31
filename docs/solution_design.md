@@ -84,3 +84,41 @@ Building the ViewModel is a task for a _Mapper_.
 ## Library Design
 Again I'd split the classes across two assemblies: _afapp.body_ and _afapp.head.console_.
 
+# afapp/give feedback (command)
+Registering the feedback of an anttendee creates the following event:
+
+* **FeedbackGiven**: context: session id, payload: conference id, email, score, comment.
+
+Signature of the interaction function:
+
+	void Store_feedback(FeedbackData data);
+
+	class FeedbackData {
+	{
+		public string SessionId;
+		public string ConfId;
+		public string Email;
+		public TrafficLightScore Score;
+		public string Comment;
+	}
+
+	enum TrafficLightScore
+	{
+		RED = 0,
+		YELLOW = 1,
+		GREEN = 2
+	}
+
+The Store\_feedback method returns void. According to the requirements the user should be redirected back to the conference after submitting the feedback. Since FeedbackData contains the conference id the calling method knows this value already so there is no reason to return it.  
+
+## Flow Design
+The flow design for this interaction seems to be quite simple. 
+
+2. Store feedback.
+
+## Class Design
+Storing of the feeback is the resposibility of the Repository class.
+
+## Library Design
+"Give feedback" is part of the afapp so again we use the _afapp.body_ and _afapp.head.console_.
+
