@@ -1,6 +1,7 @@
 using System;
 using coapp.body;
 using System.IO;
+using CLAP;
 
 namespace coapp.console
 {
@@ -10,11 +11,20 @@ namespace coapp.console
 		public Head(Body body) {
 			this.body = body;
 		}
-			
+
+
 		public void Run(string[] args) {
-			var confId = args [0];
-			var confTitle = args [1];
-			var csvSessions = File.ReadAllText (args [2]);
+			Parser.Run (args, this);
+		}
+
+
+		[Verb]
+		public void Upload(
+			[Required, Aliases("id")] string confId,
+			[Required, Aliases("title, t")] string confTitle,
+			[Required, Aliases("filename, f")] string csvfilename
+		) {
+			var csvSessions = File.ReadAllText (csvfilename);
 
 			var n = this.body.RegisterConference (confId, confTitle, csvSessions);
 

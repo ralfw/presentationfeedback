@@ -35,6 +35,9 @@
     <Reference Include="EventStore">
       <HintPath>..\..\..\lib\internal\EventStore.dll</HintPath>
     </Reference>
+    <Reference Include="CLAP">
+      <HintPath>..\packages\CLAP.4.6\lib\net35\CLAP.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -57,5 +60,6 @@
       <Link>useit.command</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

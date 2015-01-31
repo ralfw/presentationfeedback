@@ -2,6 +2,7 @@ using System;
 using afapp.body;
 using EventStore;
 using System.Collections.Generic;
+using CLAP;
 
 namespace afapp.console
 {
@@ -15,17 +16,21 @@ namespace afapp.console
 
 
 		public void Run(string[] args) {
-			switch (args [0]) {
-			case "overview":
-				var vm = this.body.GenerateSessionOverview (args [1]);
+			Parser.Run (args, this);
+		}
 
-				Console.WriteLine ("# Sessions of {0} ({1})", vm.ConfTitle, vm.ConfId);
-				Console.WriteLine ("## Active");
-				Display_sessions (vm.ActiveSessions);
-				Console.WriteLine ("## Inactive");
-				Display_sessions (vm.InactiveSessions);
-				break;
-			}
+
+		[Verb]
+		public void Overview(
+			[Required, Aliases("id")] string confid, 
+			[Aliases("now")] 		  DateTime _) {
+			var vm = this.body.GenerateSessionOverview (confid);
+
+			Console.WriteLine ("# Sessions of {0} ({1})", vm.ConfTitle, vm.ConfId);
+			Console.WriteLine ("## Active");
+			Display_sessions (vm.ActiveSessions);
+			Console.WriteLine ("## Inactive");
+			Display_sessions (vm.InactiveSessions);
 		}
 
 
