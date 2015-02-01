@@ -16,10 +16,14 @@ namespace afapp.console
 			Parser.Run (args, this);
 		}
 
+
 		[Verb]
 		public void Overview(
-			[Required, Aliases("id")] string confid, 
-			[Aliases("now")] 		  DateTime _) {
+			[Required, Aliases("id")] 	string confid, 
+			[Aliases("now,n")]			DateTime fixedNow) 
+		{
+			this.body.Now = BuildCurrentTimeProvider (fixedNow);
+
 			var vm = this.body.GenerateSessionOverview (confid);
 
 			Console.WriteLine ("# Sessions of {0} ({1})", vm.ConfTitle, vm.ConfId);
@@ -28,6 +32,7 @@ namespace afapp.console
 			Console.WriteLine ("## Inactive");
 			Display_sessions (vm.InactiveSessions);
 		}
+
 
 		[Verb(Aliases = "vote")]
 		private void Store_feedback(
@@ -48,9 +53,18 @@ namespace afapp.console
 			Console.WriteLine("Thank you for your feedback!");
 		}
 
+
 		private static void Display_sessions(IEnumerable<SessionVM> sessions) {
 			foreach (var s in sessions)
 				Console.WriteLine("{0}: {1}, {2}-{3}, {4}", s.Id, s.Title, s.Start, s.End, s.SpeakerName);
+		}
+
+
+		private static Func<DateTime> BuildCurrentTimeProvider(DateTime fixedNow) {
+			if (fixedNow == DateTime.MinValue)
+				return () => DateTime.Now;
+			else
+				return () => fixedNow;
 		}
 	}
 }
