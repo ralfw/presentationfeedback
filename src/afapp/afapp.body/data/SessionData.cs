@@ -1,14 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace afapp.body
+namespace afapp.body.data
 {
-	public class ConferenceData {
-		public string Id;
-		public string Title;
-		public IList<SessionData> Sessions;
-	}
-
 	public class SessionData {
 		public string Id;
 		public string Title;

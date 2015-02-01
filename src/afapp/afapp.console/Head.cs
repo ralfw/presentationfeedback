@@ -2,6 +2,7 @@ using afapp.body;
 using CLAP;
 using System;
 using System.Collections.Generic;
+using afapp.body.data.contract;
 
 namespace afapp.console
 {
@@ -36,20 +37,12 @@ namespace afapp.console
 
 		[Verb(Aliases = "vote")]
 		private void Store_feedback(
-			[Required] string sessionId,
-			[Required] string confId,
-			[Required] string email,
-			[Required] TrafficLightScore score, 
-			string comment)
+			[Required, Aliases("id")] string sessionId,
+			[Required, Aliases("e")] string email,
+			[Required, Aliases("s")] TrafficLightScores score, 
+			[DefaultValue(""), Aliases("c")] string comment)
 		{
-			body.Store_feedback(
-				new FeedbackData {
-					SessionId = sessionId,
-					ConfId = confId, 
-					Email = email, 
-					Score = score, 
-					Comment = comment
-			});
+			body.Store_feedback (sessionId, score, comment, email);
 			Console.WriteLine("Thank you for your feedback!");
 		}
 

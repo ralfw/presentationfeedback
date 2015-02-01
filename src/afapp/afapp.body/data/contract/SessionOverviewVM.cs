@@ -1,7 +1,7 @@
 using System;
 using EventStore.Contract;
 
-namespace afapp.body
+namespace afapp.body.data.contract
 {
 	public struct SessionOverviewVM {
 		public string ConfId;

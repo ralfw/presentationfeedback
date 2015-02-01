@@ -34,15 +34,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeedbackData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Body.cs" />
-    <Compile Include="SessionOverviewVM.cs" />
-    <Compile Include="ConferenceData.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Conference.cs" />
-    <Compile Include="TrafficLightScore.cs" />
+    <Compile Include="data\contract\TrafficLightScores.cs" />
+    <Compile Include="data\FeedbackData.cs" />
+    <Compile Include="data\contract\SessionOverviewVM.cs" />
+    <Compile Include="data\ConferenceData.cs" />
+    <Compile Include="data\SessionData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="data\" />
+    <Folder Include="data\contract\" />
+  </ItemGroup>
 </Project>

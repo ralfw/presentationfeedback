@@ -1,5 +1,7 @@
 ﻿using EventStore.Contract;
 using System;
+using afapp.body.data;
+using afapp.body.data.contract;
 
 namespace afapp.body
 {
@@ -31,9 +33,16 @@ namespace afapp.body
 		}
 
 
-		public void Store_feedback(FeedbackData data)
+		public void Store_feedback(string sessionId, TrafficLightScores score, string comment, string email)
 		{
-			repo.Store_feedback(data);
+			//TODO: maybe a check if this is a valid session id would be nice
+			//TODO: maybe a check if the session really is active would be nice
+			repo.Register_feedback(new FeedbackData{
+				SessionId = sessionId,
+				Score = score,
+				Comment = comment,
+				Email = email
+			});
 		}
 	}
 }

@@ -59,5 +59,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="..\..\..\samples\conf1 - conference number one.txt">
+      <Link>conf1 - conference number one.txt</Link>
+    </None>
   </ItemGroup>
 </Project>

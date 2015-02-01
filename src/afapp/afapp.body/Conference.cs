@@ -2,6 +2,7 @@ using System;
 using EventStore.Contract;
 using System.Collections.Generic;
 using System.Linq;
+using afapp.body.data;
 
 namespace afapp.body
 {

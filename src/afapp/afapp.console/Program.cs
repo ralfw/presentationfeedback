@@ -2,6 +2,7 @@
 using EventStore;
 using System;
 using System.Linq;
+using afapp.body.data;
 
 namespace afapp.console
 {

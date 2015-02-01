@@ -2,6 +2,7 @@ using EventStore.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using afapp.body.data;
 
 namespace afapp.body
 {
@@ -14,6 +15,7 @@ namespace afapp.body
 			this.es = es;
 		}
 			
+
 		public ConferenceData LoadConference(string confId) {
 			var events = this.es.QueryByContext (confId);
 
@@ -51,10 +53,11 @@ namespace afapp.body
 			return confdata;
 		}
 
-		public void Store_feedback(FeedbackData data)
+
+		public void Register_feedback(FeedbackData feedback)
 		{
-			es.Record(new Event(data.SessionId, "FeedbackGiven", string.Format("{0}\t{1}\t{2}\t{3}", 
-				data.ConfId, data.Email, data.Score, data.Comment)));
+			es.Record(new Event(feedback.SessionId, "FeedbackGiven", 
+								string.Format("{0}\t{1}\t{2}", feedback.Score, feedback.Comment, feedback.Email)));
 		}
 	}
 }
