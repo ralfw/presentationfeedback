@@ -7,7 +7,7 @@ namespace afapp.body
 {
 
 	public class Mapper {
-		public static SessionOverviewVM Map(string confId, string confTitle, IEnumerable<SessionData> activeSessions, IEnumerable<SessionData> inactiveSessions) {
+		public SessionOverviewVM Map(string confId, string confTitle, IEnumerable<SessionData> activeSessions, IEnumerable<SessionData> inactiveSessions) {
 			return new SessionOverviewVM { 
 				ConfId = confId,
 				ConfTitle = confTitle,

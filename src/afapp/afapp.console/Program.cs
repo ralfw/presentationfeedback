@@ -10,7 +10,10 @@ namespace afapp.console
 		public static void Main (string[] args)
 		{
 			var es = new FileEventStore ("app.events");
-			var body = new Body (es, BuildCurrentTimeProvider(args));
+			var repo = new Repository (es);
+			var conferenceFactory = new Func<ConferenceData, Func<DateTime>, Conference> ((data, now) => new Conference(data, now));
+			var mapper = new Mapper ();
+			var body = new Body (repo, conferenceFactory, mapper, BuildCurrentTimeProvider(args));
 			var head = new Head (body);
 
 			head.Run (args);

@@ -6,21 +6,25 @@ namespace afapp.body
 	public class Body
 	{
 		private readonly Repository repo;
+		private Func<ConferenceData, Func<DateTime>, Conference> conferenceFactory;
+		private Mapper mapper;
 		private readonly Func<DateTime> now;
 
-		public Body (IEventStore es, Func<DateTime> now) {
-			this.repo = new Repository(es);
+		public Body (Repository repo, Func<ConferenceData, Func<DateTime>, Conference> conferenceFactory, Mapper mapper, Func<DateTime> now) {
+			this.repo = repo;
+			this.conferenceFactory = conferenceFactory;
+			this.mapper = mapper;
 			this.now = now;
 		} 
 			
 		public SessionOverviewVM GenerateSessionOverview(string confId) {
 			var confdata = this.repo.LoadConference (confId);
 
-			var conf = new Conference (confdata, this.now);
+			var conf = this.conferenceFactory (confdata, this.now);
 			var activeSessions = conf.DetermineActiveSessions;
 			var inactiveSessions = conf.DetermineInactiveSessions;
 
-			return Mapper.Map (confdata.Id, confdata.Title, activeSessions, inactiveSessions);
+			return this.mapper.Map (confdata.Id, confdata.Title, activeSessions, inactiveSessions);
 		}
 
 		public void Store_feedback(FeedbackData data)
