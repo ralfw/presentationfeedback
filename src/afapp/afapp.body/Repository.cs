@@ -34,11 +34,11 @@ namespace afapp.body
 
 			events = this.es.QueryByName ("SessionRegistered")
 							.Where (e => sessionIds.Contains (e.Context));
-			var confSessions = new List<SessionData> ();
+			var confSessions = new List<ConferenceData.SessionData> ();
 			foreach (var e in events) {
 				var fields = e.Payload.Split ('\t');
 
-				var sessiondata = new SessionData{ 
+				var sessiondata = new ConferenceData.SessionData{ 
 					Id = e.Context,
 					Title = fields[0],
 					Start = DateTime.Parse(fields[1]),

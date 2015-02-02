@@ -47,7 +47,7 @@ namespace afapp.console
 		}
 
 
-		private static void Display_sessions(IEnumerable<Session> sessions) {
+		private static void Display_sessions(IEnumerable<SessionOverview.Session> sessions) {
 			foreach (var s in sessions)
 				Console.WriteLine("{0}: {1}, {2}-{3}, {4}", s.Id, s.Title, s.Start, s.End, s.SpeakerName);
 		}
