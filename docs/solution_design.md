@@ -96,7 +96,6 @@ Signature of the interaction function:
 	class FeedbackData {
 	{
 		public string SessionId;
-		public string ConfId;
 		public string Email;
 		public TrafficLightScore Score;
 		public string Comment;
@@ -104,9 +103,9 @@ Signature of the interaction function:
 
 	enum TrafficLightScore
 	{
-		RED = 0,
-		YELLOW = 1,
-		GREEN = 2
+		Red = 0,
+		Yellow = 1,
+		Green = 2
 	}
 
 The Store\_feedback method returns void. According to the requirements the user should be redirected back to the conference after submitting the feedback. Since FeedbackData contains the conference id the calling method knows this value already so there is no reason to return it.  
@@ -114,7 +113,7 @@ The Store\_feedback method returns void. According to the requirements the user 
 ## Flow Design
 The flow design for this interaction seems to be quite simple. 
 
-2. Store feedback.
+1. Store feedback.
 
 ## Class Design
 Storing of the feeback is the resposibility of the Repository class.
