@@ -8,24 +8,20 @@ namespace afapp.body
 	public class Body
 	{
 		private readonly Repository repo;
-		private Func<ConferenceData, Func<DateTime>, Conference> conferenceFactory;
+		private Func<ConferenceData, Conference> conferenceFactory;
 		private Mapper mapper;
 
-		public Body (Repository repo, Func<ConferenceData, Func<DateTime>, Conference> conferenceFactory, Mapper mapper) {
+		public Body (Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper) {
 			this.repo = repo;
 			this.conferenceFactory = conferenceFactory;
 			this.mapper = mapper;
-			this.Now = () => DateTime.Now;
 		} 
 
 
-		public Func<DateTime> Now { get; set;}
-			
-
-		public SessionOverviewVM GenerateSessionOverview(string confId) {
+		public SessionOverview GenerateSessionOverview(string confId) {
 			var confdata = this.repo.LoadConference (confId);
 
-			var conf = this.conferenceFactory (confdata, this.Now);
+			var conf = this.conferenceFactory (confdata);
 			var activeSessions = conf.DetermineActiveSessions;
 			var inactiveSessions = conf.DetermineInactiveSessions;
 
@@ -46,4 +42,3 @@ namespace afapp.body
 		}
 	}
 }
-

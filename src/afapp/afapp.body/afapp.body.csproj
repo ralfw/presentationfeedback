@@ -41,9 +41,10 @@
     <Compile Include="Conference.cs" />
     <Compile Include="data\contract\TrafficLightScores.cs" />
     <Compile Include="data\FeedbackData.cs" />
-    <Compile Include="data\contract\SessionOverviewVM.cs" />
     <Compile Include="data\ConferenceData.cs" />
     <Compile Include="data\SessionData.cs" />
+    <Compile Include="TimeProvider.cs" />
+    <Compile Include="data\contract\SessionOverview.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

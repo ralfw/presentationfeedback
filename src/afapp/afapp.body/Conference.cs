@@ -10,22 +10,19 @@ namespace afapp.body
 	public class Conference {
 		private const int ACTIVE_SESSION_BUFFER_MIN = 20;
 		private ConferenceData confdata;
-		private Func<DateTime> now;
 
-		public Conference(ConferenceData confdata, Func<DateTime> now) {
+		public Conference(ConferenceData confdata) {
 			this.confdata = confdata;
-			this.now = now;
 		}
 
 		public IEnumerable<SessionData> DetermineActiveSessions {get{ 
-				return this.confdata.Sessions.Where (s => s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) <= now() &&
-														  now() <= s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN));
+				return this.confdata.Sessions.Where (s => s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) <= TimeProvider.Now() &&
+													 TimeProvider.Now() <= s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN));
 		}}
 
 		public IEnumerable<SessionData> DetermineInactiveSessions {get{ 
-				return this.confdata.Sessions.Where (s => now() < s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) ||
-														  s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN) < now());
+				return this.confdata.Sessions.Where (s => TimeProvider.Now() < s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) ||
+													 s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN) < TimeProvider.Now());
 		}}
 	}
-
 }

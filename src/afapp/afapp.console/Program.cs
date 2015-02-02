@@ -10,9 +10,11 @@ namespace afapp.console
 	{
 		public static void Main (string[] args)
 		{
+			TimeProvider.Configure ();
+
 			var es = new FileEventStore ("app.events");
 			var repo = new Repository (es);
-			var conferenceFactory = new Func<ConferenceData, Func<DateTime>, Conference> ((data, now) => new Conference(data, now));
+			var conferenceFactory = new Func<ConferenceData, Conference> ((data) => new Conference(data));
 			var mapper = new Mapper ();
 			var body = new Body (repo, conferenceFactory, mapper);
 			var head = new Head (body);

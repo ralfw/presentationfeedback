@@ -3,14 +3,14 @@ using EventStore.Contract;
 
 namespace afapp.body.data.contract
 {
-	public struct SessionOverviewVM {
+	public struct SessionOverview {
 		public string ConfId;
 		public string ConfTitle;
-		public SessionVM[] ActiveSessions;
-		public SessionVM[] InactiveSessions;
+		public Session[] ActiveSessions;
+		public Session[] InactiveSessions;
 	}
 
-	public struct SessionVM {
+	public struct Session {
 		public string Id;
 		public string Title;
 		public DateTime Start, End;
