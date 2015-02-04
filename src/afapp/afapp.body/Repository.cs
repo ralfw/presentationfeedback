@@ -80,12 +80,17 @@ namespace afapp.body
 
 		public string Get_conference_title(string sessionId)
 		{
-			return "";
+			var confId = es.QueryByName("SessionAssigned").First(x => x.Payload.Contains(sessionId)).Context;
+			return es.QueryByName("ConferenceRegistered").Single(x => x.Context == confId).Payload;
 		}
 
 		public IEnumerable<TrafficLightScores> Get_scores(string sessionId)
 		{
-			return null;
+			return es.QueryByName("FeedbackGiven").Where(e => e.Context == sessionId).Select(s =>
+			{
+				var fields = s.Payload.Split('\t');
+				return (TrafficLightScores)Enum.Parse(typeof(TrafficLightScores), fields[0]);
+			});
 		}
 	}
 }
