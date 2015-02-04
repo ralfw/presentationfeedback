@@ -1,15 +1,15 @@
-﻿using EventStore.Contract;
-using System;
-using afapp.body.data;
+﻿using afapp.body.data;
 using afapp.body.data.contract;
+using afapp.body.domain;
+using System;
 
 namespace afapp.body
 {
 	public class Body
 	{
 		private readonly Repository repo;
-		private Func<ConferenceData, Conference> conferenceFactory;
-		private Mapper mapper;
+		private readonly Func<ConferenceData, Conference> conferenceFactory;
+		private readonly Mapper mapper;
 
 		public Body (Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper) {
 			this.repo = repo;

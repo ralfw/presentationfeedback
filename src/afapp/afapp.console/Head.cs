@@ -1,8 +1,8 @@
 using afapp.body;
+using afapp.body.data.contract;
 using CLAP;
 using System;
 using System.Collections.Generic;
-using afapp.body.data.contract;
 
 namespace afapp.console
 {

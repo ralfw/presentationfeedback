@@ -1,9 +1,7 @@
-using System;
-using EventStore.Contract;
+using afapp.body.data;
+using afapp.body.data.contract;
 using System.Collections.Generic;
 using System.Linq;
-using afapp.body.data.contract;
-using afapp.body.data;
 
 namespace afapp.body
 {
@@ -28,6 +26,18 @@ namespace afapp.body
 					End = s.End,
 					SpeakerName = s.SpeakerName
 				}).ToArray(),
+			};
+		}
+
+		public SpeakerNotificationData Map(string confTitle, SessionData session, IEnumerable<TrafficLightScores> scores)
+		{
+			return new SpeakerNotificationData
+			{
+				ConferenceTitle = confTitle,
+				Session = session,
+				Reds = scores.Count(x => x == TrafficLightScores.Red),
+				Yellows = scores.Count(x => x == TrafficLightScores.Yellow),
+				Greens = scores.Count(x => x == TrafficLightScores.Green)
 			};
 		}
 	}

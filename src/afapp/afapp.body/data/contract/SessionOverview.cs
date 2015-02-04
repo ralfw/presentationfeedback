@@ -1,5 +1,4 @@
 using System;
-using EventStore.Contract;
 
 namespace afapp.body.data.contract
 {

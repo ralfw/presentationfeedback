@@ -1,15 +1,13 @@
-using System;
-using EventStore.Contract;
 using System.Collections.Generic;
 using System.Linq;
 using afapp.body.data;
 
-namespace afapp.body
+namespace afapp.body.domain
 {
 	//TODO: What about time zones? This might be checked on a server in a different timezone than the conference.
 	public class Conference {
 		private const int ACTIVE_SESSION_BUFFER_MIN = 20;
-		private ConferenceData confdata;
+		private readonly ConferenceData confdata;
 
 		public Conference(ConferenceData confdata) {
 			this.confdata = confdata;

@@ -1,8 +1,8 @@
 ﻿using afapp.body;
+using afapp.body.data;
+using afapp.body.domain;
 using EventStore;
 using System;
-using System.Linq;
-using afapp.body.data;
 
 namespace afapp.console
 {
