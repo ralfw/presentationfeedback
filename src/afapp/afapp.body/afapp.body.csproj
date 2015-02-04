@@ -45,7 +45,9 @@
     <Compile Include="data\FeedbackData.cs" />
     <Compile Include="data\ConferenceData.cs" />
     <Compile Include="data\SessionData.cs" />
-    <Compile Include="SpeakerNotificationHandler.cs" />
+    <Compile Include="speakerNotification\INotificationDataProvider.cs" />
+    <Compile Include="speakerNotification\INotificationMapper.cs" />
+    <Compile Include="speakerNotification\SpeakerNotificationHandler.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="data\contract\SessionOverview.cs" />
   </ItemGroup>

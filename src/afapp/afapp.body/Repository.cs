@@ -1,5 +1,6 @@
 using afapp.body.data;
 using afapp.body.data.contract;
+using afapp.body.speakerNotification;
 using EventStore.Contract;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace afapp.body
 {
 	using EventStore.Internals;
 
-	public class Repository {
+	public class Repository : INotificationDataProvider {
 		readonly IEventStore es;
 
 		public Repository(IEventStore es) {

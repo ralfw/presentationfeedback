@@ -1,25 +1,24 @@
-﻿
-using afapp.body.data;
+﻿using afapp.body.data;
 using afapp.body.data.contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace afapp.body
+namespace afapp.body.speakerNotification
 {
-	internal class SpeakerNotificationHandler
+	public class SpeakerNotificationHandler
 	{
 		private const int FEEDBACK_PERIOD = 20;
 		private readonly int workerInvocationInterval;
 		private readonly IEmailService emailService;
-		private readonly Repository repository;
-		private readonly Mapper mapper;
+		private readonly INotificationDataProvider dataProvider;
+		private readonly INotificationMapper mapper;
 
-		public SpeakerNotificationHandler(IEmailService emailService, Repository repository, Mapper mapper,
-			int workerInvocationInterval)
+		public SpeakerNotificationHandler(IEmailService emailService, INotificationDataProvider dataProvider,
+			INotificationMapper mapper, int workerInvocationInterval)
 		{
 			this.emailService = emailService;
-			this.repository = repository;
+			this.dataProvider = dataProvider;
 			this.mapper = mapper;
 			this.workerInvocationInterval = workerInvocationInterval;
 		}
@@ -32,7 +31,7 @@ namespace afapp.body
 
 		private IEnumerable<SessionData> Find_sessions_due_for_notification()
 		{
-			var sessions = repository.GetAllSessions();
+			var sessions = dataProvider.GetAllSessions();
 			return sessions.Where(x => TimeProvider.Now().AddMinutes(FEEDBACK_PERIOD) >= x.End &&
 			                    TimeProvider.Now() < x.End.AddMinutes(FEEDBACK_PERIOD + workerInvocationInterval));  
 		}
@@ -53,8 +52,8 @@ namespace afapp.body
 
 		private SpeakerNotificationData BuildSpeakerNotification(SessionData sessionData)
 		{
-			var conferenceTitle = repository.Get_conference_title(sessionData.Id);
-			var scores = repository.Get_scores(sessionData.Id);
+			var conferenceTitle = dataProvider.Get_conference_title(sessionData.Id);
+			var scores = dataProvider.Get_scores(sessionData.Id);
 			return mapper.Map(conferenceTitle, sessionData, scores);
 		}
 	}
