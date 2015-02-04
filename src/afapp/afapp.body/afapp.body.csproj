@@ -34,7 +34,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data\contract\IEmailService.cs" />
     <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="domain\Conference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -45,8 +44,8 @@
     <Compile Include="data\FeedbackData.cs" />
     <Compile Include="data\ConferenceData.cs" />
     <Compile Include="data\SessionData.cs" />
+    <Compile Include="speakerNotification\IEmailService.cs" />
     <Compile Include="speakerNotification\INotificationDataProvider.cs" />
-    <Compile Include="speakerNotification\INotificationMapper.cs" />
     <Compile Include="speakerNotification\SpeakerNotificationHandler.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="data\contract\SessionOverview.cs" />

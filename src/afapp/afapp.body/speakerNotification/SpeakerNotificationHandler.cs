@@ -1,5 +1,4 @@
 ﻿using afapp.body.data;
-using afapp.body.data.contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +7,23 @@ namespace afapp.body.speakerNotification
 {
 	public class SpeakerNotificationHandler
 	{
-		private const int FEEDBACK_PERIOD = 20;
+		private readonly int feedbackPeriod;
 		private readonly int workerInvocationInterval;
 		private readonly IEmailService emailService;
 		private readonly INotificationDataProvider dataProvider;
-		private readonly INotificationMapper mapper;
+		private readonly Mapper mapper;
 
 		public SpeakerNotificationHandler(IEmailService emailService, INotificationDataProvider dataProvider,
-			INotificationMapper mapper, int workerInvocationInterval)
+			Mapper mapper, int feedbackPeriod, int workerInvocationInterval)
 		{
 			this.emailService = emailService;
 			this.dataProvider = dataProvider;
 			this.mapper = mapper;
+			this.feedbackPeriod = feedbackPeriod;
 			this.workerInvocationInterval = workerInvocationInterval;
 		}
 
-		internal void Run()
+		public void Run()
 		{
 			var sessions = Find_sessions_due_for_notification();
 			Process_sessions(sessions, Process_session);
@@ -32,8 +32,8 @@ namespace afapp.body.speakerNotification
 		private IEnumerable<SessionData> Find_sessions_due_for_notification()
 		{
 			var sessions = dataProvider.GetAllSessions();
-			return sessions.Where(x => TimeProvider.Now().AddMinutes(FEEDBACK_PERIOD) >= x.End &&
-			                    TimeProvider.Now() < x.End.AddMinutes(FEEDBACK_PERIOD + workerInvocationInterval));  
+			return sessions.Where(x => TimeProvider.Now().AddMinutes(feedbackPeriod) >= x.End &&
+			                    TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + workerInvocationInterval));  
 		}
 
 		private static void Process_sessions(IEnumerable<SessionData> sessions, Action<SessionData> onSession)

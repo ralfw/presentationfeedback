@@ -1,5 +1,7 @@
 ﻿
-namespace afapp.body.data.contract
+using afapp.body.data;
+
+namespace afapp.body.speakerNotification
 {
 	public interface IEmailService
 	{
