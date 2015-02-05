@@ -30,14 +30,14 @@ namespace afapp.body.speakerNotification
 			Process_sessions(sessions, Process_session);
 		}
 
-		private IEnumerable<SessionData> Find_sessions_due_for_notification()
+		private IEnumerable<ConferenceData.SessionData> Find_sessions_due_for_notification()
 		{
 			var sessions = dataProvider.Get_all_sessions();
 			return sessions.Where(x => TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod) &&
 			                    TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + schedulerRepeatInterval));
 		}
 
-		private static void Process_sessions(IEnumerable<SessionData> sessions, Action<SessionData> onSession)
+		private static void Process_sessions(IEnumerable<ConferenceData.SessionData> sessions, Action<ConferenceData.SessionData> onSession)
 		{
 			foreach (var sessionData in sessions)
 			{
@@ -45,13 +45,13 @@ namespace afapp.body.speakerNotification
 			}
 		}
 
-		private void Process_session(SessionData session)
+		private void Process_session(ConferenceData.SessionData session)
 		{
 			var notification = BuildSpeakerNotification(session);
 			emailService.Send_speaker_notification(notification);
 		}
 
-		private SpeakerNotificationData BuildSpeakerNotification(SessionData sessionData)
+		private SpeakerNotificationData BuildSpeakerNotification(ConferenceData.SessionData sessionData)
 		{
 			var conferenceTitle = dataProvider.Get_conference_title(sessionData.Id);
 			var scores = dataProvider.Get_scores(sessionData.Id);

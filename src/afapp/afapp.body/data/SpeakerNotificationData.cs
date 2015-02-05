@@ -3,7 +3,7 @@
 	public class SpeakerNotificationData
 	{
 		public string ConferenceTitle;
-		public SessionData Session;
+		public ConferenceData.SessionData Session;
 		public int Greens;
 		public int Yellows;
 		public int Reds;

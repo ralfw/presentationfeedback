@@ -1,2 +1,2 @@
-REM afapp.console.exe startspeakernotification -n:2015-01-23T10:00:00 -f:2 -s:1
+REM afapp.console.exe startspeakernotification -n:2015-01-23T10:05:00 -f:4 -s:2
 afapp.console.exe startspeakernotification -f:2 -s:1

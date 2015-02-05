@@ -6,7 +6,7 @@ namespace afapp.body.speakerNotification
 {
 	public interface INotificationDataProvider
 	{
-		IEnumerable<SessionData> Get_all_sessions();
+		IEnumerable<ConferenceData.SessionData> Get_all_sessions();
 
 		string Get_conference_title(string sessionId);
 

@@ -13,12 +13,12 @@ namespace afapp.body.domain
 			this.confdata = confdata;
 		}
 
-		public IEnumerable<SessionData> DetermineActiveSessions {get{ 
+		public IEnumerable<ConferenceData.SessionData> DetermineActiveSessions {get{ 
 				return this.confdata.Sessions.Where (s => s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) <= TimeProvider.Now() &&
 													 TimeProvider.Now() <= s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN));
 		}}
 
-		public IEnumerable<SessionData> DetermineInactiveSessions {get{ 
+		public IEnumerable<ConferenceData.SessionData> DetermineInactiveSessions {get{ 
 				return this.confdata.Sessions.Where (s => TimeProvider.Now() < s.Start.AddMinutes (-ACTIVE_SESSION_BUFFER_MIN) ||
 													 s.End.AddMinutes (ACTIVE_SESSION_BUFFER_MIN) < TimeProvider.Now());
 		}}

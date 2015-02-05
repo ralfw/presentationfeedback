@@ -47,36 +47,36 @@ namespace afapp.body.test
 				data.Reds == 2 && data.Yellows == 2 && data.Greens == 1)));
 		}
 
-		private static IEnumerable<SessionData> GetAllSession(DateTime now, int workerInvocationInterval,
+		private static IEnumerable<ConferenceData.SessionData> GetAllSession(DateTime now, int workerInvocationInterval,
 			int feedbackPeriod)
 		{
-			return new List<SessionData>
+			return new List<ConferenceData.SessionData>
 			{
-				new SessionData // In the past.
+				new ConferenceData.SessionData // In the past.
 				{
 					Id = "1",
 					Start = now.AddDays(-1).AddHours(-1),
 					End = now.AddDays(-1)
 				},
-				new SessionData // Due. Feedback period just finished a minute ago.
+				new ConferenceData.SessionData // Due. Feedback period just finished a minute ago.
 				{
 					Id = "2",
 					Start = now.AddMinutes(-(60 + feedbackPeriod)),
 					End = now.AddMinutes(-(feedbackPeriod + 1))
 				},
-				new SessionData // Due. Feedback period finished and we are in the middle of worker invocation interval.
+				new ConferenceData.SessionData // Due. Feedback period finished and we are in the middle of worker invocation interval.
 				{
 					Id = "3",
 					Start = now.AddMinutes(-(60 + feedbackPeriod)),
 					End = now.AddMinutes(-(feedbackPeriod + workerInvocationInterval /2))
 				},
-				new SessionData // Already processed. After feedback period and worker invocation interval.
+				new ConferenceData.SessionData // Already processed. After feedback period and worker invocation interval.
 				{
 					Id = "4",
 					Start = now.AddHours(-(1 + feedbackPeriod)),
 					End = now.AddMinutes(-(feedbackPeriod + workerInvocationInterval))
 				},
-				new SessionData // Worker invoked at the same time as feedback period finishes -> Not due yet.
+				new ConferenceData.SessionData // Worker invoked at the same time as feedback period finishes -> Not due yet.
 				{
 					Id = "5",
 					Start = now.AddMinutes(-(60 + feedbackPeriod)),

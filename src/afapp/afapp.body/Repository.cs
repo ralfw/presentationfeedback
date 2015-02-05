@@ -36,11 +36,11 @@ namespace afapp.body
 
 			events = this.es.QueryByName ("SessionRegistered")
 							.Where (e => sessionIds.Contains (e.Context));
-			var confSessions = new List<SessionData> ();
+			var confSessions = new List<ConferenceData.SessionData> ();
 			foreach (var e in events) {
 				var fields = e.Payload.Split ('\t');
 
-				var sessiondata = new SessionData{ 
+				var sessiondata = new ConferenceData.SessionData{ 
 					Id = e.Context,
 					Title = fields[0],
 					Start = DateTime.Parse(fields[1]),
@@ -62,12 +62,12 @@ namespace afapp.body
 								string.Format("{0}\t{1}\t{2}", feedback.Score, feedback.Comment, feedback.Email)));
 		}
 
-		public IEnumerable<SessionData> Get_all_sessions()
+		public IEnumerable<ConferenceData.SessionData> Get_all_sessions()
 		{
 			return es.QueryByName("SessionRegistered").Select(e =>
 			{
 				var fields = e.Payload.Split('\t');
-				return new SessionData
+				return new ConferenceData.SessionData
 				{
 					Id = e.Context,
 					Title = fields[0],
