@@ -1,6 +1,4 @@
-﻿
-
-namespace afapp.body.data
+﻿namespace afapp.body.data
 {
 	public class SpeakerNotificationData
 	{

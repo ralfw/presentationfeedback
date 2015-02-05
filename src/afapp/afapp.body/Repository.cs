@@ -62,7 +62,7 @@ namespace afapp.body
 								string.Format("{0}\t{1}\t{2}", feedback.Score, feedback.Comment, feedback.Email)));
 		}
 
-		public IEnumerable<SessionData> GetAllSessions()
+		public IEnumerable<SessionData> Get_all_sessions()
 		{
 			return es.QueryByName("SessionRegistered").Select(e =>
 			{

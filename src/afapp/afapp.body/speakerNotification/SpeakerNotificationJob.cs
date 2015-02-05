@@ -32,9 +32,9 @@ namespace afapp.body.speakerNotification
 
 		private IEnumerable<SessionData> Find_sessions_due_for_notification()
 		{
-			var sessions = dataProvider.GetAllSessions();
-			return sessions.Where(x => TimeProvider.Now().AddMinutes(feedbackPeriod) >= x.End &&
-			                    TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + schedulerRepeatInterval));  
+			var sessions = dataProvider.Get_all_sessions();
+			return sessions.Where(x => TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod) &&
+			                    TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + schedulerRepeatInterval));
 		}
 
 		private static void Process_sessions(IEnumerable<SessionData> sessions, Action<SessionData> onSession)

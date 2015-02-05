@@ -18,7 +18,7 @@ namespace afapp.body.speakerNotification.worker
 			return job;
 		}
 
-		public void ReturnJob(IJob job)
+		public void ReturnJob(IJob j)
 		{
 			throw new System.NotImplementedException();
 		}

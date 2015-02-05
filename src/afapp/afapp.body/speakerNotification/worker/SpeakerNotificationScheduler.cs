@@ -27,7 +27,7 @@ namespace afapp.body.speakerNotification.worker
 			var jobDetails = JobBuilder.Create<SpeakerNotificationJob>().Build();
 			var trigger = TriggerBuilder.Create()
 				.StartNow()
-				.WithSimpleSchedule(x => x.WithIntervalInSeconds(schedulerRepeatInterval).RepeatForever())
+				.WithSimpleSchedule(x => x.WithIntervalInMinutes(schedulerRepeatInterval).RepeatForever())
 				.Build();
 
 			scheduler.ScheduleJob(jobDetails, trigger);

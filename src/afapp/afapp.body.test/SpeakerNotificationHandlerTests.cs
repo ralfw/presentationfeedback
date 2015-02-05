@@ -14,7 +14,7 @@ namespace afapp.body.test
 	class SpeakerNotificationHandlerTests
 	{
 		[Test]
-		public void Run()
+		public void Execute()
 		{
 			// arange
 			const string conferenceTitle = "Conference 2015";
@@ -24,12 +24,12 @@ namespace afapp.body.test
 			var emailServiceMock = new Mock<IEmailService>();
 			var dataProvider = new Mock<INotificationDataProvider>();
 			var allSessions = GetAllSession(now, schedulerRepeatInterval, feedbackPeriod).ToList();
+			var contextMock = new Mock<IJobExecutionContext>();
 			var sut = new SpeakerNotificationJob(emailServiceMock.Object, dataProvider.Object, new Mapper(),
 				feedbackPeriod, schedulerRepeatInterval);
-			var contextMock = new Mock<IJobExecutionContext>();
 
 			TimeProvider.Configure(now);
-			dataProvider.Setup(x => x.GetAllSessions()).Returns(allSessions);
+			dataProvider.Setup(x => x.Get_all_sessions()).Returns(allSessions);
 			dataProvider.Setup(x => x.Get_conference_title(It.IsAny<string>())).Returns(conferenceTitle);
 			dataProvider.Setup(x => x.Get_scores(allSessions[1].Id)).Returns(GetScore1());
 			dataProvider.Setup(x => x.Get_scores(allSessions[2].Id)).Returns(GetScore2());
@@ -58,11 +58,11 @@ namespace afapp.body.test
 					Start = now.AddDays(-1).AddHours(-1),
 					End = now.AddDays(-1)
 				},
-				new SessionData // Due. Feedback period just finished.
+				new SessionData // Due. Feedback period just finished a minute ago.
 				{
 					Id = "2",
 					Start = now.AddMinutes(-(60 + feedbackPeriod)),
-					End = now.AddMinutes(-(feedbackPeriod))
+					End = now.AddMinutes(-(feedbackPeriod + 1))
 				},
 				new SessionData // Due. Feedback period finished and we are in the middle of worker invocation interval.
 				{
@@ -75,7 +75,13 @@ namespace afapp.body.test
 					Id = "4",
 					Start = now.AddHours(-(1 + feedbackPeriod)),
 					End = now.AddMinutes(-(feedbackPeriod + workerInvocationInterval))
-				}
+				},
+				new SessionData // Worker invoked at the same time as feedback period finishes -> Not due yet.
+				{
+					Id = "5",
+					Start = now.AddMinutes(-(60 + feedbackPeriod)),
+					End = now.AddMinutes(-(feedbackPeriod))
+				},
 			};
 		}
 

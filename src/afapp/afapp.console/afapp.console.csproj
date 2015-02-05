@@ -51,6 +51,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\startScheduler.bat">
+      <Link>startScheduler.bat</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="..\..\useit.bat">
       <Link>useit.bat</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -63,5 +67,11 @@
     <None Include="..\..\..\samples\conf1 - conference number one.txt">
       <Link>conf1 - conference number one.txt</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\samples\conf2.txt">
+      <Link>conf2.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

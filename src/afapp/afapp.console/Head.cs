@@ -32,10 +32,11 @@ namespace afapp.console
 			Display_sessions (vm.ActiveSessions);
 			Console.WriteLine ("## Inactive");
 			Display_sessions (vm.InactiveSessions);
+			Environment.Exit(0);
 		}
 
 
-		[Verb(Aliases = "vote")]
+		[Verb(Aliases = "vote")] 
 		public void Store_feedback(
 			[Required, Aliases("id")] string sessionId,
 			[Required, Aliases("e")] string email,
@@ -44,6 +45,7 @@ namespace afapp.console
 		{
 			body.Store_feedback (sessionId, score, comment, email);
 			Console.WriteLine("Thank you for your feedback!");
+			Environment.Exit(0);
 		}
 
 		[Verb(Aliases = "startspeakernotification")]
@@ -59,6 +61,7 @@ namespace afapp.console
 
 			body.Stop_speaker_notification_scheduler();
 			Console.WriteLine("Scheduler shutdown!");
+			Environment.Exit(0);
 		}
 
 		private static void Display_sessions(IEnumerable<Session> sessions) {
