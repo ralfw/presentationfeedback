@@ -45,6 +45,7 @@ namespace afapp.body
 			});
 		}
 
+
 		public void Start_speaker_notification_scheduler(int feedbackPeriod, int schedulerRepeatInterval)
 		{
 			scheduler.Start(feedbackPeriod, schedulerRepeatInterval);

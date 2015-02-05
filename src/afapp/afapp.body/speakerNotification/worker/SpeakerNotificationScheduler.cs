@@ -18,6 +18,7 @@ namespace afapp.body.speakerNotification.worker
 			this.mapper = mapper;
 		}
 
+
 		internal void Start(int feedbackPeriod, int schedulerRepeatInterval)
 		{
 			var job = new SpeakerNotificationJob(emailService, dataProvider, mapper, feedbackPeriod, schedulerRepeatInterval);
@@ -32,6 +33,7 @@ namespace afapp.body.speakerNotification.worker
 
 			scheduler.ScheduleJob(jobDetails, trigger);
 		}
+
 
 		internal void Stop()
 		{

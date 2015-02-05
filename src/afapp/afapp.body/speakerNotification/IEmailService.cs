@@ -1,5 +1,4 @@
-﻿
-using afapp.body.data;
+﻿using afapp.body.data;
 
 namespace afapp.body.speakerNotification
 {

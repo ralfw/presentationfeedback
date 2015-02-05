@@ -38,9 +38,9 @@ namespace afapp.console
 
 		[Verb(Aliases = "vote")] 
 		public void Store_feedback(
-			[Required, Aliases("id")] string sessionId,
-			[Required, Aliases("e")] string email,
-			[Required, Aliases("s")] TrafficLightScores score, 
+			[Required, Aliases("id")]	string sessionId,
+			[Required, Aliases("e")] 	string email,
+			[Required, Aliases("s")] 	TrafficLightScores score, 
 			[DefaultValue(""), Aliases("c")] string comment)
 		{
 			body.Store_feedback (sessionId, score, comment, email);
@@ -50,12 +50,14 @@ namespace afapp.console
 
 		[Verb(Aliases = "startspeakernotification")]
 		public void Start_speaker_notification(
-			[Aliases("now,n")]	DateTime fixedNow,
-			[DefaultValue(20), Aliases("f")] int feedbackPeriod,
-			[DefaultValue(5), Aliases("s")] int schedulerRepeatInterval)
+			[Aliases("now,n")]					DateTime fixedNow,
+			[DefaultValue(20), Aliases("f")] 	int feedbackPeriod,
+			[DefaultValue(5), Aliases("s")] 	int schedulerRepeatInterval)
 		{
 			TimeProvider.Configure(fixedNow);
+
 			body.Start_speaker_notification_scheduler(feedbackPeriod, schedulerRepeatInterval);
+
 			Console.WriteLine("Scheduling... - Press any key to stop");
 			Console.ReadKey();
 
@@ -63,6 +65,7 @@ namespace afapp.console
 			Console.WriteLine("Scheduler shutdown!");
 			Environment.Exit(0);
 		}
+
 
 		private static void Display_sessions(IEnumerable<SessionOverview.Session> sessions) {
 			foreach (var s in sessions)

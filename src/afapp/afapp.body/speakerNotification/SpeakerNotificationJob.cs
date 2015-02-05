@@ -24,28 +24,22 @@ namespace afapp.body.speakerNotification
 			this.schedulerRepeatInterval = schedulerRepeatInterval;
 		}
 
+
 		public void Execute(IJobExecutionContext context)
 		{
 			var sessions = Find_sessions_due_for_notification();
-			Process_sessions(sessions, Process_session);
+			sessions.ToList ().ForEach (Notify_speaker);
 		}
+
 
 		private IEnumerable<ConferenceData.SessionData> Find_sessions_due_for_notification()
 		{
 			var sessions = dataProvider.Get_all_sessions();
 			return sessions.Where(x => TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod) &&
-			                    TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + schedulerRepeatInterval));
+			                      TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + schedulerRepeatInterval));
 		}
-
-		private static void Process_sessions(IEnumerable<ConferenceData.SessionData> sessions, Action<ConferenceData.SessionData> onSession)
-		{
-			foreach (var sessionData in sessions)
-			{
-				onSession(sessionData);
-			}
-		}
-
-		private void Process_session(ConferenceData.SessionData session)
+			
+		private void Notify_speaker(ConferenceData.SessionData session)
 		{
 			var notification = BuildSpeakerNotification(session);
 			emailService.Send_speaker_notification(notification);
