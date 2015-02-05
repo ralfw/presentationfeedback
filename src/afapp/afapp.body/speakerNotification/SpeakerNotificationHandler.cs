@@ -8,19 +8,19 @@ namespace afapp.body.speakerNotification
 	public class SpeakerNotificationHandler
 	{
 		private readonly int feedbackPeriod;
-		private readonly int workerInvocationInterval;
+		private readonly int schedulerRepeatInterval;
 		private readonly IEmailService emailService;
 		private readonly INotificationDataProvider dataProvider;
 		private readonly Mapper mapper;
 
 		public SpeakerNotificationHandler(IEmailService emailService, INotificationDataProvider dataProvider,
-			Mapper mapper, int feedbackPeriod, int workerInvocationInterval)
+			Mapper mapper, int feedbackPeriod, int schedulerRepeatInterval)
 		{
 			this.emailService = emailService;
 			this.dataProvider = dataProvider;
 			this.mapper = mapper;
 			this.feedbackPeriod = feedbackPeriod;
-			this.workerInvocationInterval = workerInvocationInterval;
+			this.schedulerRepeatInterval = schedulerRepeatInterval;
 		}
 
 		public void Run()
@@ -33,7 +33,7 @@ namespace afapp.body.speakerNotification
 		{
 			var sessions = dataProvider.GetAllSessions();
 			return sessions.Where(x => TimeProvider.Now().AddMinutes(feedbackPeriod) >= x.End &&
-			                    TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + workerInvocationInterval));  
+			                    TimeProvider.Now() < x.End.AddMinutes(feedbackPeriod + schedulerRepeatInterval));  
 		}
 
 		private static void Process_sessions(IEnumerable<SessionData> sessions, Action<SessionData> onSession)

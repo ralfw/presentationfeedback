@@ -40,5 +40,10 @@ namespace afapp.body
 				Email = email
 			});
 		}
+
+		public void Start_Speaker_notification_scheduler()
+		{
+			
+		}
 	}
 }

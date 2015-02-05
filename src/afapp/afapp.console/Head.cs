@@ -36,7 +36,7 @@ namespace afapp.console
 
 
 		[Verb(Aliases = "vote")]
-		private void Store_feedback(
+		public void Store_feedback(
 			[Required, Aliases("id")] string sessionId,
 			[Required, Aliases("e")] string email,
 			[Required, Aliases("s")] TrafficLightScores score, 
@@ -46,6 +46,11 @@ namespace afapp.console
 			Console.WriteLine("Thank you for your feedback!");
 		}
 
+		public void Speaker_notification([Aliases("now,n")]	DateTime fixedNow)
+		{
+			TimeProvider.Configure(fixedNow);
+			body.Start_Speaker_notification_scheduler();
+		}
 
 		private static void Display_sessions(IEnumerable<Session> sessions) {
 			foreach (var s in sessions)

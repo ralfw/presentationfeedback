@@ -17,14 +17,14 @@ namespace afapp.body.test
 		{
 			// arange
 			const string conferenceTitle = "Conference 2015";
-			const int workerInvocationInterval = 10;
+			const int schedulerRepeatInterval = 10;
 			const int feedbackPeriod = 20;
 			var now = new DateTime(2015, 1, 4, 12, 0, 0);
 			var emailServiceMock = new Mock<IEmailService>();
 			var dataProvider = new Mock<INotificationDataProvider>();
-			var allSessions = GetAllSession(now, workerInvocationInterval, feedbackPeriod).ToList();
+			var allSessions = GetAllSession(now, schedulerRepeatInterval, feedbackPeriod).ToList();
 			var sut = new SpeakerNotificationHandler(emailServiceMock.Object, dataProvider.Object, new Mapper(),
-				feedbackPeriod, workerInvocationInterval);
+				feedbackPeriod, schedulerRepeatInterval);
 
 			TimeProvider.Configure(now);
 			dataProvider.Setup(x => x.GetAllSessions()).Returns(allSessions);
