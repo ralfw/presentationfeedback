@@ -3,9 +3,9 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="QuartzWithDI/Program.cs">
     <Files>
       <File FileName="QuartzSpike/Controllers/HomeController.cs" Line="1" Column="1" />
-      <File FileName="QuartzSpike/QuartzJobs/JobScheduler.cs" Line="40" Column="40" />
+      <File FileName="QuartzSpike/QuartzJobs/JobScheduler.cs" Line="1" Column="1" />
       <File FileName="QuartzSpike/QuartzJobs/UpdateFileJob.cs" Line="1" Column="1" />
-      <File FileName="QuartzWithDI/Program.cs" Line="22" Column="22" />
+      <File FileName="QuartzWithDI/Program.cs" Line="55" Column="55" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Quartz.Impl;
 using Quartz;
 using Quartz.Spi;
@@ -31,10 +32,21 @@ namespace QuartzWithDI
 				
 			var trigger = TriggerBuilder.Create()
 				.StartNow()
-				.WithSimpleSchedule(x => x.WithIntervalInSeconds(1).WithRepeatCount(3))
+				.WithSimpleSchedule(x => x.WithIntervalInSeconds(1).WithRepeatCount(10))
 				.Build();
-
+				
 			scheduler.ScheduleJob(job, trigger);
+
+			/*
+			 * Interestingly this code is reached. That means ScheduleJob() finishes,
+			 * and Main() also ends (if the following code was absent), and still the program
+			 * continues to run. That means the scheduler has started a non-background thread.
+			*/
+			Console.WriteLine ("Scheduling... - Press any key to stop");
+			Console.ReadKey ();
+
+			scheduler.Shutdown ();
+			Console.WriteLine ("Scheduler shutdown!");
 		}
 	}
 
