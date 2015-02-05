@@ -3,6 +3,7 @@ using afapp.body.data.contract;
 using afapp.body.speakerNotification;
 using Moq;
 using NUnit.Framework;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,9 @@ namespace afapp.body.test
 			var emailServiceMock = new Mock<IEmailService>();
 			var dataProvider = new Mock<INotificationDataProvider>();
 			var allSessions = GetAllSession(now, schedulerRepeatInterval, feedbackPeriod).ToList();
-			var sut = new SpeakerNotificationHandler(emailServiceMock.Object, dataProvider.Object, new Mapper(),
+			var sut = new SpeakerNotificationJob(emailServiceMock.Object, dataProvider.Object, new Mapper(),
 				feedbackPeriod, schedulerRepeatInterval);
+			var contextMock = new Mock<IJobExecutionContext>();
 
 			TimeProvider.Configure(now);
 			dataProvider.Setup(x => x.GetAllSessions()).Returns(allSessions);
@@ -33,7 +35,7 @@ namespace afapp.body.test
 			dataProvider.Setup(x => x.Get_scores(allSessions[2].Id)).Returns(GetScore2());
 
 			// act
-			sut.Run();
+			sut.Execute(contextMock.Object);
 
 			// assert
 			emailServiceMock.Verify(x => x.Send_speaker_notification(It.IsAny<SpeakerNotificationData>()), Times.Exactly(2));

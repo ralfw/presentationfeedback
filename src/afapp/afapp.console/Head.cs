@@ -46,10 +46,19 @@ namespace afapp.console
 			Console.WriteLine("Thank you for your feedback!");
 		}
 
-		public void Speaker_notification([Aliases("now,n")]	DateTime fixedNow)
+		[Verb(Aliases = "startspeakernotification")]
+		public void Start_speaker_notification(
+			[Aliases("now,n")]	DateTime fixedNow,
+			[DefaultValue(20), Aliases("f")] int feedbackPeriod,
+			[DefaultValue(5), Aliases("s")] int schedulerRepeatInterval)
 		{
 			TimeProvider.Configure(fixedNow);
-			body.Start_Speaker_notification_scheduler();
+			body.Start_speaker_notification_scheduler(feedbackPeriod, schedulerRepeatInterval);
+			Console.WriteLine("Scheduling... - Press any key to stop");
+			Console.ReadKey();
+
+			body.Stop_speaker_notification_scheduler();
+			Console.WriteLine("Scheduler shutdown!");
 		}
 
 		private static void Display_sessions(IEnumerable<Session> sessions) {

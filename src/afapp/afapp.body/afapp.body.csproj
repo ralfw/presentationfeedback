@@ -55,9 +55,9 @@
     <Compile Include="data\SessionData.cs" />
     <Compile Include="speakerNotification\IEmailService.cs" />
     <Compile Include="speakerNotification\INotificationDataProvider.cs" />
-    <Compile Include="speakerNotification\JobScheduler.cs" />
-    <Compile Include="speakerNotification\SpeakerNotificationHandler.cs" />
+    <Compile Include="speakerNotification\worker\SpeakerNotificationScheduler.cs" />
     <Compile Include="speakerNotification\SpeakerNotificationJob.cs" />
+    <Compile Include="speakerNotification\worker\SpeakerNotificationJobFactory.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="data\contract\SessionOverview.cs" />
   </ItemGroup>
