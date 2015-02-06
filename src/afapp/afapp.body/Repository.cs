@@ -1,6 +1,5 @@
 using afapp.body.data;
 using afapp.body.data.contract;
-using afapp.body.speakerNotification;
 using EventStore.Contract;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace afapp.body
 {
 	using EventStore.Internals;
 
-	public class Repository : INotificationDataProvider {
+	public class Repository {
 		readonly IEventStore es;
 
 		public Repository(IEventStore es) {
@@ -92,6 +91,16 @@ namespace afapp.body
 				var fields = s.Payload.Split('\t');
 				return (TrafficLightScores)Enum.Parse(typeof(TrafficLightScores), fields[0]);
 			});
+		}
+
+		public void Register_email_sent_to_speaker(ConferenceData.SessionData session)
+		{
+			es.Record(new Event(session.Id, "SpeakerEmailSent", string.Format("{0}\t", session.SpeakerEmail)));
+		}
+
+		public IEnumerable<string> Get_handled_session_ids()
+		{
+			return es.QueryByName("SpeakerEmailSent").Select(x => x.Context);
 		}
 	}
 }

@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="domain\Conference.cs" />
+    <Compile Include="IEmailService.cs" />
+    <Compile Include="JobSchedulerWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Body.cs" />
     <Compile Include="Mapper.cs" />
@@ -52,18 +54,10 @@
     <Compile Include="data\contract\TrafficLightScores.cs" />
     <Compile Include="data\FeedbackData.cs" />
     <Compile Include="data\ConferenceData.cs" />
-    <Compile Include="speakerNotification\IEmailService.cs" />
-    <Compile Include="speakerNotification\INotificationDataProvider.cs" />
-    <Compile Include="speakerNotification\worker\SpeakerNotificationScheduler.cs" />
-    <Compile Include="speakerNotification\SpeakerNotificationJob.cs" />
-    <Compile Include="speakerNotification\worker\SpeakerNotificationJobFactory.cs" />
     <Compile Include="TimeProvider.cs" />
     <Compile Include="data\contract\SessionOverview.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="job_scheduling_data_2_0.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

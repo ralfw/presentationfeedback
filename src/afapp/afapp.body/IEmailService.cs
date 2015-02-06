@@ -1,6 +1,6 @@
 ﻿using afapp.body.data;
 
-namespace afapp.body.speakerNotification
+namespace afapp.body
 {
 	public interface IEmailService
 	{

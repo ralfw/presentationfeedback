@@ -1,5 +1,5 @@
-﻿using afapp.body.data;
-using afapp.body.speakerNotification;
+﻿using afapp.body;
+using afapp.body.data;
 using System;
 
 namespace afapp.console

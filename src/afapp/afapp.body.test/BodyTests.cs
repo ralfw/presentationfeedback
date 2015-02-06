@@ -1,20 +1,13 @@
-﻿using afapp.body.data;
-using afapp.body.data.contract;
-using afapp.body.speakerNotification;
-using Moq;
-using NUnit.Framework;
-using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NUnit.Framework;
 
 namespace afapp.body.test
 {
 	[TestFixture]
-	class SpeakerNotificationHandlerTests
+	class BodyTests
 	{
+/*
 		[Test]
-		public void Execute()
+		public void Start_speaker_notification_scheduler()
 		{
 			// arange
 			const string conferenceTitle = "Conference 2015";
@@ -102,5 +95,6 @@ namespace afapp.body.test
 				TrafficLightScores.Green, TrafficLightScores.Yellow
 			};
 		}
+*/
 	}
 }
