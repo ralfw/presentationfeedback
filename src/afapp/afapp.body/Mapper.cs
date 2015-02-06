@@ -1,5 +1,5 @@
 using afapp.body.data;
-using afapp.body.data.contract;
+using afapp.body.contract.data;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,6 +28,7 @@ namespace afapp.body
 				}).ToArray(),
 			};
 		}
+
 
 		public SpeakerNotificationData Map(string confTitle, ConferenceData.SessionData session, IEnumerable<TrafficLightScores> scores)
 		{

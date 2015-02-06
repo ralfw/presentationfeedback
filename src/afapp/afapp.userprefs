@@ -1,23 +1,6 @@
 ﻿<Properties StartupItem="afapp.console/afapp.console.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="afapp.body/Body.cs">
-    <Files>
-      <File FileName="afapp.body/data/contract/SessionOverview.cs" Line="1" Column="1" />
-      <File FileName="afapp.body/data/ConferenceData.cs" Line="1" Column="1" />
-      <File FileName="afapp.body/Mapper.cs" Line="1" Column="1" />
-      <File FileName="afapp.console/Head.cs" Line="3" Column="3" />
-      <File FileName="afapp.body/Repository.cs" Line="1" Column="1" />
-      <File FileName="afapp.body/data/FeedbackData.cs" Line="1" Column="1" />
-      <File FileName="afapp.body/Body.cs" Line="51" Column="51" />
-      <File FileName="afapp.console/Program.cs" Line="37" Column="37" />
-      <File FileName="afapp.body/speakerNotification/worker/SpeakerNotificationScheduler.cs" Line="3" Column="3" />
-      <File FileName="afapp.body/speakerNotification/IEmailService.cs" Line="1" Column="1" />
-      <File FileName="afapp.body/speakerNotification/INotificationDataProvider.cs" Line="1" Column="1" />
-      <File FileName="afapp.body/speakerNotification/SpeakerNotificationJob.cs" Line="4" Column="4" />
-      <File FileName="afapp.body/domain/Conference.cs" Line="18" Column="18" />
-      <File FileName="afapp.body/job_scheduling_data_2_0.xsd" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

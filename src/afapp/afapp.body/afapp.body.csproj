@@ -43,22 +43,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="domain\Conference.cs" />
-    <Compile Include="IEmailService.cs" />
-    <Compile Include="JobSchedulerWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Body.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="data\contract\TrafficLightScores.cs" />
-    <Compile Include="data\FeedbackData.cs" />
+    <Compile Include="providers\TimeProvider.cs" />
+    <Compile Include="providers\SchedulingProvider.cs" />
+    <Compile Include="contract\IEmailService.cs" />
     <Compile Include="data\ConferenceData.cs" />
-    <Compile Include="TimeProvider.cs" />
-    <Compile Include="data\contract\SessionOverview.cs" />
+    <Compile Include="data\FeedbackData.cs" />
+    <Compile Include="data\SpeakerNotificationData.cs" />
+    <Compile Include="contract\data\SessionOverview.cs" />
+    <Compile Include="contract\data\TrafficLightScores.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="providers\" />
+    <Folder Include="contract\" />
+    <Folder Include="contract\data\" />
+  </ItemGroup>
 </Project>

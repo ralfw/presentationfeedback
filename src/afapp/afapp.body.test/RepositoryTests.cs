@@ -1,5 +1,5 @@
 ﻿using afapp.body.data;
-using afapp.body.data.contract;
+using afapp.body.contract.data;
 
 
 namespace afapp.body.test

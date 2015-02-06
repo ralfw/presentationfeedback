@@ -1,8 +1,9 @@
 using afapp.body;
-using afapp.body.data.contract;
+using afapp.body.contract.data;
 using CLAP;
 using System;
 using System.Collections.Generic;
+using afapp.body.providers;
 
 namespace afapp.console
 {
@@ -56,12 +57,12 @@ namespace afapp.console
 		{
 			TimeProvider.Configure(fixedNow);
 
-			body.Start_speaker_notification_scheduler(feedbackPeriod, schedulerRepeatInterval);
+			body.Start_background_speaker_notification(feedbackPeriod, schedulerRepeatInterval);
 
 			Console.WriteLine("Scheduling... - Press any key to stop");
 			Console.ReadKey();
 
-			body.Stop_speaker_notification_scheduler();
+			body.Stop_speaker_notification();
 			Console.WriteLine("Scheduler shutdown!");
 			Environment.Exit(0);
 		}

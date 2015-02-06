@@ -1,9 +1,9 @@
 using EventStore.Contract;
 using System;
 using afapp.body.data;
-using afapp.body.data.contract;
+using afapp.body.contract.data;
 
-namespace afapp.body
+namespace afapp.body.providers
 {
 
 	public static class TimeProvider {

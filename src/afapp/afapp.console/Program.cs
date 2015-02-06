@@ -3,6 +3,7 @@ using afapp.body.data;
 using afapp.body.domain;
 using EventStore;
 using System;
+using afapp.body.providers;
 
 namespace afapp.console
 {
@@ -16,8 +17,9 @@ namespace afapp.console
 			var repo = new Repository (es);
 			var conferenceFactory = new Func<ConferenceData, Conference> ((data) => new Conference(data));
 			var mapper = new Mapper ();
+			var scheduler = new SchedulingProvider ();
 			var emailService = new FakeEmailService();
-			var body = new Body (repo, conferenceFactory, mapper, emailService);
+			var body = new Body (repo, conferenceFactory, mapper, scheduler, emailService);
 			var head = new Head (body);
 
 			head.Run (args);

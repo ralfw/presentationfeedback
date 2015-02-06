@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using afapp.body.data;
+using afapp.body.providers;
 
 namespace afapp.body.domain
 {

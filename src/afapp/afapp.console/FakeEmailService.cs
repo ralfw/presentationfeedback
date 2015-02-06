@@ -1,12 +1,13 @@
 ﻿using afapp.body;
 using afapp.body.data;
 using System;
+using afapp.body.contract;
 
 namespace afapp.console
 {
 	internal class FakeEmailService : IEmailService
 	{
-		public void Send_speaker_notification(SpeakerNotificationData data)
+		public void Notify_speaker(SpeakerNotificationData data)
 		{
 			Console.WriteLine("Dear {0}", data.Session.SpeakerName);
 			Console.WriteLine("Thank you for speaking at '{0}'", data.ConferenceTitle);

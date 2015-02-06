@@ -1,4 +1,4 @@
-﻿using afapp.body.data.contract;
+﻿using afapp.body.contract.data;
 
 namespace afapp.body.data
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace afapp.body.data.contract
+namespace afapp.body.contract.data
 {
 	public struct SessionOverview {
 		public string ConfId;

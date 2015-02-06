@@ -1,5 +1,5 @@
 using afapp.body.data;
-using afapp.body.data.contract;
+using afapp.body.contract.data;
 using EventStore.Contract;
 using System;
 using System.Collections.Generic;
@@ -93,7 +93,7 @@ namespace afapp.body
 			});
 		}
 
-		public void Register_email_sent_to_speaker(ConferenceData.SessionData session)
+		public void Remember_speaker_got_notified_about_session_feedback(ConferenceData.SessionData session)
 		{
 			es.Record(new Event(session.Id, "SpeakerEmailSent", string.Format("{0}\t", session.SpeakerEmail)));
 		}
