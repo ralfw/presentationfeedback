@@ -14,7 +14,6 @@ namespace afapp.body.providers
 			scheduler = StdSchedulerFactory.GetDefaultScheduler();
 		}
 
-
 		public void Start(int schedulerRepeatInterval, Action action) {
 			var job = new Job(action);
 			var jobFactory = new JobFactory(job);
@@ -34,7 +33,6 @@ namespace afapp.body.providers
 			}
 		}
 
-
 		private class Job : IJob {
 			private readonly Action action;
 
@@ -46,7 +44,6 @@ namespace afapp.body.providers
 				action();
 			}
 		}
-
 
 		private class JobFactory : IJobFactory {
 			private readonly IJob job;

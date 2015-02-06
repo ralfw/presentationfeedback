@@ -1,11 +1,11 @@
-﻿using afapp.body.data;
+﻿using afapp.body.contract;
 using afapp.body.contract.data;
+using afapp.body.data;
 using afapp.body.domain;
+using afapp.body.providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using afapp.body.providers;
-using afapp.body.contract;
 
 namespace afapp.body
 {
@@ -13,19 +13,22 @@ namespace afapp.body
 	{
 		private readonly Repository repo;
 		private readonly Func<ConferenceData, Conference> conferenceFactory;
+		private readonly Func<IEnumerable<SessionWithScoresData>, Sessions> sessionsFactory;
 		private readonly Mapper mapper;
 		private readonly SchedulingProvider scheduler;
 		private readonly IEmailService emailService;
 
 		public Body (Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper,
-					 SchedulingProvider scheduler, IEmailService emailService) {
+					 SchedulingProvider scheduler, IEmailService emailService,
+					 Func<IEnumerable<SessionWithScoresData>, Sessions> sessionsFactory)
+		{
 			this.repo = repo;
 			this.conferenceFactory = conferenceFactory;
 			this.mapper = mapper;
 			this.scheduler = scheduler;
 			this.emailService = emailService;
+			this.sessionsFactory = sessionsFactory;
 		} 
-
 
 		public SessionOverview GenerateSessionOverview(string confId) {
 			var confdata = this.repo.LoadConference (confId);
@@ -50,39 +53,23 @@ namespace afapp.body
 			});
 		}
 
-
 		public void Start_background_speaker_notification(int feedbackPeriod, int schedulerRepeatInterval)
 		{
 			scheduler.Start(schedulerRepeatInterval,
 			  () => {
-				  var sessions = Find_sessions_due_for_notification(feedbackPeriod);
-				  sessions.ToList().ForEach(Notify_speaker);
+					var sessionsData = repo.Load_sessions();
+					var sessions = sessionsFactory(sessionsData);
+				    var dueSessions = sessions.Get_sessions_due_for_notification(feedbackPeriod);
+					dueSessions.ToList().ForEach(Notify_speaker);
 			  });
 		}
 
-		//TODO: data handling seems to be complicated
-		private IEnumerable<ConferenceData.SessionData> Find_sessions_due_for_notification(int feedbackPeriod)
+		private void Notify_speaker(SessionWithScoresData sessionData)
 		{
-			var sessions = repo.Get_all_sessions();
-			//TODO: this should be a matter of the Conference I guess; Sessions could be marked as closed after speaker got notified
-			return sessions.Where(x => TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod)
-								  && repo.Get_handled_session_ids().All(y => y != x.Id));
+			var notificationData = mapper.Map(sessionData);
+			emailService.Notify_speaker(notificationData);
+			repo.Remember_speaker_got_notified_about_session_feedback(sessionData);
 		}
-
-		private void Notify_speaker(ConferenceData.SessionData session)
-		{
-			var notification = Build_speaker_feedback_notification(session);
-			emailService.Notify_speaker(notification);
-			repo.Remember_speaker_got_notified_about_session_feedback(session);
-		}
-
-		private SpeakerNotificationData Build_speaker_feedback_notification(ConferenceData.SessionData sessionData)
-		{
-			var conferenceTitle = repo.Get_conference_title(sessionData.Id);
-			var scores = repo.Get_scores(sessionData.Id);
-			return mapper.Map(conferenceTitle, sessionData, scores);
-		}
-
 
 		public void Stop_speaker_notification()
 		{

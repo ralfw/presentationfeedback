@@ -1,5 +1,5 @@
-using afapp.body.data;
 using afapp.body.contract.data;
+using afapp.body.data;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,16 +29,19 @@ namespace afapp.body
 			};
 		}
 
-
-		public SpeakerNotificationData Map(string confTitle, ConferenceData.SessionData session, IEnumerable<TrafficLightScores> scores)
+		public SpeakerNotificationData Map(SessionWithScoresData session)
 		{
 			return new SpeakerNotificationData
 			{
-				ConferenceTitle = confTitle,
-				Session = session,
-				Reds = scores.Count(x => x == TrafficLightScores.Red),
-				Yellows = scores.Count(x => x == TrafficLightScores.Yellow),
-				Greens = scores.Count(x => x == TrafficLightScores.Green)
+				ConferenceTitle = session.ConferenceTitle,
+				Title = session.Title,
+				Start = session.Start,
+				End = session.End,
+				SpeakerName = session.SpeakerName,
+				SpeakerEmail = session.SpeakerEmail,
+				Reds = session.Scores.Count(x => x == TrafficLightScores.Red),
+				Yellows = session.Scores.Count(x => x == TrafficLightScores.Yellow),
+				Greens = session.Scores.Count(x => x == TrafficLightScores.Green)
 			};
 		}
 	}

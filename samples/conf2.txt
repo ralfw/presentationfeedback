@@ -1,3 +1,3 @@
-s1	session #1	2015-02-06T10:00:00	2015-02-06T11:00:00	John Doe	johnd@gmail.com
+s1	session #1	2015-02-06T22:00:00	2015-02-06T23:37:00	John Doe	johnd@gmail.com
 s2	session #2	2015-02-06T10:00:00	2015-02-06T11:00:00	Susan Poe	susan@gmail.com
 s3	session #3	2015-02-06T09:30:00	2015-02-06T10:15:00	Allan Key	allan@mail.com
