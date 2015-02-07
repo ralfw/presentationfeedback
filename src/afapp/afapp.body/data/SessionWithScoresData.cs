@@ -7,13 +7,14 @@ namespace afapp.body.data
 
 	public class SessionWithScoresData
 	{
-		public string ConferenceTitle;
 		public string Id;
 		public string Title;
 		public DateTime Start, End;
 		public string SpeakerName;
 		public string SpeakerEmail;
-		public IEnumerable<TrafficLightScores> Scores;
-		public bool IsSpeakerNotifiedAboutSessionfeedback;
+		public Func<string, string> ConferenceTitle;
+		public Func<string, IEnumerable<TrafficLightScores>> Scores;
+		public Func<string, bool> IsSpeakerNotifiedAboutSessionfeedback;
 	}
 }
+ 

@@ -31,17 +31,18 @@ namespace afapp.body
 
 		public SpeakerNotificationData Map(SessionWithScoresData session)
 		{
+			var scores = session.Scores(session.Id).ToList();
 			return new SpeakerNotificationData
 			{
-				ConferenceTitle = session.ConferenceTitle,
+				ConferenceTitle = session.ConferenceTitle(session.Id),
 				Title = session.Title,
 				Start = session.Start,
 				End = session.End,
 				SpeakerName = session.SpeakerName,
 				SpeakerEmail = session.SpeakerEmail,
-				Reds = session.Scores.Count(x => x == TrafficLightScores.Red),
-				Yellows = session.Scores.Count(x => x == TrafficLightScores.Yellow),
-				Greens = session.Scores.Count(x => x == TrafficLightScores.Green)
+				Reds = scores.Count(x => x == TrafficLightScores.Red),
+				Yellows = scores.Count(x => x == TrafficLightScores.Yellow),
+				Greens = scores.Count(x => x == TrafficLightScores.Green)
 			};
 		}
 	}

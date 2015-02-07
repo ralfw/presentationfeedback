@@ -17,7 +17,8 @@ namespace afapp.body.domain
 
 		public IEnumerable<SessionWithScoresData> Get_sessions_due_for_notification(int feedbackPeriod)
 		{
-			return sessions.Where(x => TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod) && !x.IsSpeakerNotifiedAboutSessionfeedback);
+			return sessions.Where(x => TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod) && 
+				!x.IsSpeakerNotifiedAboutSessionfeedback(x.Id));
 		}
 	}
 }

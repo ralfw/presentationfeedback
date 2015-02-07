@@ -88,9 +88,9 @@ namespace afapp.body
 				return new SessionWithScoresData
 				{
 					Id = e.Context,
-					ConferenceTitle = getConfTitle(e.Context),
-					Scores = getScores(e.Context),
-					IsSpeakerNotifiedAboutSessionfeedback = isSpeakerNotified(e.Context),
+					ConferenceTitle = getConfTitle,
+					Scores = getScores,
+					IsSpeakerNotifiedAboutSessionfeedback = isSpeakerNotified,
 					Title = fields[0],
 					Start = DateTime.Parse(fields[1]),
 					End = DateTime.Parse(fields[2]),
