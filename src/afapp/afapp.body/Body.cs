@@ -13,25 +13,25 @@ namespace afapp.body
 	{
 		private readonly Repository repo;
 		private readonly Func<ConferenceData, Conference> conferenceFactory;
-		private readonly Func<IEnumerable<SessionWithScoresData>, Sessions> sessionsFactory;
+		private readonly Func<IEnumerable<ScoredSessionData>, XXX> xxxFactory;
 		private readonly Mapper mapper;
 		private readonly SchedulingProvider scheduler;
 		private readonly IEmailService emailService;
 
 		public Body (Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper,
 					 SchedulingProvider scheduler, IEmailService emailService,
-					 Func<IEnumerable<SessionWithScoresData>, Sessions> sessionsFactory)
+					 Func<IEnumerable<ScoredSessionData>, XXX> xxxFactory)
 		{
 			this.repo = repo;
 			this.conferenceFactory = conferenceFactory;
 			this.mapper = mapper;
 			this.scheduler = scheduler;
 			this.emailService = emailService;
-			this.sessionsFactory = sessionsFactory;
+			this.xxxFactory = xxxFactory;
 		} 
 
 		public SessionOverview GenerateSessionOverview(string confId) {
-			var confdata = this.repo.LoadConference (confId);
+			var confdata = this.repo.Load_conference (confId);
 
 			var conf = this.conferenceFactory (confdata);
 			var activeSessions = conf.DetermineActiveSessions;
@@ -57,14 +57,15 @@ namespace afapp.body
 		{
 			scheduler.Start(schedulerRepeatInterval,
 			  () => {
-					var sessionsData = repo.Load_sessions();
-					var sessions = sessionsFactory(sessionsData);
-				    var dueSessions = sessions.Get_sessions_due_for_notification(feedbackPeriod);
-					dueSessions.ToList().ForEach(Notify_speaker);
+					var scoredSessionsData = repo.Load_scored_sessions();
+					var xxx = xxxFactory(scoredSessionsData);
+				    var dueSessions = xxx.Get_sessions_due_for_notification(feedbackPeriod);
+					dueSessions.ToList().ForEach(
+						Notify_speaker);
 			  });
 		}
 
-		private void Notify_speaker(SessionWithScoresData sessionData)
+		private void Notify_speaker(ScoredSessionData sessionData)
 		{
 			var notificationData = mapper.Map(sessionData);
 			emailService.Notify_speaker(notificationData);

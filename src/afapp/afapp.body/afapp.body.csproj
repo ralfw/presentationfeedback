@@ -43,9 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data\SessionWithScoresData.cs" />
     <Compile Include="domain\Conference.cs" />
-    <Compile Include="domain\Sessions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Body.cs" />
     <Compile Include="Mapper.cs" />
@@ -58,6 +56,8 @@
     <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="contract\data\SessionOverview.cs" />
     <Compile Include="contract\data\TrafficLightScores.cs" />
+    <Compile Include="data\ScoredSessionData.cs" />
+    <Compile Include="domain\XXX.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

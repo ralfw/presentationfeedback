@@ -2,6 +2,7 @@ using afapp.body.contract.data;
 using afapp.body.data;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace afapp.body
 {
@@ -29,21 +30,22 @@ namespace afapp.body
 			};
 		}
 
-		public SpeakerNotificationData Map(SessionWithScoresData session)
+		public SpeakerNotificationData Map(ScoredSessionData session)
 		{
-			var scores = session.Scores(session.Id).ToList();
-			return new SpeakerNotificationData
-			{
-				ConferenceTitle = session.ConferenceTitle(session.Id),
-				Title = session.Title,
-				Start = session.Start,
-				End = session.End,
-				SpeakerName = session.SpeakerName,
-				SpeakerEmail = session.SpeakerEmail,
-				Reds = scores.Count(x => x == TrafficLightScores.Red),
-				Yellows = scores.Count(x => x == TrafficLightScores.Yellow),
-				Greens = scores.Count(x => x == TrafficLightScores.Green)
-			};
+			throw new NotImplementedException ();
+//			var scores = session.Scores(session.Id).ToList();
+//			return new SpeakerNotificationData
+//			{
+//				ConferenceTitle = session.ConferenceTitle(session.Id),
+//				Title = session.Title,
+//				Start = session.Start,
+//				End = session.End,
+//				SpeakerName = session.SpeakerName,
+//				SpeakerEmail = session.SpeakerEmail,
+//				Reds = scores.Count(x => x == TrafficLightScores.Red),
+//				Yellows = scores.Count(x => x == TrafficLightScores.Yellow),
+//				Greens = scores.Count(x => x == TrafficLightScores.Green)
+//			};
 		}
 	}
 }
