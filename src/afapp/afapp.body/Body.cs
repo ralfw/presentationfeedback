@@ -13,21 +13,21 @@ namespace afapp.body
 	{
 		private readonly Repository repo;
 		private readonly Func<ConferenceData, Conference> conferenceFactory;
-		private readonly Func<IEnumerable<ScoredSessionData>, XXX> xxxFactory;
+		private readonly Func<IEnumerable<ScoredSessionData>, ScoredSessions> scoredSessionsFactory;
 		private readonly Mapper mapper;
-		private readonly SchedulingProvider scheduler;
+		private readonly ISchedulingProvider scheduler;
 		private readonly INotificationProvider notifier;
 
 		public Body (Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper,
-					 SchedulingProvider scheduler, INotificationProvider notifier,
-					 Func<IEnumerable<ScoredSessionData>, XXX> xxxFactory)
+					 ISchedulingProvider scheduler, INotificationProvider notifier,
+					 Func<IEnumerable<ScoredSessionData>, ScoredSessions> scoredSessionsFactory)
 		{
 			this.repo = repo;
 			this.conferenceFactory = conferenceFactory;
 			this.mapper = mapper;
 			this.scheduler = scheduler;
 			this.notifier = notifier;
-			this.xxxFactory = xxxFactory;
+			this.scoredSessionsFactory = scoredSessionsFactory;
 		} 
 
 		public SessionOverview GenerateSessionOverview(string confId) {
@@ -59,8 +59,8 @@ namespace afapp.body
 			scheduler.Start(schedulerRepeatInterval,
 			  () => {
 					var scoredSessionsData = repo.Load_scored_sessions();
-					var xxx = xxxFactory(scoredSessionsData);
-				    var dueSessions = xxx.Get_sessions_due_for_notification(feedbackPeriod);
+					var scoredSessions = scoredSessionsFactory(scoredSessionsData);
+				    var dueSessions = scoredSessions.Get_sessions_due_for_notification(feedbackPeriod);
 					dueSessions.ToList().ForEach(
 						Notify_speaker);
 			  });
@@ -70,7 +70,7 @@ namespace afapp.body
 		{
 			var notificationData = mapper.Map(scoredSessionData);
 			notifier.Send_feedback(notificationData);
-			repo.Remember_speaker_got_notified_about_session_feedback(scoredSessionData.Id);
+			repo.Register_feedback_notification(scoredSessionData.Id);
 		}
 
 

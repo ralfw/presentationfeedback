@@ -5,7 +5,7 @@ using System;
 
 namespace afapp.body.providers
 {
-	public class SchedulingProvider
+	public class SchedulingProvider : ISchedulingProvider
 	{
 		private readonly IScheduler scheduler;
 
@@ -13,6 +13,7 @@ namespace afapp.body.providers
 		{
 			scheduler = StdSchedulerFactory.GetDefaultScheduler();
 		}
+
 
 		public void Start(int schedulerRepeatInterval, Action action) {
 			var job = new Job(action);
@@ -32,6 +33,7 @@ namespace afapp.body.providers
 				scheduler.Shutdown();
 			}
 		}
+
 
 		private class Job : IJob {
 			private readonly Action action;

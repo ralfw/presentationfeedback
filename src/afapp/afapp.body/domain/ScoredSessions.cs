@@ -7,12 +7,12 @@ namespace afapp.body.domain
 	using System.Collections.Generic;
 	using System.Linq;
 
-	public class XXX
+	public class ScoredSessions
 	{
 		private readonly IEnumerable<ScoredSessionData> sessions;
 
 
-		public XXX(IEnumerable<ScoredSessionData> sessions)
+		public ScoredSessions(IEnumerable<ScoredSessionData> sessions)
 		{
 			this.sessions = sessions;
 		}

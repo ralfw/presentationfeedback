@@ -20,7 +20,7 @@ namespace afapp.body.data
 
 		public bool SpeakerNotified;
 
-		public List<FeedbackData> Feedback;
+		public List<FeedbackData> Feedback = new List<FeedbackData>();
 
 		public IEnumerable<FeedbackData> UniqueFeedback { get { 
 				var feedbackByEmail = this.Feedback.GroupBy (f => f.Email);

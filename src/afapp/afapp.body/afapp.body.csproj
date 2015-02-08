@@ -58,6 +58,7 @@
     <Compile Include="data\ScoredSessionData.cs" />
     <Compile Include="contract\INotificationProvider.cs" />
     <Compile Include="domain\ScoredSessions.cs" />
+    <Compile Include="contract\ISchedulingProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -115,7 +115,7 @@ namespace afapp.body
 		}
 			
 
-		public void Remember_speaker_got_notified_about_session_feedback(string sessionId)
+		public void Register_feedback_notification(string sessionId)
 		{
 			es.Record(new Event(sessionId, "SpeakerNotified", ""));
 		}
