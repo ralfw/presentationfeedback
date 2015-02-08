@@ -59,10 +59,14 @@
     <Compile Include="contract\INotificationProvider.cs" />
     <Compile Include="domain\ScoredSessions.cs" />
     <Compile Include="contract\ISchedulingProvider.cs" />
+    <Compile Include="helpers\IEnumExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="helpers\" />
+  </ItemGroup>
 </Project>

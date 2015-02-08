@@ -1,10 +1,13 @@
 ﻿<Properties StartupItem="afapp.console/afapp.console.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="afapp.body/Body.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="afapp.body.test/BodyTests.cs">
     <Files>
-      <File FileName="afapp.body/Body.cs" Line="40" Column="40" />
-      <File FileName="afapp.body/Repository.cs" Line="23" Column="23" />
-      <File FileName="afapp.body/domain/Feedbackcompiler.cs" Line="31" Column="31" />
+      <File FileName="afapp.body/Body.cs" Line="32" Column="32" />
+      <File FileName="afapp.body.test/BodyTests.cs" Line="49" Column="49" />
+      <File FileName="afapp.body/providers/SchedulingProvider.cs" Line="24" Column="24" />
+      <File FileName="afapp.body/domain/ScoredSessions.cs" Line="55" Column="55" />
+      <File FileName="afapp.body/Repository.cs" Line="30" Column="30" />
+      <File FileName="afapp.body/domain/Conference.cs" Line="25" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
