@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
-using System;
-using afapp.body.domain;
-using afapp.body.contract;
+﻿using afapp.body.contract;
 using afapp.body.data;
-using System.Collections.Generic;
-using EventStore.Internals;
+using afapp.body.domain;
 using afapp.body.providers;
+using EventStore.Internals;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
 
 namespace afapp.body.test
@@ -27,7 +27,7 @@ namespace afapp.body.test
 
 			// It would have been nice to have the coapp Repository{} available.
 			es.Record (new Event ("c1", "ConferenceRegistered", "conf1"));
-			es.Record (new Event ("c1s1", "SessionRegistered", "sess11\t2015-02-08T9:00:00\t2015-02-08T10:00:00\tname1\tname1@gmail.com"));
+			es.Record (new Event ("c1s1", "SessionRegistered", "sess11\t2015-02-08T09:00:00\t2015-02-08T10:00:00\tname1\tname1@gmail.com"));
 			es.Record (new Event("c1", "SessionAssigned", "c1s1"));
 			es.Record (new Event ("c1s2", "SessionRegistered", "sess12\t2015-02-08T10:00:00\t2015-02-08T11:00:00\tname2\tname2@gmail.com"));
 			es.Record (new Event("c1", "SessionAssigned", "c1s2"));
@@ -35,7 +35,7 @@ namespace afapp.body.test
 			es.Record (new Event("c1", "SessionAssigned", "c1s3"));
 
 			es.Record (new Event ("c2", "ConferenceRegistered", "conf2"));
-			es.Record (new Event ("c2s1", "SessionRegistered", "sess21\t2015-02-08T9:15:00\t2015-02-08T10:15:00\tname3\tname3@gmail.com"));
+			es.Record (new Event ("c2s1", "SessionRegistered", "sess21\t2015-02-08T09:15:00\t2015-02-08T10:15:00\tname3\tname3@gmail.com"));
 			es.Record (new Event("c2", "SessionAssigned", "c2s1"));
 			es.Record (new Event ("c2s2", "SessionRegistered", "sess22\t2015-02-08T10:15:00\t2015-02-08T11:15:00\tname3\tname3@gmail.com"));
 			es.Record (new Event("c2", "SessionAssigned", "c2s2"));
