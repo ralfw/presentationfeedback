@@ -67,11 +67,11 @@ namespace afapp.body
 			var events = this.es.Replay ();
 
 			var scoredSessions = new Dictionary<string, ScoredSessionData> ();
-			var conferences = new Dictionary<string, Tuple<string,string>> ();
+			var conferences = new Dictionary<string, string> ();
 			foreach (var e in events) {
 				switch (e.Name) {
 				case "ConferenceRegistered":
-					conferences.Add (e.Context, new Tuple<string, string> (e.Context, e.Payload));
+					conferences.Add (e.Context, e.Payload);
 					break;
 				case "SessionRegistered": {
 						var fields = e.Payload.Split ('\t');
@@ -87,10 +87,9 @@ namespace afapp.body
 					}
 					break;
 				case "SessionAssigned": {
-						var conf = conferences [e.Context];
+						var confTitle = conferences [e.Context];
 						var scoredSession = scoredSessions [e.Payload];
-						scoredSession.ConfId = conf.Item1;
-						scoredSession.ConfTitle = conf.Item2;
+						scoredSession.ConfTitle = confTitle;
 					}
 					break;
 				case "SpeakerNotified": {
@@ -116,9 +115,9 @@ namespace afapp.body
 		}
 			
 
-		public void Remember_speaker_got_notified_about_session_feedback(ScoredSessionData session)
+		public void Remember_speaker_got_notified_about_session_feedback(string sessionId)
 		{
-			es.Record(new Event(session.Id, "SpeakerNotified", ""));
+			es.Record(new Event(sessionId, "SpeakerNotified", ""));
 		}
 	}
 }

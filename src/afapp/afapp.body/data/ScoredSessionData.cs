@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace afapp.body.data
 {
@@ -7,7 +8,6 @@ namespace afapp.body.data
 
 	public class ScoredSessionData
 	{
-		public string ConfId;
 		public string ConfTitle;
 
 		public string Id;
@@ -22,7 +22,17 @@ namespace afapp.body.data
 
 		public List<FeedbackData> Feedback;
 
-		//TODO: return unique feedback (only the last feedback per email)
+		public IEnumerable<FeedbackData> UniqueFeedback { get { 
+				var feedbackByEmail = this.Feedback.GroupBy (f => f.Email);
+				return feedbackByEmail.SelectMany<IGrouping<string,FeedbackData>, FeedbackData> (fg => {
+					if (fg.Key == "")
+						return fg;
+					else
+						// take only the last feedback given by an identified voter
+						return new[] {fg.Last()};
+				});
+			}
+		}
 	}
 }
  

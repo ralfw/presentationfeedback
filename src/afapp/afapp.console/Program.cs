@@ -18,10 +18,10 @@ namespace afapp.console
 			var es = new FileEventStore ("app.events");
 			var repo = new Repository (es);
 			var conferenceFactory = new Func<ConferenceData, Conference> (data => new Conference(data));
-			var xxxFactory = new Func<IEnumerable<ScoredSessionData>, XXX>(data => new XXX(data));
+			var xxxFactory = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var mapper = new Mapper ();
 			var scheduler = new SchedulingProvider ();
-			var emailService = new FakeEmailService();
+			var emailService = new FakeEmailNotificationProvider();
 			var body = new Body (repo, conferenceFactory, mapper, scheduler, emailService, xxxFactory);
 			var head = new Head (body);
 

@@ -4,7 +4,7 @@
 
 	public class SpeakerNotificationData
 	{
-		public string ConferenceTitle;
+		public string ConfTitle;
 		public string Title;
 		public DateTime Start, End;
 		public string SpeakerName;
@@ -12,5 +12,6 @@
 		public int Greens;
 		public int Yellows;
 		public int Reds;
+		//TODO: Compile comments
 	}
 }

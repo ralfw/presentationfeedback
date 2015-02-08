@@ -32,20 +32,19 @@ namespace afapp.body
 
 		public SpeakerNotificationData Map(ScoredSessionData session)
 		{
-			throw new NotImplementedException ();
-//			var scores = session.Scores(session.Id).ToList();
-//			return new SpeakerNotificationData
-//			{
-//				ConferenceTitle = session.ConferenceTitle(session.Id),
-//				Title = session.Title,
-//				Start = session.Start,
-//				End = session.End,
-//				SpeakerName = session.SpeakerName,
-//				SpeakerEmail = session.SpeakerEmail,
-//				Reds = scores.Count(x => x == TrafficLightScores.Red),
-//				Yellows = scores.Count(x => x == TrafficLightScores.Yellow),
-//				Greens = scores.Count(x => x == TrafficLightScores.Green)
-//			};
+			var feedback = session.UniqueFeedback;
+			return new SpeakerNotificationData
+			{
+				ConfTitle = session.ConfTitle,
+				Title = session.Title,
+				Start = session.Start,
+				End = session.End,
+				SpeakerName = session.SpeakerName,
+				SpeakerEmail = session.SpeakerEmail,
+				Reds = feedback.Count(x => x.Score == TrafficLightScores.Red),
+				Yellows = feedback.Count(x => x.Score == TrafficLightScores.Yellow),
+				Greens = feedback.Count(x => x.Score == TrafficLightScores.Green)
+			};
 		}
 	}
 }

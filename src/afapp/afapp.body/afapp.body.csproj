@@ -50,14 +50,14 @@
     <Compile Include="Repository.cs" />
     <Compile Include="providers\TimeProvider.cs" />
     <Compile Include="providers\SchedulingProvider.cs" />
-    <Compile Include="contract\IEmailService.cs" />
     <Compile Include="data\ConferenceData.cs" />
     <Compile Include="data\FeedbackData.cs" />
     <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="contract\data\SessionOverview.cs" />
     <Compile Include="contract\data\TrafficLightScores.cs" />
     <Compile Include="data\ScoredSessionData.cs" />
-    <Compile Include="domain\XXX.cs" />
+    <Compile Include="contract\INotificationProvider.cs" />
+    <Compile Include="domain\ScoredSessions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

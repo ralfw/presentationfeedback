@@ -11,16 +11,17 @@ namespace afapp.body.domain
 	{
 		private readonly IEnumerable<ScoredSessionData> sessions;
 
+
 		public XXX(IEnumerable<ScoredSessionData> sessions)
 		{
 			this.sessions = sessions;
 		}
 
+
 		public IEnumerable<ScoredSessionData> Get_sessions_due_for_notification(int feedbackPeriod)
 		{
-			throw new NotImplementedException ();
-//			return sessions.Where(x => TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod) && 
-//				!x.IsSpeakerNotifiedAboutSessionfeedback(x.Id));
+			return sessions.Where(x => !x.SpeakerNotified &&
+									   TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod));
 		}
 	}
 }

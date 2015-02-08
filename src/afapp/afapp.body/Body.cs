@@ -16,17 +16,17 @@ namespace afapp.body
 		private readonly Func<IEnumerable<ScoredSessionData>, XXX> xxxFactory;
 		private readonly Mapper mapper;
 		private readonly SchedulingProvider scheduler;
-		private readonly IEmailService emailService;
+		private readonly INotificationProvider notifier;
 
 		public Body (Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper,
-					 SchedulingProvider scheduler, IEmailService emailService,
+					 SchedulingProvider scheduler, INotificationProvider notifier,
 					 Func<IEnumerable<ScoredSessionData>, XXX> xxxFactory)
 		{
 			this.repo = repo;
 			this.conferenceFactory = conferenceFactory;
 			this.mapper = mapper;
 			this.scheduler = scheduler;
-			this.emailService = emailService;
+			this.notifier = notifier;
 			this.xxxFactory = xxxFactory;
 		} 
 
@@ -53,6 +53,7 @@ namespace afapp.body
 			});
 		}
 
+
 		public void Start_background_speaker_notification(int feedbackPeriod, int schedulerRepeatInterval)
 		{
 			scheduler.Start(schedulerRepeatInterval,
@@ -65,12 +66,13 @@ namespace afapp.body
 			  });
 		}
 
-		private void Notify_speaker(ScoredSessionData sessionData)
+		private void Notify_speaker(ScoredSessionData scoredSessionData)
 		{
-			var notificationData = mapper.Map(sessionData);
-			emailService.Notify_speaker(notificationData);
-			repo.Remember_speaker_got_notified_about_session_feedback(sessionData);
+			var notificationData = mapper.Map(scoredSessionData);
+			notifier.Send_feedback(notificationData);
+			repo.Remember_speaker_got_notified_about_session_feedback(scoredSessionData.Id);
 		}
+
 
 		public void Stop_speaker_notification()
 		{
