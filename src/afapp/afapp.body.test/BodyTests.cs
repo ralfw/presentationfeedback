@@ -6,6 +6,7 @@ using afapp.body.data;
 using System.Collections.Generic;
 using EventStore.Internals;
 using afapp.body.providers;
+using System.Linq;
 
 
 namespace afapp.body.test
@@ -41,24 +42,35 @@ namespace afapp.body.test
 			es.Record (new Event("c2", "SessionAssigned", "c2s2"));
 			es.Record (new Event ("c2s3", "SessionRegistered", "sess23\t2015-02-08T11:15:00\t2015-02-08T12:15:00\tname4\tname4@gmail.com"));
 			es.Record (new Event("c2", "SessionAssigned", "c2s2"));
+			var nEventsBefore = es.Replay ().Count ();
 
 			TimeProvider.Configure (new DateTime (2015, 2, 8, 11, 0, 0));
 
 			// act
+			fakeNotifier.Clear ();
 			body.Start_background_speaker_notification (20, 5);
 
 			// assert
 			var notificationsSent = fakeNotifier.Notifications;
+			Assert.AreEqual (nEventsBefore + notificationsSent.Count, es.Replay ().Count());
 			Assert.AreEqual (2, notificationsSent.Count);
 			Assert.AreEqual ("sess11", notificationsSent [0].Title);
 			Assert.AreEqual ("sess21", notificationsSent [1].Title);
 			//TODO: some more assertions needed ;-)
+
+			// act again
+			fakeNotifier.Clear ();
+			body.Start_background_speaker_notification (20, 5);
+
+			// assert
+			notificationsSent = fakeNotifier.Notifications;
+			Assert.AreEqual (0, notificationsSent.Count);
 		}
 	}
 
 
 	class FakeNotificationProvider : INotificationProvider {
-		public List<SpeakerNotificationData> Notifications = new List<SpeakerNotificationData> ();
+		public List<SpeakerNotificationData> Notifications;
 
 
 		#region INotificationProvider implementation
@@ -69,6 +81,11 @@ namespace afapp.body.test
 		}
 
 		#endregion
+
+
+		public void Clear() {
+			this.Notifications = new List<SpeakerNotificationData> ();
+		}
 	}
 
 

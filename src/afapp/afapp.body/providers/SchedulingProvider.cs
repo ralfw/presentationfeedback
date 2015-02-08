@@ -2,6 +2,7 @@
 using Quartz.Impl;
 using Quartz.Spi;
 using System;
+using afapp.body.contract;
 
 namespace afapp.body.providers
 {

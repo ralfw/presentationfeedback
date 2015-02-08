@@ -3,6 +3,7 @@ using afapp.body.contract.data;
 using afapp.body.data;
 using afapp.body.domain;
 using afapp.body.providers;
+using afapp.body.helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace afapp.body
 			this.notifier = notifier;
 			this.scoredSessionsFactory = scoredSessionsFactory;
 		} 
+
 
 		public SessionOverview GenerateSessionOverview(string confId) {
 			var confdata = this.repo.Load_conference (confId);
@@ -60,9 +62,8 @@ namespace afapp.body
 			  () => {
 					var scoredSessionsData = repo.Load_scored_sessions();
 					var scoredSessions = scoredSessionsFactory(scoredSessionsData);
-				    var dueSessions = scoredSessions.Get_sessions_due_for_notification(feedbackPeriod);
-					dueSessions.ToList().ForEach(
-						Notify_speaker);
+					scoredSessions.Get_sessions_due_for_notification(feedbackPeriod)
+						.ForEach(Notify_speaker);
 			  });
 		}
 
