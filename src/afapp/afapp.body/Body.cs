@@ -2,11 +2,9 @@
 using afapp.body.contract.data;
 using afapp.body.data;
 using afapp.body.domain;
-using afapp.body.providers;
 using afapp.body.helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace afapp.body
 {
