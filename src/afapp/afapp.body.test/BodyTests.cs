@@ -1,9 +1,10 @@
-﻿using afapp.body.contract;
-using afapp.body.data;
-using afapp.body.domain;
+﻿using afapp.body.domain;
 using afapp.body.providers;
-using EventStore.Internals;
+using Contract;
+using Contract.data;
 using NUnit.Framework;
+using Repository.data;
+using Repository.events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,30 +19,30 @@ namespace afapp.body.test
 		public void Speaker_notification_calculates_correct_due_sessions() {
 			// arrange
 			var es = new EventStore.InMemoryEventStore ();
-			var repo = new Repository (es);
+			var repo = new Repository.Repository (es);
 			var map = new Mapper ();
 			var fakeScheduler = new FakeSchedulingProvider ();
 			var fakeNotifier = new FakeNotificationProvider ();
-			var scoredSessionsFactory = new Func<IEnumerable<ScoredSessionData>, ScoredSessions> ((data) => new ScoredSessions(data));
+			var scoredSessionsFactory = new Func<IEnumerable<ScoredSessionData>, ScoredSessions> (data => new ScoredSessions(data));
 
 			var body = new Body (repo, null, map, fakeScheduler, fakeNotifier, scoredSessionsFactory);
 
 			// It would have been nice to have the coapp Repository{} available.
-			es.Record (new Event ("c1", "ConferenceRegistered", "conf1"));
-			es.Record (new Event ("c1s1", "SessionRegistered", "sess11\t2015-02-08T09:00:00\t2015-02-08T10:00:00\tname1\tname1@gmail.com"));
-			es.Record (new Event("c1", "SessionAssigned", "c1s1"));
-			es.Record (new Event ("c1s2", "SessionRegistered", "sess12\t2015-02-08T10:00:00\t2015-02-08T11:00:00\tname2\tname2@gmail.com"));
-			es.Record (new Event("c1", "SessionAssigned", "c1s2"));
-			es.Record (new Event ("c1s3", "SessionRegistered", "sess13\t2015-02-08T11:00:00\t2015-02-08T12:00:00\tname1\tname1@gmail.com"));
-			es.Record (new Event("c1", "SessionAssigned", "c1s3"));
+			es.Record (new ConferenceRegistered("c1", "conf1"));
+			es.Record (new SessionRegistered("c1s1", "sess11", new DateTime(2015,02,08,09,00,00), new DateTime(2015,02,08,10,00,00),"name1","name1@gmail.com"));
+			es.Record (new SessionAssigned("c1", "c1s1"));
+			es.Record (new SessionRegistered("c1s2", "sess12", new DateTime(2015,02,08,10,00,00), new DateTime(2015,02,08,11,00,00),"name2","name2@gmail.com"));
+			es.Record (new SessionAssigned("c1", "c1s2"));
+			es.Record (new SessionRegistered("c1s3", "sess13", new DateTime(2015,02,08,11,00,00), new DateTime(2015,02,08,12,00,00),"name1","name1@gmail.com"));
+			es.Record (new SessionAssigned("c1", "c1s3"));
 
-			es.Record (new Event ("c2", "ConferenceRegistered", "conf2"));
-			es.Record (new Event ("c2s1", "SessionRegistered", "sess21\t2015-02-08T09:15:00\t2015-02-08T10:15:00\tname3\tname3@gmail.com"));
-			es.Record (new Event("c2", "SessionAssigned", "c2s1"));
-			es.Record (new Event ("c2s2", "SessionRegistered", "sess22\t2015-02-08T10:15:00\t2015-02-08T11:15:00\tname3\tname3@gmail.com"));
-			es.Record (new Event("c2", "SessionAssigned", "c2s2"));
-			es.Record (new Event ("c2s3", "SessionRegistered", "sess23\t2015-02-08T11:15:00\t2015-02-08T12:15:00\tname4\tname4@gmail.com"));
-			es.Record (new Event("c2", "SessionAssigned", "c2s2"));
+			es.Record (new ConferenceRegistered("c2", "conf2"));
+			es.Record (new SessionRegistered("c2s1", "sess21", new DateTime(2015,02,08,09,15,00), new DateTime(2015,02,08,10,15,00),"name3","name3@gmail.com"));
+			es.Record (new SessionAssigned("c2", "c2s1"));
+			es.Record (new SessionRegistered("c2s2", "sess22", new DateTime(2015,02,08,10,15,00), new DateTime(2015,02,08,11,15,00),"name3","name3@gmail.com"));
+			es.Record (new SessionAssigned("c2", "c2s2"));
+			es.Record (new SessionRegistered("c2s3", "sess23", new DateTime(2015,02,08,11,15,00), new DateTime(2015,02,08,12,15,00),"name4","name4@gmail.com"));
+			es.Record (new SessionAssigned("c2", "c2s2"));
 			var nEventsBefore = es.Replay ().Count ();
 
 			TimeProvider.Configure (new DateTime (2015, 2, 8, 11, 0, 0));
@@ -81,27 +82,27 @@ namespace afapp.body.test
 		{
 			// arrange
 			var es = new EventStore.InMemoryEventStore();
-			var repo = new Repository(es);
+			var repo = new Repository.Repository(es);
 			var map = new Mapper();
 			var fakeScheduler = new FakeSchedulingProvider();
 			var fakeNotifier = new FakeNotificationProvider();
-			var scoredSessionsFactory = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>((data) => new ScoredSessions(data));
+			var scoredSessionsFactory = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var body = new Body(repo, null, map, fakeScheduler, fakeNotifier, scoredSessionsFactory);
 
-			es.Record(new Event("c1", "ConferenceRegistered", "conf1"));
-			es.Record(new Event("c1s1", "SessionRegistered", "sess11\t2015-02-08T09:00:00\t2015-02-08T10:00:00\tname1\tname1@gmail.com"));
-			es.Record(new Event("c1", "SessionAssigned", "c1s1"));
-			es.Record(new Event("c1s2", "SessionRegistered", "sess12\t2015-02-08T10:00:00\t2015-02-08T11:00:00\tname2\tname2@gmail.com"));
-			es.Record(new Event("c1", "SessionAssigned", "c1s2"));
+			es.Record(new ConferenceRegistered("c1", "conf1"));
+			es.Record(new SessionRegistered("c1s1", "sess11", new DateTime(2015,02,08,09,00,00), new DateTime(2015,02,08,10,00,00),"name1","name1@gmail.com"));
+			es.Record(new SessionAssigned("c1", "c1s1"));
+			es.Record(new SessionRegistered("c1s2", "sess12", new DateTime(2015,02,08,10,00,00), new DateTime(2015,02,08,11,00,00),"name2","name2@gmail.com"));
+			es.Record(new SessionAssigned("c1", "c1s2"));
 
-			es.Record(new Event("c1s1", "FeedbackGiven", "Green\tGreat session\tjohn@doe.com"));
-			es.Record(new Event("c1s1", "FeedbackGiven", "Red\tBoring!\tjane@doe.com"));
-			es.Record(new Event("c1s1", "FeedbackGiven", "Yellow\t\tpeter@mail.com"));
-			es.Record(new Event("c1s1", "FeedbackGiven", "Green\t\tpeter@mail.com")); // Attendee changed his mind. Last score is used.
-			es.Record(new Event("c1s1", "FeedbackGiven", "Yellow\t\tmartin@mail.com"));
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Green, "Great session", "john@doe.com"));
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Red, "Boring!", "jane@doe.com"));
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Yellow, "", "peter@mail.com"));
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Green, "", "peter@mail.com")); // Attendee changed his mind. Last score is used.
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Yellow, "", "martin@mail.com"));
 
-			es.Record(new Event("c1s2", "FeedbackGiven", "Green\t\tpeter@mail.com"));
-			es.Record(new Event("c1s2", "FeedbackGiven", "Yellow\t\tpeter@mail.com"));
+			es.Record(new FeedbackGiven("c1s2", TrafficLightScores.Green, "", "peter@mail.com"));
+			es.Record(new FeedbackGiven("c1s2", TrafficLightScores.Yellow, "", "peter@mail.com"));
 
 			TimeProvider.Configure(new DateTime(2015, 2, 8, 11, 0, 0));
 			fakeNotifier.Clear();
@@ -126,14 +127,14 @@ namespace afapp.body.test
 
 		public void Send_feedback (SpeakerNotificationData data)
 		{
-			this.Notifications.Add (data);
+			Notifications.Add (data);
 		}
 
 		#endregion
 
 
 		public void Clear() {
-			this.Notifications = new List<SpeakerNotificationData> ();
+			Notifications = new List<SpeakerNotificationData> ();
 		}
 	}
 

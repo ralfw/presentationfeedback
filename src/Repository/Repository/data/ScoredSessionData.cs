@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-namespace afapp.body.data
+namespace Repository.data
 {
-	using contract.data;
 	using System.Collections.Generic;
 
 	public class ScoredSessionData

@@ -1,22 +1,20 @@
-using System;
-using coapp.body;
-using System.IO;
 using CLAP;
+using coapp.body;
+using System;
+using System.IO;
 
 namespace coapp.console
 {
 	class Head {
-		Body body;
+		readonly Body body;
 
 		public Head(Body body) {
 			this.body = body;
 		}
 
-
 		public void Run(string[] args) {
 			Parser.Run (args, this);
 		}
-
 
 		[Verb]
 		public void Upload(

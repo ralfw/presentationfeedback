@@ -2,9 +2,9 @@
 
 namespace EventStore.Internals
 {
-	public class Event : IEvent
+	public abstract class Event : IEvent
 	{
-		public Event(string context, string name, string payload)
+		protected Event(string context, string name, string payload)
 		{
 			Context = context;
 			Name = name;

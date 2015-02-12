@@ -1,8 +1,8 @@
-﻿using afapp.body.contract;
-using afapp.body.contract.data;
-using afapp.body.data;
-using afapp.body.domain;
+﻿using afapp.body.domain;
 using afapp.body.helpers;
+using Contract;
+using Contract.data;
+using Repository.data;
 using System;
 using System.Collections.Generic;
 
@@ -10,14 +10,14 @@ namespace afapp.body
 {
 	public class Body
 	{
-		private readonly Repository repo;
+		private readonly Repository.Repository repo;
 		private readonly Func<ConferenceData, Conference> conferenceFactory;
 		private readonly Func<IEnumerable<ScoredSessionData>, ScoredSessions> scoredSessionsFactory;
 		private readonly Mapper mapper;
 		private readonly ISchedulingProvider scheduler;
 		private readonly INotificationProvider notifier;
 
-		public Body (Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper,
+		public Body(Repository.Repository repo, Func<ConferenceData, Conference> conferenceFactory, Mapper mapper,
 					 ISchedulingProvider scheduler, INotificationProvider notifier,
 					 Func<IEnumerable<ScoredSessionData>, ScoredSessions> scoredSessionsFactory)
 		{

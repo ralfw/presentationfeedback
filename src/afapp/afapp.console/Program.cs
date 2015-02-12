@@ -1,8 +1,8 @@
 ﻿using afapp.body;
-using afapp.body.data;
 using afapp.body.domain;
 using afapp.body.providers;
 using EventStore;
+using Repository.data;
 using System;
 
 namespace afapp.console
@@ -16,7 +16,7 @@ namespace afapp.console
 			TimeProvider.Configure ();
 
 			var es = new FileEventStore ("app.events");
-			var repo = new Repository (es);
+			var repo = new Repository.Repository (es);
 			var conferenceFactory = new Func<ConferenceData, Conference> (data => new Conference(data));
 			var scoredSessions = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var mapper = new Mapper ();

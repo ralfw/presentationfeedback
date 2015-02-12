@@ -1,6 +1,6 @@
-﻿using afapp.body.contract.data;
+﻿using Contract.data;
 
-namespace afapp.body.data
+namespace Repository.data
 {
 	public class FeedbackData
 	{

@@ -20,17 +20,17 @@ namespace EventStore.Internals.File
 			}
 		}
 
-		internal void Write(string filename, IRecordedEvent @event)
+		internal void Write(string filename, IRecordedEvent recordedEvent)
 		{
 			using (var writer = new StreamWriter(GetFullFilePath(filename)))
 			{
-				writer.WriteLine(@event.Id);
-				writer.WriteLine(@event.Timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fffffff"));
-				writer.WriteLine(@event.SequenceNumber);
+				writer.WriteLine(recordedEvent.Id);
+				writer.WriteLine(recordedEvent.Timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fffffff"));
+				writer.WriteLine(recordedEvent.SequenceNumber);
 
-				writer.WriteLine(@event.Context);
-				writer.WriteLine(@event.Name);
-				writer.Write(@event.Payload);
+				writer.WriteLine(recordedEvent.Event.Context);
+				writer.WriteLine(recordedEvent.Event.Name);
+				writer.Write(recordedEvent.Event.Payload);
 			}
 		}
 
@@ -41,10 +41,10 @@ namespace EventStore.Internals.File
 
 		internal IEnumerable<IRecordedEvent> ReadAll()
 		{
-			return Directory.GetFiles(dirPath).Select(Read);
+			return Directory.GetFiles(dirPath).Select(x => Read(x, GetTypeOfEvent));
 		}
 
-		private static IRecordedEvent Read(string fileName)
+		private static IRecordedEvent Read(string fileName, Func<string, Type> getEventType)
 		{
 			using (var reader = new StreamReader(fileName))
 			{
@@ -54,8 +54,24 @@ namespace EventStore.Internals.File
 				var context = reader.ReadLine();
 				var name = reader.ReadLine();
 				var payload = reader.ReadToEnd();
-				return new RecordedEvent(id, timeStamp, sequenceNumber, context, name, payload);
+				var @event = (IEvent) Activator.CreateInstance(getEventType(name), context, name, payload);
+				return new RecordedEvent(id, timeStamp, sequenceNumber, @event);
 			}
+		}
+
+		private static Type GetTypeOfEvent(string eventName)
+		{
+			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+			foreach (var assembly in assemblies)
+			{
+				var eventType = assembly.GetTypes().FirstOrDefault(t => t.Name == eventName && 
+					t.GetInterfaces().Contains(typeof(IEvent)));
+				if (eventType != null)
+				{
+					return eventType;
+				}
+			}
+			throw new Exception("Unknown class:" + eventName);
 		}
 
 		internal long GetNextSequenceNumber()

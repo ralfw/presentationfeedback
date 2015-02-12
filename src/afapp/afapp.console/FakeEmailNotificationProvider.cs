@@ -1,5 +1,5 @@
-﻿using afapp.body.contract;
-using afapp.body.data;
+﻿using Contract;
+using Contract.data;
 using System;
 
 namespace afapp.console

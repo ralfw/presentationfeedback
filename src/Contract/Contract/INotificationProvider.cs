@@ -1,6 +1,7 @@
-﻿using afapp.body.data;
+﻿
+using Contract.data;
 
-namespace afapp.body.contract
+namespace Contract
 {
 	public interface INotificationProvider
 	{

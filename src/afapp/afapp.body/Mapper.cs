@@ -1,13 +1,13 @@
-using afapp.body.contract.data;
-using afapp.body.data;
+using Contract.data;
+using Repository.data;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace afapp.body
 {
 	public class Mapper {
-		public SessionOverview Map(string confId, string confTitle, IEnumerable<ConferenceData.SessionData> activeSessions, IEnumerable<ConferenceData.SessionData> inactiveSessions) {
+		public SessionOverview Map(string confId, string confTitle, IEnumerable<ConferenceData.SessionData> activeSessions, 
+			IEnumerable<ConferenceData.SessionData> inactiveSessions) {
 			return new SessionOverview { 
 				ConfId = confId,
 				ConfTitle = confTitle,
@@ -32,7 +32,7 @@ namespace afapp.body
 
 		public SpeakerNotificationData Map(ScoredSessionData session)
 		{
-			var feedback = session.UniqueFeedback;
+			var feedback = session.UniqueFeedback.ToList();
 			return new SpeakerNotificationData
 			{
 				ConfTitle = session.ConfTitle,

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Repository.data;
 
 namespace afapp.body.domain
 {
-	using data;
 	using providers;
 	using System.Collections.Generic;
 	using System.Linq;

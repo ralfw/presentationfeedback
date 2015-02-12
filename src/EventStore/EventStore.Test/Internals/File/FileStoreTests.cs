@@ -27,18 +27,17 @@ namespace EventStore.Test.Internals.File
 		{
 			// arrange 
 			const string fileName = "fooEvent.txt";
-			var testEvent = new RecordedEvent(Guid.NewGuid(), DateTime.Now, 0, "session", "feedbackRegistered", "foo bar payload");
+			var testEvent = new EventHappened("session", "feedbackRegistered", "foo bar payload");
+			var testRecordedEvent = new RecordedEvent(Guid.NewGuid(), DateTime.Now, 0, testEvent);
 			var sut = new FileStore(DirPath);
 
 			// act 
-			sut.Write(fileName, testEvent);
+			sut.Write(fileName, testRecordedEvent);
 			var result = sut.ReadAll().ToList();
 
 			// assert
 			result.Count().Should().Be(1);
-			result[0].Context.Should().Be(testEvent.Context);
-			result[0].Name.Should().Be(testEvent.Name);
-			result[0].Payload.Should().Be(testEvent.Payload);
+			result[0].Event.ShouldBeEquivalentTo(testEvent);
 		}
 
 		[Test]
@@ -49,9 +48,11 @@ namespace EventStore.Test.Internals.File
 
 			// act + assert
 			sut.GetNextSequenceNumber().Should().Be(0);
-			sut.Write("fooEvent1.txt", new RecordedEvent(Guid.NewGuid(), DateTime.Now, 0, "session", "feedbackRegistered", "foo bar payload"));
+			sut.Write("fooEvent1.txt", new RecordedEvent(Guid.NewGuid(), DateTime.Now, 0, 
+				new EventHappened("session", "feedbackRegistered", "foo bar payload")));
 			sut.GetNextSequenceNumber().Should().Be(1);
-			sut.Write("fooEvent2.txt", new RecordedEvent(Guid.NewGuid(), DateTime.Now, 1, "conference", "sessionAdded", "foo bar"));
+			sut.Write("fooEvent2.txt", new RecordedEvent(Guid.NewGuid(), DateTime.Now, 1, 
+				new AnotherEventHappened("conference", "sessionAdded", "foo bar")));
 			sut.GetNextSequenceNumber().Should().Be(2);
 		}
 	}

@@ -50,12 +50,18 @@ namespace EventStore
 
 		public IEnumerable<IRecordedEvent> QueryByName(params string[] eventNames)
 		{
-			return Replay().Where(x => eventNames.Contains(x.Name));
+			return Replay().Where(x => eventNames.Contains(x.Event.Name));
 		}
 
 		public IEnumerable<IRecordedEvent> QueryByContext(params string[] contexts)
 		{
-			return Replay().Where(x => contexts.Contains(x.Context));
+			return Replay().Where(x => contexts.Contains(x.Event.Context));
+		}
+
+		public IEnumerable<IRecordedEvent> QueryByType(params Type[] types)
+		{
+
+			return Replay().Where(x => types.Contains(x.Event.GetType()));
 		}
 
 		public event Action<IRecordedEvent> OnRecorded = _ => { };

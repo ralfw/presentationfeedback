@@ -1,7 +1,4 @@
-using EventStore.Contract;
 using System;
-using afapp.body.data;
-using afapp.body.contract.data;
 
 namespace afapp.body.providers
 {

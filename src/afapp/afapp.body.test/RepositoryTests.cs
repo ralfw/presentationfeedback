@@ -1,6 +1,7 @@
-﻿using afapp.body.data;
-using afapp.body.contract.data;
+﻿
 
+using Contract.data;
+using Repository.data;
 
 namespace afapp.body.test
 {
@@ -22,7 +23,7 @@ namespace afapp.body.test
 			feedbackData2.Comment = "great!";
 			var feedbackData = feedbackData2;
 			var eventStoreMock = new Mock<IEventStore>();
-			var target = new Repository(eventStoreMock.Object);
+			var target = new Repository.Repository(eventStoreMock.Object);
 
 			// act
 			target.Register_feedback(feedbackData);

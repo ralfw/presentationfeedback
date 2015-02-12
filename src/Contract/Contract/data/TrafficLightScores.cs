@@ -1,4 +1,4 @@
-﻿namespace afapp.body.contract.data
+﻿namespace Contract.data
 {
 	public enum TrafficLightScores
 	{

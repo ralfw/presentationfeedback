@@ -10,6 +10,7 @@ namespace EventStore.Contract
 		IEnumerable<IRecordedEvent> Replay(long firstSequenceNumber);
 		IEnumerable<IRecordedEvent> QueryByName(params string[] eventNames);
 		IEnumerable<IRecordedEvent> QueryByContext(params string[] contexts);
+		IEnumerable<IRecordedEvent> QueryByType(params Type[] types);
 
 		event Action<IRecordedEvent> OnRecorded;
 	}

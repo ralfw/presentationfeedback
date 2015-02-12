@@ -1,7 +1,8 @@
-﻿namespace afapp.body.data
-{
-	using System;
+﻿using System;
 
+namespace Contract.data
+
+{
 	public class SpeakerNotificationData
 	{
 		public string ConfTitle;

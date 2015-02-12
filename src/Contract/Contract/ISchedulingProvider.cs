@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace afapp.body.contract
+namespace Contract
 {
 	public interface ISchedulingProvider
 	{

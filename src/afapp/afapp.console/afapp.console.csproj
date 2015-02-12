@@ -29,6 +29,14 @@
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Contract, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\internal\Contract.dll</HintPath>
+    </Reference>
+    <Reference Include="Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\internal\Repository.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="EventStore">
       <HintPath>..\..\..\lib\internal\EventStore.dll</HintPath>

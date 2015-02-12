@@ -3,30 +3,25 @@ using System;
 
 namespace EventStore.Internals
 {
-	internal class RecordedEvent : IRecordedEvent
+	public class RecordedEvent : IRecordedEvent
 	{
+
 		internal RecordedEvent(long sequenceNumber, IEvent @event)
-			: this(Guid.NewGuid(), DateTime.Now.ToUniversalTime(), sequenceNumber, @event.Context, @event.Name, @event.Payload)
+			: this(Guid.NewGuid(), DateTime.Now.ToUniversalTime(), sequenceNumber, @event)
 		{
 		}
 
-		internal RecordedEvent(Guid id, DateTime timestamp, long sequenceNumber, string context, string name, string payload)
+		internal RecordedEvent(Guid id, DateTime timestamp, long sequenceNumber, IEvent @event)
 		{
 			Id = id;
 			Timestamp = timestamp;
 			SequenceNumber = sequenceNumber;
-			Name = name;
-			Context = context;
-			Name = name;
-			Payload = payload;
+			Event = @event;
 		}
 
+		public IEvent Event { get; private set; }
 		public Guid Id { get; private set; }
 		public DateTime Timestamp { get; private set; }
 		public long SequenceNumber { get; private set; }
-
-		public string Context { get; private set; }
-		public string Name { get; private set; }
-		public string Payload { get; private set; }
 	}
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace coapp.body
+namespace Repository.data
 {
 	public struct SessionParsed {
 		public string Id;

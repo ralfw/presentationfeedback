@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace afapp.body.data
+namespace Repository.data
 {
 	public class ConferenceData {
 		public string Id;
