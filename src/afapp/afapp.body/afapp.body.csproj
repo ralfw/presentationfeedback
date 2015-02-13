@@ -34,9 +34,6 @@
     <Reference Include="Common.Logging.Core">
       <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Contract">
-      <HintPath>..\..\..\lib\internal\Contract.dll</HintPath>
-    </Reference>
     <Reference Include="Quartz">
       <HintPath>..\packages\Quartz.2.3.1\lib\net40\Quartz.dll</HintPath>
     </Reference>
@@ -64,4 +61,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
   <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contract\Contract\Contract.csproj">
+      <Project>{9B4B0517-C1E1-4BD4-8DAE-A26318D29C72}</Project>
+      <Name>Contract</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

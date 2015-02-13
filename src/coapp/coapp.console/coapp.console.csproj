@@ -32,9 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="EventStore">
-      <HintPath>..\..\..\lib\internal\EventStore.dll</HintPath>
-    </Reference>
     <Reference Include="CLAP">
       <HintPath>..\packages\CLAP.4.6\lib\net35\CLAP.dll</HintPath>
     </Reference>
@@ -49,6 +46,10 @@
     <ProjectReference Include="..\coapp.body\coapp.body.csproj">
       <Project>{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}</Project>
       <Name>coapp.body</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\EventStore\EventStore\EventStore.csproj">
+      <Project>{93FA69C1-B9D7-49A8-8CB0-8BC0B171F507}</Project>
+      <Name>EventStore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

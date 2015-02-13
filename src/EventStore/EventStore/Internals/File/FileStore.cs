@@ -71,7 +71,7 @@ namespace EventStore.Internals.File
 					return eventType;
 				}
 			}
-			throw new Exception("Unknown class:" + eventName);
+			throw new Exception("Unknown event class:" + eventName);
 		}
 
 		internal long GetNextSequenceNumber()
