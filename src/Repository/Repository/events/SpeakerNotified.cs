@@ -3,20 +3,15 @@ using System;
 
 namespace Repository.events
 {
+	[Serializable]
 	public class SpeakerNotified : Event, ISemaphoreFeedbackEvent
 	{
 		public string SessionId;
 
 		public SpeakerNotified(string sessionId)
-			: base(sessionId, "SpeakerNotified", "")
+			: base(sessionId, "SpeakerNotified")
 		{
 			SessionId = sessionId;
-		}
-
-		public SpeakerNotified(string context, string name, string payload) // deserialize
-			: base(context, name, payload)
-		{
-			SessionId = context;
 		}
 
 		public void Accept(Action<ConferenceRegistered> conferenceRegistered, Action<SessionRegistered> sessionRegistered,

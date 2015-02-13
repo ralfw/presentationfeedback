@@ -1,11 +1,12 @@
 ﻿using EventStore.Contract;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace EventStore.Internals.File
 {
+	using System.Runtime.Serialization.Formatters.Binary;
+
 	internal class FileStore
 	{
 		private readonly string dirPath;
@@ -22,15 +23,10 @@ namespace EventStore.Internals.File
 
 		internal void Write(string filename, IRecordedEvent recordedEvent)
 		{
-			using (var writer = new StreamWriter(GetFullFilePath(filename)))
+			using (var stream = new FileStream(GetFullFilePath(filename), FileMode.Create))
 			{
-				writer.WriteLine(recordedEvent.Id);
-				writer.WriteLine(recordedEvent.Timestamp.ToString("yyyy-MM-ddTHH:mm:ss.fffffff"));
-				writer.WriteLine(recordedEvent.SequenceNumber);
-
-				writer.WriteLine(recordedEvent.Event.Context);
-				writer.WriteLine(recordedEvent.Event.Name);
-				writer.Write(recordedEvent.Event.Payload);
+				BinaryFormatter bFormatter = new BinaryFormatter();
+				bFormatter.Serialize(stream, recordedEvent);
 			}
 		}
 
@@ -41,39 +37,18 @@ namespace EventStore.Internals.File
 
 		internal IEnumerable<IRecordedEvent> ReadAll()
 		{
-			return Directory.GetFiles(dirPath).Select(x => Read(x, GetTypeOfEvent));
+			return Directory.GetFiles(dirPath).Select(Read);
 		}
 
-		private static IRecordedEvent Read(string fileName, Func<string, Type> getEventType)
+		private static IRecordedEvent Read(string fileName)
 		{
-			using (var reader = new StreamReader(fileName))
+			using (var reader = new FileStream(fileName, FileMode.Open))
 			{
-				var id = Guid.Parse("" + reader.ReadLine());
-				var timeStamp = DateTime.Parse(reader.ReadLine());
-				var sequenceNumber = long.Parse("" + reader.ReadLine());
-				var context = reader.ReadLine();
-				var name = reader.ReadLine();
-				var payload = reader.ReadToEnd();
-				var @event = (IEvent) Activator.CreateInstance(getEventType(name), context, name, payload);
-				return new RecordedEvent(id, timeStamp, sequenceNumber, @event);
+				BinaryFormatter bFormatter = new BinaryFormatter();
+				return (RecordedEvent)bFormatter.Deserialize(reader);
 			}
 		}
-
-		private static Type GetTypeOfEvent(string eventName)
-		{
-			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-			foreach (var assembly in assemblies)
-			{
-				var eventType = assembly.GetTypes().FirstOrDefault(t => t.Name == eventName && 
-					t.GetInterfaces().Contains(typeof(IEvent)));
-				if (eventType != null)
-				{
-					return eventType;
-				}
-			}
-			throw new Exception("Unknown event class:" + eventName);
-		}
-
+	
 		internal long GetNextSequenceNumber()
 		{
 			return Directory.GetFiles(dirPath).Length;

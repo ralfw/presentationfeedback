@@ -12,13 +12,26 @@ using System.Linq;
 
 namespace afapp.body.test
 {
+	using System.IO;
+
 	[TestFixture]
 	class BodyTests
 	{
+		private const string DIR_PATH = "eventStoreDir";
+
+		[SetUp]
+		public void Init()
+		{
+			if (Directory.Exists(DIR_PATH))
+			{
+				Directory.Delete(DIR_PATH, true);
+			}
+		}
+
 		[Test]
 		public void Speaker_notification_calculates_correct_due_sessions() {
 			// arrange
-			var es = new EventStore.InMemoryEventStore ();
+			var es = new EventStore.FileEventStore(DIR_PATH);
 			var repo = new Repository.Repository (es);
 			var map = new Mapper ();
 			var fakeScheduler = new FakeSchedulingProvider ();

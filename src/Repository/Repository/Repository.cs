@@ -45,10 +45,12 @@ namespace Repository
 				switch (e.Event.Name)
 				{
 					case "ConferenceRegistered":
-						confdata.Title = e.Event.Payload;
+						var confRegistered = (ConferenceRegistered) e.Event;
+						confdata.Title = confRegistered.Title;
 						break;
 					case "SessionAssigned":
-						sessionIds.Add(e.Event.Payload);
+						var sessionAssigned = (SessionAssigned) e.Event;
+						sessionIds.Add(sessionAssigned.SessionId);
 						break;
 				}
 			}

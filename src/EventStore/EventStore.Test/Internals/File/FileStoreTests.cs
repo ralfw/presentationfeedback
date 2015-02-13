@@ -27,7 +27,7 @@ namespace EventStore.Test.Internals.File
 		{
 			// arrange 
 			const string fileName = "fooEvent.txt";
-			var testEvent = new EventHappened("session", "feedbackRegistered", "foo bar payload");
+			var testEvent = new EventHappened("session");
 			var testRecordedEvent = new RecordedEvent(Guid.NewGuid(), DateTime.Now, 0, testEvent);
 			var sut = new FileStore(DirPath);
 
@@ -49,10 +49,10 @@ namespace EventStore.Test.Internals.File
 			// act + assert
 			sut.GetNextSequenceNumber().Should().Be(0);
 			sut.Write("fooEvent1.txt", new RecordedEvent(Guid.NewGuid(), DateTime.Now, 0, 
-				new EventHappened("session", "feedbackRegistered", "foo bar payload")));
+				new EventHappened("session")));
 			sut.GetNextSequenceNumber().Should().Be(1);
 			sut.Write("fooEvent2.txt", new RecordedEvent(Guid.NewGuid(), DateTime.Now, 1, 
-				new AnotherEventHappened("conference", "sessionAdded", "foo bar")));
+				new AnotherEventHappened("conference")));
 			sut.GetNextSequenceNumber().Should().Be(2);
 		}
 	}

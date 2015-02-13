@@ -5,6 +5,5 @@ namespace EventStore.Contract
 	{
 		string Context { get; }
 		string Name { get; }
-		string Payload { get; }
 	}
 }

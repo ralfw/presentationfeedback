@@ -37,9 +37,6 @@
     <Reference Include="Quartz">
       <HintPath>..\packages\Quartz.2.3.1\lib\net40\Quartz.dll</HintPath>
     </Reference>
-    <Reference Include="Repository">
-      <HintPath>..\..\..\lib\internal\Repository.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="EventStore">
       <HintPath>..\..\..\lib\internal\EventStore.dll</HintPath>
@@ -65,6 +62,10 @@
     <ProjectReference Include="..\..\Contract\Contract\Contract.csproj">
       <Project>{9B4B0517-C1E1-4BD4-8DAE-A26318D29C72}</Project>
       <Name>Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Repository\Repository\Repository.csproj">
+      <Project>{a2bfc56e-d90e-4c3d-909f-5f10b9a2abd7}</Project>
+      <Name>Repository</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

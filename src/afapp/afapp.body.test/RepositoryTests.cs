@@ -31,9 +31,7 @@ namespace afapp.body.test
 			// assert
 			eventStoreMock
 				.Verify(x => x.Record(It.Is<IEvent>(data =>
-					data.Context == feedbackData.SessionId && data.Name == "FeedbackGiven" &&
-					data.Payload == string.Format("{0}\t{1}\t{2}", 
-												  feedbackData.Score, feedbackData.Comment, feedbackData.Email))));
+					data.Context == feedbackData.SessionId && data.Name == "FeedbackGiven")));
 		}
 	}
 }

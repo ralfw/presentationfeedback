@@ -3,6 +3,8 @@ using System;
 
 namespace EventStore.Internals
 {
+
+	[Serializable()]
 	public class RecordedEvent : IRecordedEvent
 	{
 

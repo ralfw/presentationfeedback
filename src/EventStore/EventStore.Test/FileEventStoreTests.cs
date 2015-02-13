@@ -25,8 +25,8 @@ namespace EventStore.Test
 		public void Record()
 		{
 			// arrange
-			var testEvent0 = new AnotherEventHappened("session", "feedbackRegistered", "payload...\nmore...");
-			var testEvent1 = new EventHappened("conference", "sessionAdded", "foo bar foo bar");
+			var testEvent0 = new AnotherEventHappened("session");
+			var testEvent1 = new EventHappened("conference");
 			var sut = new FileEventStore(DIR_PATH);
 			var recordedEvents = new List<IRecordedEvent>();
 			sut.OnRecorded += recordedEvents.Add;
@@ -45,9 +45,9 @@ namespace EventStore.Test
 		public void Replay()
 		{
 			// arrange 
-			var testEvent0 = new AnotherEventHappened("session", "feedbackRegistered", "payload...\nmore...");
-			var testEvent1 = new AnotherEventHappened("conference", "sessionAdded", "foo bar foo bar");
-			var testEvent2 = new AnotherEventHappened("session", "feedbackRegistered", "payload...\nmore...");
+			var testEvent0 = new AnotherEventHappened("session");
+			var testEvent1 = new AnotherEventHappened("conference");
+			var testEvent2 = new AnotherEventHappened("session");
 			var sut = new FileEventStore(DIR_PATH);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
@@ -66,10 +66,10 @@ namespace EventStore.Test
 		public void Replay_FirstSequenceNumber()
 		{
 			// arrange
-			var testEvent0 = new AnotherEventHappened("session", "feedbackRegistered", "payload...\nmore...");
-			var testEvent1 = new AnotherEventHappened("conference", "sessionAdded", "foo bar foo bar");
-			var testEvent2 = new EventHappened("session", "feedbackRegistered", "payload...\nmore...");
-			var testEvent3 = new EventHappened("session", "feedbackRegistered", "grade: green");
+			var testEvent0 = new AnotherEventHappened("session");
+			var testEvent1 = new AnotherEventHappened("conference");
+			var testEvent2 = new EventHappened("session");
+			var testEvent3 = new EventHappened("session");
 			var sut = new FileEventStore(DIR_PATH);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
@@ -89,13 +89,12 @@ namespace EventStore.Test
 		public void QueryByName()
 		{
 			// arrange
-			const string eventName0 = "AnotherEventHappened";
 			const string eventName1 = "EventHappened";
-			var testEvent0 = new AnotherEventHappened("session", eventName0, "payload...\nmore...");
-			var testEvent1 = new EventHappened("conference", eventName1, "foo bar foo bar");
-			var testEvent2 = new EventHappened("session", eventName1, "payload...\nmore...");
-			var testEvent3 = new EventHappened("session", eventName1, "grade: green");
-			var testEvent4 = new EventHappened("conference", eventName1, "grade: green");
+			var testEvent0 = new AnotherEventHappened("session");
+			var testEvent1 = new EventHappened("conference");
+			var testEvent2 = new EventHappened("session");
+			var testEvent3 = new EventHappened("session");
+			var testEvent4 = new EventHappened("conference");
 			var sut = new FileEventStore(DIR_PATH);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
@@ -120,10 +119,10 @@ namespace EventStore.Test
 			// arrange
 			const string context1 = "session";
 			const string context2 = "conference";
-			var testEvent0 = new EventHappened("foo context", "fooEvent", "payload...\nmore...");
-			var testEvent1 = new AnotherEventHappened(context1, "sessionAdded", "foo bar foo bar");
-			var testEvent2 = new EventHappened("bar context", "fooEvent2", "payload...\nmore...");
-			var testEvent3 = new EventHappened(context2, "fooEvent3", "grade: green");
+			var testEvent0 = new EventHappened("foo context");
+			var testEvent1 = new AnotherEventHappened(context1);
+			var testEvent2 = new EventHappened("bar context");
+			var testEvent3 = new EventHappened(context2);
 			var sut = new FileEventStore(DIR_PATH);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
@@ -145,10 +144,10 @@ namespace EventStore.Test
 			// arrange
 			const string context1 = "session";
 			const string context2 = "conference";
-			var testEvent0 = new EventHappened("foo context", "fooEvent", "payload...\nmore...");
-			var testEvent1 = new AnotherEventHappened(context1, "sessionAdded", "foo bar foo bar");
-			var testEvent2 = new EventHappened("bar context", "fooEvent2", "payload...\nmore...");
-			var testEvent3 = new EventHappened(context2, "fooEvent3", "grade: green");
+			var testEvent0 = new EventHappened("foo context");
+			var testEvent1 = new AnotherEventHappened(context1);
+			var testEvent2 = new EventHappened("bar context");
+			var testEvent3 = new EventHappened(context2);
 			var sut = new FileEventStore(DIR_PATH);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);

@@ -3,6 +3,7 @@ using System;
 
 namespace Repository.events
 {
+	[Serializable]
 	public class SessionRegistered : Event, ISemaphoreFeedbackEvent
 	{
 		public string SessionId;
@@ -13,7 +14,7 @@ namespace Repository.events
 		public string SpeakerEmail;
 
 		public SessionRegistered(string sessionId, string title, DateTime start, DateTime end, string speakerName, string speakerEmail) 
-			: base(sessionId, "SessionRegistered", string.Format("{0}\t{1:s}\t{2:s}\t{3}\t{4}", title, start, end, speakerName, speakerEmail))
+			: base(sessionId, "SessionRegistered")
 		{
 			SessionId = sessionId;
 			Title = title;
@@ -22,19 +23,7 @@ namespace Repository.events
 			SpeakerName = speakerName;
 			SpeakerEmail = speakerEmail;
 		}
-
-		public SessionRegistered(string context, string name, string payload) // deserialize
-			: base(context, name, payload)
-		{
-			var fields = payload.Split('\t');
-			SessionId = context;
-			Title = fields[0];
-			Start = DateTime.Parse(fields[1]);
-			End = DateTime.Parse(fields[2]);
-			SpeakerName = fields[3];
-			SpeakerEmail = fields[4];
-		}
-
+	
 		public void Accept(Action<ConferenceRegistered> conferenceRegistered, Action<SessionRegistered> sessionRegistered,
 		   Action<SessionAssigned> sessionAssigned, Action<SpeakerNotified> speakerNotified,
 		   Action<FeedbackGiven> feedbackGiven)

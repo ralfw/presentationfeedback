@@ -36,9 +36,6 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Repository">
-      <HintPath>..\..\..\lib\internal\Repository.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Repository\Repository\Repository.csproj">
+      <Project>{a2bfc56e-d90e-4c3d-909f-5f10b9a2abd7}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\afapp.body\afapp.body.csproj">
       <Project>{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}</Project>
       <Name>afapp.body</Name>

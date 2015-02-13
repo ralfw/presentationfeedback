@@ -3,6 +3,7 @@ using System;
 
 namespace EventStore.Contract
 {
+
 	public interface IRecordedEvent
 	{
 		IEvent Event { get;  }
