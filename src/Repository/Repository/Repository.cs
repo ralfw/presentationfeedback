@@ -43,17 +43,19 @@ namespace Repository
 			var sessionIds = new HashSet<string>();
 			foreach (var e in recordedEvents)
 			{
-				if (e.Event is ConferenceRegistered)
-				{
-					var confRegistered = (ConferenceRegistered) e.Event;
-					confdata.Title = confRegistered.Title;
-				}
-				else if (e.Event is SessionAssigned)
-				{
-					var sessionAssigned = (SessionAssigned) e.Event;
-					sessionIds.Add(sessionAssigned.SessionId);
-					
-				}
+				var @switch = new Dictionary<Type, Action<IRecordedEvent>>{
+					{typeof(ConferenceRegistered), recordedEvent =>
+					{
+						var confRegistered = (ConferenceRegistered)recordedEvent.Event;
+						confdata.Title = confRegistered.Title;
+					}},
+					{typeof(SessionAssigned), recordedEvent =>
+					{
+						var sessionAssigned = (SessionAssigned) recordedEvent.Event;
+						sessionIds.Add(sessionAssigned.SessionId);
+					}}
+				};
+				@switch[(e.Event.GetType())](e);
 			}
 
 			recordedEvents = this.es.QueryByType(typeof(SessionRegistered)).Where(e => sessionIds.Contains(e.Event.Context));
@@ -91,55 +93,55 @@ namespace Repository
 			var conferences = new Dictionary<string, string>();
 			foreach (var e in recordedEvents)
 			{
-				if (e.Event is ConferenceRegistered)
+				var @switch = new Dictionary<Type, Action<IRecordedEvent>>
 				{
-					var confRegistered = (ConferenceRegistered) e.Event;
-					conferences.Add(confRegistered.ConfId, confRegistered.Title);
-				}
-				else if (e.Event is SessionRegistered)
-				{
-					var sessionRegistered = (SessionRegistered) e.Event;
-					var scoredSession = new ScoredSessionData
+					{typeof (ConferenceRegistered), recordedEvent =>
 					{
-						Id = sessionRegistered.SessionId,
-						Title = sessionRegistered.Title,
-						Start = sessionRegistered.Start,
-						End = sessionRegistered.End,
-						SpeakerName = sessionRegistered.SpeakerName,
-						SpeakerEmail = sessionRegistered.SpeakerEmail
-					};
-					scoredSessions.Add(sessionRegistered.SessionId, scoredSession);
-				}
-				else if (e.Event is SessionAssigned)
-				{
-					var sessionAssigned = (SessionAssigned) e.Event;
-					var confTitle = conferences[sessionAssigned.ConfId];
-					var scoredSession = scoredSessions[sessionAssigned.SessionId];
-					scoredSession.ConfTitle = confTitle;
-				}
-				else if (e.Event is SpeakerNotified)
-				{
-					var speakerNotified = (SpeakerNotified) e.Event;
-					var scoredSession = scoredSessions[speakerNotified.SessionId];
-					scoredSession.SpeakerNotified = true;
-				}
-				else if (e.Event is FeedbackGiven)
-				{
-					var feedbackGiven = (FeedbackGiven) e.Event;
-					var feedback = new FeedbackData
+						var confRegistered = (ConferenceRegistered) recordedEvent.Event;
+						conferences.Add(confRegistered.ConfId, confRegistered.Title);
+					}},
+					{typeof (SessionRegistered), recordedEvent =>
 					{
-						SessionId = feedbackGiven.SessionId,
-						Score = feedbackGiven.Score,
-						Comment = feedbackGiven.Comment,
-						Email = feedbackGiven.Email
-					};
-					var scoredSession = scoredSessions[feedbackGiven.SessionId];
-					scoredSession.Feedback.Add(feedback);
-				}
-				else
-				{
-					throw new Exception("Unknown event:" + e.Event);
-				}
+						var sessionRegistered = (SessionRegistered) recordedEvent.Event;
+						var scoredSession = new ScoredSessionData
+						{
+							Id = sessionRegistered.SessionId,
+							Title = sessionRegistered.Title,
+							Start = sessionRegistered.Start,
+							End = sessionRegistered.End,
+							SpeakerName = sessionRegistered.SpeakerName,
+							SpeakerEmail = sessionRegistered.SpeakerEmail
+						};
+						scoredSessions.Add(sessionRegistered.SessionId, scoredSession);
+					}},
+					{typeof (SessionAssigned), recordedEvent =>
+					{
+						var sessionAssigned = (SessionAssigned) recordedEvent.Event;
+						var confTitle = conferences[sessionAssigned.ConfId];
+						var scoredSession = scoredSessions[sessionAssigned.SessionId];
+						scoredSession.ConfTitle = confTitle;
+					}},
+					{typeof (SpeakerNotified), recordedEvent =>
+					{
+						var speakerNotified = (SpeakerNotified) recordedEvent.Event;
+						var scoredSession = scoredSessions[speakerNotified.SessionId];
+						scoredSession.SpeakerNotified = true;
+					}},
+					{typeof (FeedbackGiven), recordedEvent =>
+					{
+						var feedbackGiven = (FeedbackGiven) recordedEvent.Event;
+						var feedback = new FeedbackData
+						{
+							SessionId = feedbackGiven.SessionId,
+							Score = feedbackGiven.Score,
+							Comment = feedbackGiven.Comment,
+							Email = feedbackGiven.Email
+						};
+						var scoredSession = scoredSessions[feedbackGiven.SessionId];
+						scoredSession.Feedback.Add(feedback);
+					}}
+				};
+				@switch[(e.Event.GetType())](e);
 			}
 			return scoredSessions.Values;
 		}
