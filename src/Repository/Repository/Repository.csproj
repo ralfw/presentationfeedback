@@ -48,7 +48,6 @@
     <Compile Include="events\SessionRegistered.cs" />
     <Compile Include="events\ConferenceRegistered.cs" />
     <Compile Include="events\FeedbackGiven.cs" />
-    <Compile Include="events\ISemaphoreFeedbackEvent.cs" />
     <Compile Include="events\SessionAssigned.cs" />
     <Compile Include="events\SpeakerNotified.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

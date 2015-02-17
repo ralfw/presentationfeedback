@@ -5,7 +5,7 @@ using System;
 namespace Repository.events
 {
 	[Serializable]
-	public class FeedbackGiven : Event, ISemaphoreFeedbackEvent
+	public class FeedbackGiven : Event
 	{
 		public string SessionId;
 		public TrafficLightScores Score;
@@ -20,13 +20,6 @@ namespace Repository.events
 			Score = score;
 			Comment = comment;
 			Email = email;
-		}
-
-		public void Accept(Action<ConferenceRegistered> conferenceRegistered, Action<SessionRegistered> sessionRegistered,
-				   Action<SessionAssigned> sessionAssigned, Action<SpeakerNotified> speakerNotified,
-				   Action<FeedbackGiven> feedbackGiven)
-		{
-			feedbackGiven(this);
 		}
 	}
 }

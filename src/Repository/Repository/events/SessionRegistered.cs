@@ -4,7 +4,7 @@ using System;
 namespace Repository.events
 {
 	[Serializable]
-	public class SessionRegistered : Event, ISemaphoreFeedbackEvent
+	public class SessionRegistered : Event
 	{
 		public string SessionId;
 		public string Title;
@@ -22,13 +22,6 @@ namespace Repository.events
 			End = end;
 			SpeakerName = speakerName;
 			SpeakerEmail = speakerEmail;
-		}
-	
-		public void Accept(Action<ConferenceRegistered> conferenceRegistered, Action<SessionRegistered> sessionRegistered,
-		   Action<SessionAssigned> sessionAssigned, Action<SpeakerNotified> speakerNotified,
-		   Action<FeedbackGiven> feedbackGiven)
-		{
-			sessionRegistered(this);
 		}
 	}
 }
