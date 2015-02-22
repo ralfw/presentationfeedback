@@ -18,3 +18,5 @@ afapp.console.exe vote -id:s2 -s:Red -e:dave@yahoo.com
 afapp.console.exe vote -id:s2 -s:Yellow -c:"Not interesting!" -e:hugo@mail.com
 afapp.console.exe vote -id:s2 -s:Green -c:"I loooved it" -e:olga@gmail.com
 afapp.console.exe vote -id:s2 -s:Red -e:finn@hotmail.com
+
+coapp.console.exe feedback -id:conf1

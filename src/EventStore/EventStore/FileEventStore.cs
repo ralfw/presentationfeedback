@@ -31,7 +31,7 @@ namespace EventStore
 
 		private static string CreateFileName(long sequenceNumber)
 		{
-			return sequenceNumber.ToString("000000000000") + ".txt";
+			return sequenceNumber.ToString("000000000000") + ".bin";
 		}
 
 		public IEnumerable<IRecordedEvent> Replay()

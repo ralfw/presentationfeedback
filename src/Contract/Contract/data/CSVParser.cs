@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Repository.data
+namespace Contract.data
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
 	public struct SessionParsed {
 		public string Id;
 		public string Title;
@@ -23,7 +23,7 @@ namespace Repository.data
 								Start = DateTime.Parse(fields[2]),
 								End = DateTime.Parse(fields[3]),
 								SpeakerName = fields[4],
-								SpeakerEmail = fields[5]
+								SpeakerEmail = fields[5].Replace("\r", "")
 							};
 					   });
 		}

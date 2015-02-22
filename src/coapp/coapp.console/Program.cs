@@ -1,5 +1,4 @@
-﻿using System;
-using coapp.body;
+﻿using coapp.body;
 
 namespace coapp.console
 {
@@ -8,7 +7,8 @@ namespace coapp.console
 		public static void Main (string[] args)
 		{
 			var es = new EventStore.FileEventStore ("app.events");
-			var body = new Body (es);
+			var repo = new Repository.Repository(es);
+			var body = new Body (repo);
 			var head = new Head (body);
 
 			head.Run (args);

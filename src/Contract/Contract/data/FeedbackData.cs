@@ -1,6 +1,4 @@
-﻿using Contract.data;
-
-namespace Repository.data
+﻿namespace Contract.data
 {
 	public class FeedbackData
 	{

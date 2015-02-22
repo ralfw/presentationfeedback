@@ -2,6 +2,7 @@
 
 namespace afapp.body.domain
 {
+	using Contract.data;
 	using providers;
 	using System.Collections.Generic;
 	using System.Linq;

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-
-namespace Repository.data
+﻿namespace Contract.data
 {
+	using System;
 	using System.Collections.Generic;
+	using System.Linq;
 
 	public class ScoredSessionData
 	{
+		public string ConfId;
 		public string ConfTitle;
 
 		public string Id;

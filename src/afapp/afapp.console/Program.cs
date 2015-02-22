@@ -8,6 +8,7 @@ using System;
 namespace afapp.console
 {
 	using System.Collections.Generic;
+	using Contract.data;
 
 	class MainClass
 	{
