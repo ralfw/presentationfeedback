@@ -26,7 +26,7 @@ namespace afapp.console
 		{
 			TimeProvider.Configure (fixedNow);
 
-			var vm = this.body.GenerateSessionOverview (confid);
+			var vm = this.body.Generate_session_overview (confid);
 
 			Console.WriteLine ("# Sessions of {0} ({1})", vm.ConfTitle, vm.ConfId);
 			Console.WriteLine ("## Active");
@@ -67,6 +67,17 @@ namespace afapp.console
 			Environment.Exit(0);
 		}
 
+		[Verb]
+		public void Conferences()
+		{
+			var conferences = body.Generate_conference_overview();
+			foreach (var conference in conferences)
+			{
+				Console.WriteLine("{0} {1} {2} {3}", conference.Id, conference.Title, conference.Start.ToShortDateString(), 
+					conference.End.ToShortDateString());
+			}
+			Environment.Exit(0);
+		}
 
 		private static void Display_sessions(IEnumerable<SessionOverview.Session> sessions) {
 			foreach (var s in sessions)

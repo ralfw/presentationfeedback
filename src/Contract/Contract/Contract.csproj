@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\ConferenceVm.cs" />
     <Compile Include="data\ConferenceCvsFeedback.cs" />
     <Compile Include="data\SessionOverview.cs" />
     <Compile Include="data\SpeakerNotificationData.cs" />

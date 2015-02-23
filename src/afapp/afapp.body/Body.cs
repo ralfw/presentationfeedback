@@ -5,6 +5,7 @@ using Contract.data;
 using Repository.data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace afapp.body
 {
@@ -30,7 +31,7 @@ namespace afapp.body
 		} 
 
 
-		public SessionOverview GenerateSessionOverview(string confId) {
+		public SessionOverview Generate_session_overview(string confId) {
 			var confdata = this.repo.Load_conference (confId);
 
 			var conf = this.conferenceFactory (confdata);
@@ -78,6 +79,19 @@ namespace afapp.body
 			scheduler.Stop();
 		}
 
-
+		public IEnumerable<ConferenceVm> Generate_conference_overview()
+		{
+			return repo.Load_conferences().Select(x =>
+			{
+				var conference = conferenceFactory(x);
+				return new ConferenceVm
+				{
+					Id = x.Id,
+					Title = x.Title,
+					Start = conference.StartDate,
+					End = conference.EndDate
+				};
+			});
+		} 
 	}
 }

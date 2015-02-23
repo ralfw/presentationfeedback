@@ -151,5 +151,15 @@ namespace Repository
 		{
 			es.Record(new SpeakerNotified(sessionId));
 		}
+
+
+		public IEnumerable<ConferenceData> Load_conferences()
+		{
+			return es.QueryByType(typeof(ConferenceRegistered)).Select(x =>
+			{
+				var confRegistered = (ConferenceRegistered) x.Event;
+				return Load_conference(confRegistered.ConfId);
+			});
+		}
 	}
 }
