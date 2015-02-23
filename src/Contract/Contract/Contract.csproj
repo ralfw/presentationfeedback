@@ -39,15 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data\ConferenceCVSFeedback.cs" />
-    <Compile Include="data\CSVParser.cs" />
-    <Compile Include="data\FeedbackData.cs" />
-    <Compile Include="data\ScoredSessionData.cs" />
+    <Compile Include="data\ConferenceCvsFeedback.cs" />
     <Compile Include="data\SessionOverview.cs" />
     <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="data\TrafficLightScores.cs" />
     <Compile Include="INotificationProvider.cs" />
-    <Compile Include="ICoappRepository.cs" />
     <Compile Include="ISchedulingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

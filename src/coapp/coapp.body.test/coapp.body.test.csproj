@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq">
-      <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -55,6 +52,14 @@
     <ProjectReference Include="..\..\Contract\Contract\Contract.csproj">
       <Project>{9B4B0517-C1E1-4BD4-8DAE-A26318D29C72}</Project>
       <Name>Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\EventStore\EventStore\EventStore.csproj">
+      <Project>{93FA69C1-B9D7-49A8-8CB0-8BC0B171F507}</Project>
+      <Name>EventStore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Repository\Repository\Repository.csproj">
+      <Project>{A2BFC56E-D90E-4C3D-909F-5F10B9A2ABD7}</Project>
+      <Name>Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\coapp.body\coapp.body.csproj">
       <Project>{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}</Project>

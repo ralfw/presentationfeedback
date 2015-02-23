@@ -1,4 +1,6 @@
-﻿namespace Contract.data
+﻿using Contract.data;
+
+namespace Repository.data
 {
 	public class FeedbackData
 	{

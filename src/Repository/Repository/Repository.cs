@@ -7,10 +7,8 @@ using System.Linq;
 
 namespace Repository
 {
-	using Contract;
-	using Contract.data;
 
-	public class Repository : ICoappRepository
+	public class Repository
 	{
 		readonly IEventStore es;
 

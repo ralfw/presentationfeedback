@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="data\ConferenceData.cs" />
+    <Compile Include="data\CSVParser.cs" />
+    <Compile Include="data\FeedbackData.cs" />
+    <Compile Include="data\ScoredSessionData.cs" />
     <Compile Include="events\SessionRegistered.cs" />
     <Compile Include="events\ConferenceRegistered.cs" />
     <Compile Include="events\FeedbackGiven.cs" />

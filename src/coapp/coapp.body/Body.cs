@@ -1,7 +1,9 @@
 ﻿
+using EventStore.Contract;
+using Repository.data;
+
 namespace coapp.body
 {
-	using Contract;
 	using Contract.data;
 	using data;
 	using System.Collections.Generic;
@@ -12,10 +14,10 @@ namespace coapp.body
 	public class Body
 	{
 		readonly CSVParser parser;
-		readonly ICoappRepository repo;
+		readonly Repository.Repository repo;
 
-		public Body (ICoappRepository repo)	{
-			this.repo = repo;
+		public Body (IEventStore es)	{
+			this.repo = new Repository.Repository(es);
 			this.parser = new CSVParser ();
 		}
 

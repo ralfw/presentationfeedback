@@ -1,12 +1,11 @@
 ﻿
+using Repository.events;
+
 namespace coapp.body.test
 {
-	using Contract;
 	using Contract.data;
-	using Moq;
 	using NUnit.Framework;
 	using System;
-	using System.Collections.Generic;
 
 	[TestFixture]
 	public class BodyTests
@@ -16,16 +15,35 @@ namespace coapp.body.test
 		{
 			// arrange
 			const string confId = "c1";
-			var repoMock = new Mock<ICoappRepository>();
+			var es = new EventStore.InMemoryEventStore();
+			var su = new Body(es);
 			var expectedContent = Build_expected_content();
-			var su = new Body(repoMock.Object);
-			repoMock.Setup(x => x.Load_scored_sessions()).Returns(GetScoredSessionData);
+			es.Record(new ConferenceRegistered("c1", "conf1"));
+			es.Record(new SessionRegistered("c1s1", "Session1", new DateTime(2015, 02, 08, 09, 00, 00), new DateTime(2015, 02, 08, 10, 00, 00), "speaker 1", "speaker1@mail.com"));
+			es.Record(new SessionAssigned("c1", "c1s1"));
+			es.Record(new SessionRegistered("c1s2", "Session2", new DateTime(2015, 02, 08, 10, 00, 00), new DateTime(2015, 02, 08, 11, 00, 00), "speaker 2", "speaker2@mail.com"));
+			es.Record(new SessionAssigned("c1", "c1s2"));
+			es.Record(new ConferenceRegistered("c2", "conf2"));
+			es.Record(new SessionRegistered("c2s1", "sess21", new DateTime(2015, 02, 08, 09, 15, 00), new DateTime(2015, 02, 08, 10, 15, 00), "name3", "name3@gmail.com"));
+			es.Record(new SessionAssigned("c2", "c2s1"));
+
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Green, "Great session", "anttendee1@mail.com"));
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Red, "Boring session", "anttendee2@mail.com"));
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Green, "Best session", "anttendee6@mail.com"));
+			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Yellow, "", "martin@mail.com"));
+
+			es.Record(new FeedbackGiven("c1s2", TrafficLightScores.Red, "Not relevant", "anttendee3@mail.com"));
+			es.Record(new FeedbackGiven("c1s2", TrafficLightScores.Yellow, "The sounds was too low", "anttendee1@mail.com"));
+			es.Record(new FeedbackGiven("c1s2", TrafficLightScores.Yellow, "Not my thing", "anttendee5@mail.com"));
+
+			es.Record(new FeedbackGiven("c2s1", TrafficLightScores.Green, "Super", "anttendee4@mail.com"));
+			es.Record(new FeedbackGiven("c2s1", TrafficLightScores.Yellow, "", "anttendee8@mail.com"));
 
 			// act
 			var result = su.Generate_conference_feedback(confId);
 
 			// assert
-			Assert.AreEqual("Conf 1", result.ConfTitle);
+			Assert.AreEqual("conf1", result.ConfTitle);
 			Assert.AreEqual(expectedContent, result.Content);
 		}
 
@@ -38,107 +56,5 @@ namespace coapp.body.test
 				"c1s2	Session2	2015-02-08T10:00:00	2015-02-08T11:00:00	speaker 2	speaker2@mail.com	0	2	1	\"anttendee3@mail.com: Not relevant\n" +
 					"anttendee1@mail.com: The sounds was too low\nanttendee5@mail.com: Not my thing\"";
 		}
-
-		private static IEnumerable<ScoredSessionData> GetScoredSessionData()
-		{
-			return new List<ScoredSessionData>
-			{
-				new ScoredSessionData
-				{
-					ConfId = "c1",
-					ConfTitle = "Conf 1",
-					Start = new DateTime(2015,02,08,09,00,00), 
-					End = new DateTime(2015,02,08,10,00,00),
-					SpeakerName = "speaker 1",
-					SpeakerEmail = "speaker1@mail.com",
-					Id = "c1s1",
-					Title = "Session1",
-					Feedback = new List<FeedbackData>
-					{
-						new FeedbackData
-						{
-							Email = "anttendee1@mail.com",
-							Comment = "Great session",
-							Score = TrafficLightScores.Green,
-						},
-						new FeedbackData
-						{
-							Email = "anttendee2@mail.com",
-							Comment = "Boring session",
-							Score = TrafficLightScores.Red,
-						},
-						new FeedbackData
-						{
-							Email = "anttendee3@mail.com",
-							Score = TrafficLightScores.Yellow,
-						},
-						new FeedbackData
-						{
-							Email = "anttendee6@mail.com",
-							Comment = "Best session",
-							Score = TrafficLightScores.Green,
-						}
-					}
-				},
-				new ScoredSessionData
-				{
-					ConfId = "c1",
-					ConfTitle = "Conf 1",
-					Start = new DateTime(2015,02,08,10,00,00), 
-					End = new DateTime(2015,02,08,11,00,00),
-					SpeakerName = "speaker 2",
-					SpeakerEmail = "speaker2@mail.com",
-					Id = "c1s2",
-					Title = "Session2",
-					Feedback = new List<FeedbackData>
-					{
-						new FeedbackData
-						{
-							Email = "anttendee3@mail.com",
-							Comment = "Not relevant",
-							Score = TrafficLightScores.Red,
-						},
-						new FeedbackData
-						{
-							Email = "anttendee1@mail.com",
-							Comment = "The sounds was too low",
-							Score = TrafficLightScores.Yellow,
-						},
-						new FeedbackData
-						{
-							Email = "anttendee5@mail.com",
-							Comment = "Not my thing",
-							Score = TrafficLightScores.Yellow,
-						},
-					}
-				},
-				new ScoredSessionData
-				{
-					ConfId = "c2",
-					ConfTitle = "Conf 2",
-					Start = new DateTime(2015,03,12,10,00,00), 
-					End = new DateTime(2015,03,12,11,00,00),
-					SpeakerName = "speaker 3",
-					SpeakerEmail = "speaker3@mail.com",
-					Id = "c2s1",
-					Title = "Session1",
-					Feedback = new List<FeedbackData>
-					{
-						new FeedbackData
-						{
-							Email = "anttendee4@mail.com",
-							Comment = "I liked the last part.",
-							Score = TrafficLightScores.Green,
-						},
-						new FeedbackData
-						{
-							Email = "anttendee5@mail.com",
-							Comment = "The sounds was too high",
-							Score = TrafficLightScores.Yellow,
-						}
-					}
-				}
-			};
-		} 
 	}
 }

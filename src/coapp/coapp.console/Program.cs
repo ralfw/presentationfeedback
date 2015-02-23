@@ -7,8 +7,7 @@ namespace coapp.console
 		public static void Main (string[] args)
 		{
 			var es = new EventStore.FileEventStore ("app.events");
-			var repo = new Repository.Repository(es);
-			var body = new Body (repo);
+			var body = new Body (es);
 			var head = new Head (body);
 
 			head.Run (args);

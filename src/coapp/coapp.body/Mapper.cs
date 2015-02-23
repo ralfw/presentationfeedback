@@ -1,4 +1,6 @@
 ﻿
+using Repository.data;
+
 namespace coapp.body
 {
 	using Contract.data;
