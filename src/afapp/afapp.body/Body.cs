@@ -79,15 +79,16 @@ namespace afapp.body
 			scheduler.Stop();
 		}
 
+
 		public IEnumerable<ConferenceVm> Generate_conference_overview()
 		{
-			return repo.Load_conferences().Select(x =>
+			return repo.Load_conferences().Select(conferenceData =>
 			{
-				var conference = conferenceFactory(x);
+				var conference = conferenceFactory(conferenceData);
 				return new ConferenceVm
 				{
-					Id = x.Id,
-					Title = x.Title,
+					Id = conferenceData.Id,
+					Title = conferenceData.Title,
 					Start = conference.StartDate,
 					End = conference.EndDate
 				};

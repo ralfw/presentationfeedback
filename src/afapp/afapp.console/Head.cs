@@ -49,6 +49,7 @@ namespace afapp.console
 			Environment.Exit(0);
 		}
 
+
 		[Verb(Aliases = "startspeakernotification")]
 		public void Start_speaker_notification(
 			[Aliases("now,n")]					DateTime fixedNow,
@@ -67,14 +68,18 @@ namespace afapp.console
 			Environment.Exit(0);
 		}
 
+
 		[Verb]
 		public void Conferences()
 		{
 			var conferences = body.Generate_conference_overview();
-			foreach (var conference in conferences)
-			{
-				Console.WriteLine("{0} {1} {2} {3}", conference.Id, conference.Title, conference.Start.ToShortDateString(), 
-					conference.End.ToShortDateString());
+
+			foreach (var conference in conferences) {
+				Console.WriteLine("{0} {1} {2} {3}", 
+									conference.Id, 
+									conference.Title, 
+									conference.Start.ToShortDateString(), 
+									conference.End.ToShortDateString());
 			}
 			Environment.Exit(0);
 		}

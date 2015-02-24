@@ -35,14 +35,18 @@ namespace coapp.console
 			[Aliases("d")] string dir)
 		{
 			var feedback = body.Generate_conference_feedback(confId);
-			var fileName = string.Format("Feedback for {0}-{1}.txt", confId, feedback.ConfTitle);
 
-			using (var writer = new StreamWriter(Path.Combine(dir ?? string.Empty, fileName)))
-			{
-				writer.Write(feedback.Content);
-			}
+			var fileName = Store_feedback (confId, dir, feedback);
 
 			Console.WriteLine("Feedback written to file: '{0}'.", fileName);
+		}
+
+		static string Store_feedback (string confId, string dir, Contract.data.ConferenceCvsFeedback feedback)
+		{
+			var fileName = string.Format ("Feedback for {0}-{1}.txt", confId, feedback.ConfTitle);
+			var filePath = Path.Combine (dir ?? string.Empty, fileName);
+			File.WriteAllText (filePath, feedback.Content);
+			return fileName;
 		}
 	}
 }

@@ -31,9 +31,10 @@ namespace coapp.body
 		{
 			var scoredSessionData = Get_scored_sessions_for_conference(confId);
 			var confOverviewData = Mapper.Map(scoredSessionData);
-			var confTitle = confOverviewData.Title;
-			var content = Build_csv_content(confOverviewData.Sessions);
-			return Assemble_cvs_feedback(confTitle, content);
+			return new ConferenceCvsFeedback{ 
+				ConfTitle = confOverviewData.Title,
+				Content = Build_csv_content(confOverviewData.Sessions)
+			};
 		}
 
 		private IEnumerable<ScoredSessionData> Get_scored_sessions_for_conference(string confId)
@@ -87,15 +88,6 @@ namespace coapp.body
 			stringBuilder.Append(columnHeaders).Append("\n");
 			stringBuilder.Append(string.Join("\n", lines));
 			return stringBuilder.ToString();
-		}
-
-		private static ConferenceCvsFeedback Assemble_cvs_feedback(string confTitle, string content)
-		{
-			return new ConferenceCvsFeedback
-			{
-				ConfTitle = confTitle,
-				Content = content
-			};
 		}
 	}
 }
