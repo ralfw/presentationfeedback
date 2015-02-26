@@ -31,7 +31,7 @@ namespace afapp.body.test
 		[Test]
 		public void Speaker_notification_calculates_correct_due_sessions() {
 			// arrange
-			var es = new EventStore.FileEventStore(DIR_PATH);
+			var es = new EventStore.InMemoryEventStore();
 			var repo = new Repository.Repository (es);
 			var map = new Mapper ();
 			var fakeScheduler = new FakeSchedulingProvider ();

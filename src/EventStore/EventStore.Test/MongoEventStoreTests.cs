@@ -1,24 +1,21 @@
-﻿using EventStore.Contract;
-using FluentAssertions;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
+﻿
 namespace EventStore.Test
 {
+	using Contract;
+	using FluentAssertions;
+	using NUnit.Framework;
+	using System.Collections.Generic;
+	using System.Linq;
+
 	[TestFixture]
-	public class FileEventStoreTests
+	public class MongoEventStoreTests
 	{
-		private const string DirPath = "eventStoreDir";
+		private readonly MongoEventStore sut = new MongoEventStore("mongodb://localhost/trafficlightfeedback", "trafficlightfeedback"); 
 
 		[SetUp]
 		public void Init()
 		{
-			if (Directory.Exists(DirPath))
-			{
-				Directory.Delete(DirPath, true);
-			}
+			sut.Drop();
 		}
 
 		[Test]
@@ -27,7 +24,6 @@ namespace EventStore.Test
 			// arrange
 			var testEvent0 = new AnotherEventHappened("session");
 			var testEvent1 = new EventHappened("conference");
-			var sut = new FileEventStore(DirPath);
 			var recordedEvents = new List<IRecordedEvent>();
 			sut.OnRecorded += recordedEvents.Add;
 
@@ -48,7 +44,6 @@ namespace EventStore.Test
 			var testEvent0 = new AnotherEventHappened("session");
 			var testEvent1 = new AnotherEventHappened("conference");
 			var testEvent2 = new AnotherEventHappened("session");
-			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -70,7 +65,6 @@ namespace EventStore.Test
 			var testEvent1 = new AnotherEventHappened("conference");
 			var testEvent2 = new EventHappened("session");
 			var testEvent3 = new EventHappened("session");
-			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -95,7 +89,6 @@ namespace EventStore.Test
 			var testEvent2 = new EventHappened("session");
 			var testEvent3 = new EventHappened("session");
 			var testEvent4 = new EventHappened("conference");
-			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -123,7 +116,6 @@ namespace EventStore.Test
 			var testEvent1 = new AnotherEventHappened(context1);
 			var testEvent2 = new EventHappened("bar context");
 			var testEvent3 = new EventHappened(context2);
-			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -138,7 +130,7 @@ namespace EventStore.Test
 			result[1].Event.ShouldBeEquivalentTo(testEvent3);
 		}
 
-		[Test] 
+		[Test]
 		public void QueryByType()
 		{
 			// arrange
@@ -148,7 +140,6 @@ namespace EventStore.Test
 			var testEvent1 = new AnotherEventHappened(context1);
 			var testEvent2 = new EventHappened("bar context");
 			var testEvent3 = new EventHappened(context2);
-			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);

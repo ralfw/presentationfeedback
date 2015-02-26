@@ -65,6 +65,7 @@
     <Compile Include="EventHappened.cs" />
     <Compile Include="InMemoryEventStoreTests.cs" />
     <Compile Include="Internals\File\FileStoreTests.cs" />
+    <Compile Include="MongoEventStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileEventStoreTests.cs" />
   </ItemGroup>
