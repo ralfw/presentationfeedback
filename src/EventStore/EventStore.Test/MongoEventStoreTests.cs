@@ -10,7 +10,8 @@ namespace EventStore.Test
 	[TestFixture]
 	public class MongoEventStoreTests
 	{
-		private readonly MongoEventStore sut = new MongoEventStore("mongodb://localhost/trafficlightfeedback", "trafficlightfeedback"); 
+		private readonly MongoEventStore sut = 
+			new MongoEventStore("mongodb://admin:admin@dogen.mongohq.com:10097/trafficlightfeedback_test", "trafficlightfeedback_test"); 
 
 		[SetUp]
 		public void Init()
