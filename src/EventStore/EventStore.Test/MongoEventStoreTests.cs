@@ -1,4 +1,7 @@
 ﻿
+
+using MongoDB.Driver;
+
 namespace EventStore.Test
 {
 	using Contract;
@@ -10,13 +13,17 @@ namespace EventStore.Test
 	[TestFixture]
 	public class MongoEventStoreTests
 	{
-		private readonly MongoEventStore sut = 
-			new MongoEventStore("mongodb://admin:admin@dogen.mongohq.com:10097/trafficlightfeedback_test", "trafficlightfeedback_test"); 
+		private const string CONNECTION_STRING = "mongodb://admin:admin@dogen.mongohq.com:10097/trafficlightfeedback_test";
+		private const string DATABASE = "trafficlightfeedback_test";
+		private readonly MongoEventStore sut = new MongoEventStore(CONNECTION_STRING, DATABASE); 
 
 		[SetUp]
 		public void Init()
 		{
-			sut.Drop();
+			var client = new MongoClient(CONNECTION_STRING);
+			var server = client.GetServer();
+			var database = server.GetDatabase(DATABASE);
+			database.GetCollection<IRecordedEvent>("events").Drop();
 		}
 
 		[Test]

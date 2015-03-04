@@ -64,10 +64,5 @@ namespace EventStore
 		}
 
 		public event Action<IRecordedEvent> OnRecorded = _ => { };
-
-		public void Drop()
-		{
-			collection.Drop();
-		}
 	}
 }
