@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EventStore.Contract
 {
-	public interface IEventStore
+	public interface IEventStore : IDisposable
 	{
 		void Record(IEvent @event);
 		IEnumerable<IRecordedEvent> Replay();

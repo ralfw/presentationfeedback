@@ -65,5 +65,10 @@ namespace EventStore
 		}
 
 		public event Action<IRecordedEvent> OnRecorded = _ => { };
+
+		public void Dispose()
+		{
+
+		}
 	}
 }
