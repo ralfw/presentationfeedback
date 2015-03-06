@@ -2,6 +2,9 @@
 using afapp.body.providers;
 using Contract;
 using Contract.data;
+using EventStore;
+using EventStore.Contract;
+using MongoDB.Driver;
 using NUnit.Framework;
 using Repository.data;
 using Repository.events;
@@ -12,26 +15,27 @@ using System.Linq;
 
 namespace afapp.body.test
 {
-	using System.IO;
 
 	[TestFixture]
 	class BodyTests
 	{
-		private const string DIR_PATH = "eventStoreDir";
+		private const string CONNECTION_STRING = "mongodb://admin:admin@dogen.mongohq.com:10046/trafficlightfeedback";
+		private const string DATABASE = "trafficlightfeedback";
+
 
 		[SetUp]
 		public void Init()
 		{
-			if (Directory.Exists(DIR_PATH))
-			{
-				Directory.Delete(DIR_PATH, true);
-			}
+			var client = new MongoClient(CONNECTION_STRING);
+			var server = client.GetServer();
+			var database = server.GetDatabase(DATABASE);
+			database.GetCollection<IRecordedEvent>("events").Drop();
 		}
 
 		[Test]
 		public void Speaker_notification_calculates_correct_due_sessions() {
 			// arrange
-			var es = new EventStore.InMemoryEventStore();
+			var es = new MongoEventStore(CONNECTION_STRING, DATABASE);
 			var repo = new Repository.Repository (es);
 			var map = new Mapper ();
 			var fakeScheduler = new FakeSchedulingProvider ();
@@ -94,7 +98,7 @@ namespace afapp.body.test
 		public void Speaker_notification_calculates_correct_feedback()
 		{
 			// arrange
-			var es = new EventStore.InMemoryEventStore();
+			var es = new MongoEventStore(CONNECTION_STRING, DATABASE);
 			var repo = new Repository.Repository(es);
 			var map = new Mapper();
 			var fakeScheduler = new FakeSchedulingProvider();
@@ -135,7 +139,7 @@ namespace afapp.body.test
 		public void Generate_conference_overview()
 		{
 			// arrange
-			var es = new EventStore.FileEventStore(DIR_PATH);
+			var es = new MongoEventStore(CONNECTION_STRING, DATABASE);
 			var repo = new Repository.Repository(es);
 			var map = new Mapper();
 			var fakeScheduler = new FakeSchedulingProvider();

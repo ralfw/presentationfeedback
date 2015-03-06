@@ -30,15 +30,14 @@ namespace afapp.body
 			this.scoredSessionsFactory = scoredSessionsFactory;
 		} 
 
-
 		public SessionOverview Generate_session_overview(string confId) {
-			var confdata = this.repo.Load_conference (confId);
+			var confdata = repo.Load_conference (confId);
 
-			var conf = this.conferenceFactory (confdata);
+			var conf = conferenceFactory (confdata);
 			var activeSessions = conf.DetermineActiveSessions;
 			var inactiveSessions = conf.DetermineInactiveSessions;
 
-			return this.mapper.Map (confdata.Id, confdata.Title, activeSessions, inactiveSessions);
+			return mapper.Map (confdata.Id, confdata.Title, activeSessions, inactiveSessions);
 		}
 
 
@@ -53,7 +52,6 @@ namespace afapp.body
 				Email = email
 			});
 		}
-
 
 		public void Start_background_speaker_notification(int feedbackPeriod, int schedulerRepeatInterval)
 		{
@@ -73,12 +71,10 @@ namespace afapp.body
 			repo.Register_feedback_notification(scoredSessionData.Id);
 		}
 
-
 		public void Stop_speaker_notification()
 		{
 			scheduler.Stop();
 		}
-
 
 		public IEnumerable<ConferenceVm> Generate_conference_overview()
 		{
@@ -93,6 +89,11 @@ namespace afapp.body
 					End = conference.EndDate
 				};
 			});
-		} 
+		}
+
+		public Session Get_Session(string sessionId)
+		{
+			return repo.Get_Session(sessionId);
+		}
 	}
 }

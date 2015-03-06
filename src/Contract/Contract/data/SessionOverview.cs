@@ -7,12 +7,12 @@ namespace Contract.data
 		public string ConfTitle;
 		public Session[] ActiveSessions;
 		public Session[] InactiveSessions;
+	}
 
-		public struct Session {
-			public string Id;
-			public string Title;
-			public DateTime Start, End;
-			public string SpeakerName;
-		}
+	public struct Session {
+		public string Id;
+		public string Title;
+		public DateTime Start, End;
+		public string SpeakerName;
 	}
 }

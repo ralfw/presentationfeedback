@@ -1,4 +1,5 @@
-﻿using EventStore.Contract;
+﻿using Contract.data;
+using EventStore.Contract;
 using Repository.data;
 using Repository.events;
 using System;
@@ -152,7 +153,6 @@ namespace Repository
 			es.Record(new SpeakerNotified(sessionId));
 		}
 
-
 		public IEnumerable<ConferenceData> Load_conferences()
 		{
 			return es.QueryByType(typeof(ConferenceRegistered)).Select(x =>
@@ -160,6 +160,20 @@ namespace Repository
 				var confRegistered = (ConferenceRegistered) x.Event;
 				return Load_conference(confRegistered.ConfId);
 			});
+		}
+
+		public Session Get_Session(string sessionId)
+		{
+			var @event = es.QueryByType(typeof (SessionRegistered)).Single(x => x.Event.Context == sessionId).Event;
+			var sessionRegistered = (SessionRegistered)@event;
+			return new Session
+			{
+				Id	= sessionRegistered.SessionId,
+				Title = sessionRegistered.Title,
+				Start = sessionRegistered.Start,
+				End = sessionRegistered.End,
+				SpeakerName = sessionRegistered.SpeakerName
+			};
 		}
 	}
 }

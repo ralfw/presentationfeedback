@@ -12,7 +12,7 @@ namespace afapp.body
 				ConfId = confId,
 				ConfTitle = confTitle,
 
-				ActiveSessions = activeSessions.Select(s => new SessionOverview.Session{
+				ActiveSessions = activeSessions.Select(s => new Session{
 					Id = s.Id,
 					Title = s.Title,
 					Start = s.Start,
@@ -20,7 +20,7 @@ namespace afapp.body
 					SpeakerName = s.SpeakerName
 				}).ToArray(),
 
-				InactiveSessions = inactiveSessions.Select(s => new SessionOverview.Session{
+				InactiveSessions = inactiveSessions.Select(s => new Session{
 					Id = s.Id,
 					Title = s.Title,
 					Start = s.Start,
