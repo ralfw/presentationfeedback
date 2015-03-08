@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Contract.data.ConferenceVm>
+		
+<div class="page-header">
+	<h1>Conferences</h1>
+</div>
+
+<container>
+	<row>
+		<div class="col-lg-8">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Start date</th>
+						<th>End date</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var row in Model)
+					{
+						<tr>
+							<td><a href="@Url.Action("Index", new { id = row.Id })">@row.Title</a></td>
+							<td>@row.Start.ToShortDateString()</td>
+							<td>@row.End.ToShortDateString()</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</row>
+</container>

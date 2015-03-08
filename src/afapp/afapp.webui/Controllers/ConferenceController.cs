@@ -15,16 +15,18 @@ namespace afapp.webui.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Index()
+		public ActionResult Index(string id)
 		{
-			return View(body.Generate_conference_overview());
+			ViewBag.SelectedMenuItem = "Conference";
+			TimeProvider.Configure(new DateTime(2015, 1, 23, 8, 0, 0));
+			return View(body.Generate_session_overview(id));
 		}
 
 		[HttpGet]
-		public ActionResult Show(string id)
+		public ActionResult List()
 		{
-			TimeProvider.Configure(new DateTime(2015, 2, 8, 8, 0, 0));
-			return View(body.Generate_session_overview(id));
+			ViewBag.SelectedMenuItem = "Conference";
+			return View(body.Generate_conference_overview());
 		}
 	}
 }

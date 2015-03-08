@@ -85,14 +85,20 @@
     </Reference>
     <Reference Include="System.Web.Mvc">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\bootstrap\bootstrap.min.css" />
     <Content Include="Content\css\conference\show.css" />
-    <Content Include="Content\css\navbar.css" />
+    <Content Include="Content\css\home\about.css" />
+    <Content Include="Content\css\shared\navbar.css" />
     <Content Include="Content\css\session\show.css" />
+    <Content Include="Content\css\shared\pftheme.css" />
     <Content Include="Content\images\favicon.ico" />
-    <Content Include="Content\js\ie10-viewport-bug-workaround.js" />
+    <Content Include="Content\js\bootstrap\bootstrap.min.js" />
+    <Content Include="Content\js\bootstrap\validator.js" />
+    <Content Include="Content\js\session\session-show.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -101,7 +107,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ConferenceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SessionController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="FormModels\FeedbackFormModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -117,9 +123,11 @@
     <Content Include="Views\Shared\_navbar.cshtml" />
     <Content Include="Views\Shared\_styleSheets.cshtml" />
     <Content Include="Views\Shared\_scripts.cshtml" />
+    <Content Include="Views\Conference\List.cshtml" />
     <Content Include="Views\Conference\Index.cshtml" />
-    <Content Include="Views\Conference\Show.cshtml" />
-    <Content Include="Views\Session\Show.cshtml" />
+    <Content Include="Views\Feedback\Create.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -130,6 +138,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Contract\Contract\Contract.csproj">

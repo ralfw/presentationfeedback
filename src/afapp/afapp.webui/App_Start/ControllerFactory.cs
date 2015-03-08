@@ -26,10 +26,10 @@ namespace afapp.webui
 
 				return new ConferenceController(BuildBody());
 			}
-			if (controllerType == typeof(SessionController))
+			if (controllerType == typeof(FeedbackController))
 			{
 
-				return new SessionController(BuildBody());
+				return new FeedbackController(BuildBody());
 			}
 
 			throw new Exception("Unknown controller type: " + controllerType);

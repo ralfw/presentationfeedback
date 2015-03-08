@@ -10,12 +10,20 @@
 			<a class="navbar-brand" href="#">Presentation feedback</a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">Conferences</a></li>
-				<li><a href="#about">About</a></li>
-				<li><a href="#contact">Contact</a></li>
+			<ul class="nav navbar-nav navbar-right">
+				<li @HighlightActive("Home")><a href="@Url.Action("Index", "Home")">Home</a></li>
+				<li @HighlightActive("Conference")><a href="@Url.Action("List", "Conference")">Conferences</a></li>
+				<li @HighlightActive("About")><a href="@Url.Action("About", "Home")">About</a></li>
+				<li @HighlightActive("Contact")><a href="@Url.Action("Contact", "Home")">Contact</a></li>
 			</ul>
 		</div>
 	</div>
 </nav>
+
+@helper HighlightActive(string item)
+{
+	if (@ViewBag.SelectedMenuItem == item)
+	{
+		<text>class="active"</text>
+	}
+}
