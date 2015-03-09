@@ -1,12 +1,12 @@
 ﻿using afapp.body.domain;
 using afapp.body.helpers;
-using Common.Logging;
 using Contract;
 using Contract.data;
 using Repository.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using log4net;
 
 namespace afapp.body
 {
