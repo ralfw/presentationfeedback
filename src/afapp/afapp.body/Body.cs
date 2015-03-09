@@ -2,11 +2,11 @@
 using afapp.body.helpers;
 using Contract;
 using Contract.data;
+using log4net;
 using Repository.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using log4net;
 
 namespace afapp.body
 {
@@ -71,7 +71,7 @@ namespace afapp.body
 
 		private void Notify_speaker(ScoredSessionData scoredSessionData)
 		{
-			Logger.Info(string.Format("Notify speaker {0}", scoredSessionData.SpeakerEmail));
+			Logger.Info(string.Format("Notify speaker {0} about session {1}", scoredSessionData.SpeakerEmail, scoredSessionData.Title));
 			var notificationData = mapper.Map(scoredSessionData);
 			notifier.Send_feedback(notificationData);
 			repo.Register_feedback_notification(scoredSessionData.Id);

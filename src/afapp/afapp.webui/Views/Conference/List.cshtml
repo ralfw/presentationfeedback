@@ -20,8 +20,8 @@
 					{
 						<tr>
 							<td><a href="@Url.Action("Index", new { id = row.Id })">@row.Title</a></td>
-							<td>@row.Start.ToShortDateString()</td>
-							<td>@row.End.ToShortDateString()</td>
+							<td>@String.Format("{0:dd-MM-yyyy}", row.Start)</td>
+							<td>@String.Format("{0:dd-MM-yyyy}", row.End)</td>
 						</tr>
 					}
 				</tbody>

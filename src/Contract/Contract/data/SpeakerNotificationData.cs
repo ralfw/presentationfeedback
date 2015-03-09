@@ -13,6 +13,6 @@ namespace Contract.data
 		public int Greens;
 		public int Yellows;
 		public int Reds;
-		//TODO: Compile comments
+		public string Comments;
 	}
 }

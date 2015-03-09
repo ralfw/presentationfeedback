@@ -32,6 +32,8 @@ namespace afapp.body
 
 		public SpeakerNotificationData Map(ScoredSessionData session)
 		{
+			var comments = session.UniqueFeedback.Where(x => !string.IsNullOrWhiteSpace(x.Comment));
+			var commentsString = string.Join("\n", comments.Select(x => string.Format("{0}: {1}", x.Score, x.Comment)));
 			var feedback = session.UniqueFeedback.ToList();
 			return new SpeakerNotificationData
 			{
@@ -43,7 +45,8 @@ namespace afapp.body
 				SpeakerEmail = session.SpeakerEmail,
 				Reds = feedback.Count(x => x.Score == TrafficLightScores.Red),
 				Yellows = feedback.Count(x => x.Score == TrafficLightScores.Yellow),
-				Greens = feedback.Count(x => x.Score == TrafficLightScores.Green)
+				Greens = feedback.Count(x => x.Score == TrafficLightScores.Green),
+				Comments = commentsString
 			};
 		}
 	}
