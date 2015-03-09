@@ -12,6 +12,8 @@ using System.Web.Routing;
 
 namespace afapp.webui
 {
+	using Providers;
+
 	public class ControllerFactory : DefaultControllerFactory
 	{
 
@@ -37,7 +39,6 @@ namespace afapp.webui
 
 		private static Body BuildBody()
 		{
-			TimeProvider.Configure();
 			var es = new MongoEventStore("mongodb://admin:admin@dogen.mongohq.com:10046/trafficlightfeedback",
 				"trafficlightfeedback");
 			var repo = new Repository.Repository(es);
@@ -45,7 +46,8 @@ namespace afapp.webui
 			var scoredSessions = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var mapper = new Mapper();
 			var scheduler = new SchedulingProvider();
-			return new Body(repo, conferenceFactory, mapper, scheduler, null, scoredSessions);
+			var notificationProvider = new EmailNotificationProvider();
+			return new Body(repo, conferenceFactory, mapper, scheduler, notificationProvider, scoredSessions);
 		}
 	}
 }

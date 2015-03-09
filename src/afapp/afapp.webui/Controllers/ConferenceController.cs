@@ -1,6 +1,4 @@
 ﻿using afapp.body;
-using afapp.body.providers;
-using System;
 using System.Web.Mvc;
 
 namespace afapp.webui.Controllers
@@ -18,7 +16,7 @@ namespace afapp.webui.Controllers
 		public ActionResult Index(string id)
 		{
 			ViewBag.SelectedMenuItem = "Conference";
-			TimeProvider.Configure(new DateTime(2015, 1, 23, 8, 0, 0));
+//			TimeProvider.Configure(new DateTime(2015, 1, 23, 8, 0, 0));
 			return View(body.Generate_session_overview(id));
 		}
 

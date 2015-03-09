@@ -9,6 +9,8 @@ using System.Linq;
 
 namespace afapp.body
 {
+	using System.Diagnostics;
+
 	public class Body
 	{
 		private readonly Repository.Repository repo;
@@ -57,6 +59,7 @@ namespace afapp.body
 		{
 			scheduler.Start(schedulerRepeatInterval,
 			  () => {
+					Trace.TraceInformation("Notification scheduler run: {0}", DateTime.Now);
 					var scoredSessionsData = repo.Load_scored_sessions();
 					var scoredSessions = scoredSessionsFactory(scoredSessionsData);
 					scoredSessions.Get_sessions_due_for_notification(feedbackPeriod)
@@ -66,6 +69,7 @@ namespace afapp.body
 
 		private void Notify_speaker(ScoredSessionData scoredSessionData)
 		{
+			Trace.TraceInformation("Notify speaker {0}", scoredSessionData.SpeakerEmail);
 			var notificationData = mapper.Map(scoredSessionData);
 			notifier.Send_feedback(notificationData);
 			repo.Register_feedback_notification(scoredSessionData.Id);
