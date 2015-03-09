@@ -1,5 +1,6 @@
 ﻿using afapp.body.domain;
 using afapp.body.helpers;
+using Common.Logging;
 using Contract;
 using Contract.data;
 using Repository.data;
@@ -9,10 +10,10 @@ using System.Linq;
 
 namespace afapp.body
 {
-	using System.Diagnostics;
 
 	public class Body
 	{
+		private static readonly ILog Logger = LogManager.GetLogger(typeof(Body));
 		private readonly Repository.Repository repo;
 		private readonly Func<ConferenceData, Conference> conferenceFactory;
 		private readonly Func<IEnumerable<ScoredSessionData>, ScoredSessions> scoredSessionsFactory;
@@ -59,7 +60,8 @@ namespace afapp.body
 		{
 			scheduler.Start(schedulerRepeatInterval,
 			  () => {
-					Trace.TraceInformation("Notification scheduler run: {0}", DateTime.Now);
+					Logger.Info(string.Format("Notification scheduler runs: {0} - feedbackPeriod: {1} - schedulerRepeatInterval: {2}", 
+						DateTime.Now, feedbackPeriod, schedulerRepeatInterval));
 					var scoredSessionsData = repo.Load_scored_sessions();
 					var scoredSessions = scoredSessionsFactory(scoredSessionsData);
 					scoredSessions.Get_sessions_due_for_notification(feedbackPeriod)
@@ -69,7 +71,7 @@ namespace afapp.body
 
 		private void Notify_speaker(ScoredSessionData scoredSessionData)
 		{
-			Trace.TraceInformation("Notify speaker {0}", scoredSessionData.SpeakerEmail);
+			Logger.Info(string.Format("Notify speaker {0}", scoredSessionData.SpeakerEmail));
 			var notificationData = mapper.Map(scoredSessionData);
 			notifier.Send_feedback(notificationData);
 			repo.Register_feedback_notification(scoredSessionData.Id);

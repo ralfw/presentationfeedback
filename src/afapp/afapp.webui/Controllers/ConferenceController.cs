@@ -3,7 +3,6 @@ using System.Web.Mvc;
 
 namespace afapp.webui.Controllers
 {
-	using System.Diagnostics;
 
 	[RoutePrefix("Conference")]
 	public class ConferenceController : Controller
@@ -19,7 +18,6 @@ namespace afapp.webui.Controllers
 		[HttpGet]
 		public ActionResult Index(string id)
 		{
-			Trace.TraceInformation("Conference#Index: {0}", id);
 			ViewBag.SelectedMenuItem = "Conference";
 			return View(body.Generate_session_overview(id));
 		}
@@ -28,7 +26,6 @@ namespace afapp.webui.Controllers
 		[HttpGet]
 		public ActionResult List()
 		{
-			Trace.TraceInformation("Conference#List");
 			ViewBag.SelectedMenuItem = "Conference";
 			return View(body.Generate_conference_overview());
 		}
