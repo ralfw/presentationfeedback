@@ -9,6 +9,7 @@ namespace afapp.webui
 	using body.domain;
 	using body.providers;
 	using EventStore;
+	using log4net;
 	using Providers;
 	using Repository.data;
 	using System;
@@ -18,6 +19,8 @@ namespace afapp.webui
 
 	public class MvcApplication : System.Web.HttpApplication
 	{
+		private static readonly ILog Logger = LogManager.GetLogger(typeof(MvcApplication));
+
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
@@ -43,6 +46,8 @@ namespace afapp.webui
 			var body = BuildBody();
 			var feedbackPeriod = WebConfigurationManager.AppSettings["FeedbackPeriod"];
 			var schedulerRepeatInterval = WebConfigurationManager.AppSettings["SchedulerRepeatInterval"];
+			Logger.Info(string.Format("Start background speaker notification at {0} - fp: {1} = sri: {2}",
+				DateTime.Now, feedbackPeriod, schedulerRepeatInterval));
 			body.Start_background_speaker_notification(int.Parse(feedbackPeriod), int.Parse(schedulerRepeatInterval));
 		}
 
