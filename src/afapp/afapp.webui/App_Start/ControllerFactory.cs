@@ -7,6 +7,7 @@ using EventStore;
 using Repository.data;
 using System;
 using System.Collections.Generic;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -39,8 +40,9 @@ namespace afapp.webui
 
 		private static Body BuildBody()
 		{
-			var es = new MongoEventStore("mongodb://admin:admin@dogen.mongohq.com:10046/trafficlightfeedback",
-				"trafficlightfeedback");
+			var connString = WebConfigurationManager.AppSettings["MongoDbConn"];
+			var database = WebConfigurationManager.AppSettings["MongoDbDatabase"];
+			var es = new MongoEventStore(connString, database);
 			var repo = new Repository.Repository(es);
 			var conferenceFactory = new Func<ConferenceData, Conference>(data => new Conference(data));
 			var scoredSessions = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
