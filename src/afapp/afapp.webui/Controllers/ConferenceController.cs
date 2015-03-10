@@ -1,4 +1,4 @@
-﻿using afapp.body;
+﻿using System.IO;
 using System.Web.Mvc;
 
 namespace afapp.webui.Controllers
@@ -7,11 +7,13 @@ namespace afapp.webui.Controllers
 	[RoutePrefix("Conference")]
 	public class ConferenceController : Controller
 	{
-		private readonly Body body;
+		private readonly body.Body afappBody;
+		private readonly coapp.body.Body coappBody;
 
-		public ConferenceController(Body body)
+		public ConferenceController(body.Body afappBody, coapp.body.Body coappBody)
 		{
-			this.body = body;
+			this.afappBody = afappBody;
+			this.coappBody = coappBody;
 		}
 
 		[Route("{id}")]
@@ -19,7 +21,7 @@ namespace afapp.webui.Controllers
 		public ActionResult Index(string id)
 		{
 			ViewBag.SelectedMenuItem = "Conference";
-			return View(body.Generate_session_overview(id));
+			return View(afappBody.Generate_session_overview(id));
 		}
 
 		[Route("List")]
@@ -27,7 +29,21 @@ namespace afapp.webui.Controllers
 		public ActionResult List()
 		{
 			ViewBag.SelectedMenuItem = "Conference";
-			return View(body.Generate_conference_overview());
+			return View(afappBody.Generate_conference_overview());
+		}
+
+		[Route("Feedback")]
+		[HttpGet]
+		public ActionResult Feedback(string id)
+		{
+			var feedback = coappBody.Generate_conference_feedback(id);
+			var memoryStream = new MemoryStream();
+			var tw = new StreamWriter(memoryStream);
+			tw.Write(feedback.Content);
+			tw.Flush();
+			tw.Close();
+			return File(memoryStream.GetBuffer(), "text/plain", string.Format("{0}-feedbackResult.txt", feedback.ConfTitle));
+			
 		}
 	}
 }

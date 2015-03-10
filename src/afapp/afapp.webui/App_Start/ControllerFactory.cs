@@ -4,6 +4,7 @@ using afapp.body.domain;
 using afapp.body.providers;
 using afapp.webui.Controllers;
 using EventStore;
+using EventStore.Contract;
 using Repository.data;
 using System;
 using System.Collections.Generic;
@@ -26,30 +27,40 @@ namespace afapp.webui
 			}
 			if (controllerType == typeof (ConferenceController))
 			{
-
-				return new ConferenceController(BuildBody());
+				return new ConferenceController(BuildAfappBody(), BuildCoappBody());
 			}
 			if (controllerType == typeof(FeedbackController))
 			{
 
-				return new FeedbackController(BuildBody());
+				return new FeedbackController(BuildAfappBody());
 			}
 
 			throw new Exception("Unknown controller type: " + controllerType);
 		}
 
-		private static Body BuildBody()
+		private static Body BuildAfappBody()
 		{
-			var connString = WebConfigurationManager.AppSettings["MongoDbConn"];
-			var database = WebConfigurationManager.AppSettings["MongoDbDatabase"];
-			var es = new MongoEventStore(connString, database);
-			var repo = new Repository.Repository(es);
+			var eventStore = BuildEventStore();
+			var repo = new Repository.Repository(eventStore);
 			var conferenceFactory = new Func<ConferenceData, Conference>(data => new Conference(data));
 			var scoredSessions = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var mapper = new Mapper();
 			var scheduler = new SchedulingProvider();
 			var notificationProvider = new EmailNotificationProvider();
 			return new Body(repo, conferenceFactory, mapper, scheduler, notificationProvider, scoredSessions);
+		}
+
+		private static coapp.body.Body BuildCoappBody()
+		{
+			var eventStore = BuildEventStore();
+			return new coapp.body.Body(eventStore);
+		}
+
+		private static IEventStore BuildEventStore()
+		{
+			var connString = WebConfigurationManager.AppSettings["MongoDbConn"];
+			var database = WebConfigurationManager.AppSettings["MongoDbDatabase"];
+			return new MongoEventStore(connString, database);
 		}
 	}
 }

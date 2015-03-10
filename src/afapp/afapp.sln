@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStore.Test", "..\Event
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "afapp.webui", "afapp.webui\afapp.webui.csproj", "{0F61F75B-0537-4C71-B6E9-E0525E3DD7D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "coapp.body", "..\coapp\coapp.body\coapp.body.csproj", "{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{0F61F75B-0537-4C71-B6E9-E0525E3DD7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F61F75B-0537-4C71-B6E9-E0525E3DD7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F61F75B-0537-4C71-B6E9-E0525E3DD7D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFBE14A5-F655-42FA-AF98-4B40631CEEA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,5 +76,6 @@ Global
 		{A2BFC56E-D90E-4C3D-909F-5F10B9A2ABD7} = {AF731A88-BD14-4428-8D2A-E80CB2FF440D}
 		{9B4B0517-C1E1-4BD4-8DAE-A26318D29C72} = {AF731A88-BD14-4428-8D2A-E80CB2FF440D}
 		{1D2A32E7-7FB4-4ECA-AB44-FF918BE6B193} = {43EAD5F0-5917-41D0-AD4C-2D1CE9EF9F15}
+		{FFBE14A5-F655-42FA-AF98-4B40631CEEA7} = {AF731A88-BD14-4428-8D2A-E80CB2FF440D}
 	EndGlobalSection
 EndGlobal

@@ -154,6 +154,10 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\coapp\coapp.body\coapp.body.csproj">
+      <Project>{ffbe14a5-f655-42fa-af98-4b40631ceea7}</Project>
+      <Name>coapp.body</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Contract\Contract\Contract.csproj">
       <Project>{9B4B0517-C1E1-4BD4-8DAE-A26318D29C72}</Project>
       <Name>Contract</Name>
