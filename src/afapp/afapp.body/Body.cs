@@ -1,5 +1,6 @@
 ﻿using afapp.body.domain;
 using afapp.body.helpers;
+using afapp.body.providers;
 using Contract;
 using Contract.data;
 using log4net;
@@ -61,7 +62,7 @@ namespace afapp.body
 			scheduler.Start(schedulerRepeatInterval,
 			  () => {
 					Logger.Info(string.Format("Notification scheduler runs: {0} - feedbackPeriod: {1} - schedulerRepeatInterval: {2}", 
-						DateTime.Now, feedbackPeriod, schedulerRepeatInterval));
+						TimeProvider.Now, feedbackPeriod, schedulerRepeatInterval));
 					var scoredSessionsData = repo.Load_scored_sessions();
 					var scoredSessions = scoredSessionsFactory(scoredSessionsData);
 					scoredSessions.Get_sessions_due_for_notification(feedbackPeriod)

@@ -20,8 +20,8 @@ namespace Repository.data
 							return new SessionParsed{
 								Id = fields[0],
 								Title = fields[1],
-								Start = DateTime.Parse(fields[2]),
-								End = DateTime.Parse(fields[3]),
+								Start = DateTime.Parse(fields[2]).ToUniversalTime(),
+								End = DateTime.Parse(fields[3]).ToUniversalTime(),
 								SpeakerName = fields[4],
 								SpeakerEmail = fields[5].Replace("\r", "")
 							};

@@ -47,7 +47,7 @@ namespace afapp.webui
 			var feedbackPeriod = WebConfigurationManager.AppSettings["FeedbackPeriod"];
 			var schedulerRepeatInterval = WebConfigurationManager.AppSettings["SchedulerRepeatInterval"];
 			Logger.Info(string.Format("Start background speaker notification at {0} - fp: {1} = sri: {2}",
-				DateTime.Now, feedbackPeriod, schedulerRepeatInterval));
+				TimeProvider.Now, feedbackPeriod, schedulerRepeatInterval));
 			body.Start_background_speaker_notification(int.Parse(feedbackPeriod), int.Parse(schedulerRepeatInterval));
 		}
 

@@ -5,7 +5,7 @@ namespace afapp.body.providers
 
 	public static class TimeProvider {
 		public static void Configure() {
-			Now = () => DateTime.Now;
+			Now = () => DateTime.UtcNow;
 		}
 
 		public static void Configure(DateTime fixedNow) {

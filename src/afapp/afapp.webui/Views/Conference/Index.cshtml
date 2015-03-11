@@ -1,5 +1,6 @@
 ﻿@using System.Globalization
 @using System.Web.Configuration
+@using afapp.body.providers
 @using Contract.data
 @using MongoDB.Driver.Linq
 @model Contract.data.SessionOverview
@@ -53,7 +54,7 @@
 @helper ShowFeedbackResultLink()
 {
 	var feedbackPeriod = int.Parse(WebConfigurationManager.AppSettings["FeedbackPeriod"]);
-	if (@Model.InactiveSessions.Max(x => x.End).AddMinutes(feedbackPeriod) < DateTime.Now)
+	if (@Model.InactiveSessions.Max(x => x.End).AddMinutes(feedbackPeriod) < TimeProvider.Now())
 	{
 		<a class="btn btn-primary btn-success" href="@Url.Action("Feedback", new {id=@Model.ConfId})" role="button">Result as a CSV file</a>
 	}
