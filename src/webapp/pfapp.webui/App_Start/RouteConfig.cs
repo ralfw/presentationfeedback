@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace afapp.webui
+namespace pfapp.webui
 {
 	public class RouteConfig
 	{

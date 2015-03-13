@@ -1,6 +1,4 @@
-﻿using afapp.body.domain;
-using afapp.body.providers;
-using Contract;
+﻿using Contract;
 using Contract.data;
 using EventStore;
 using EventStore.Contract;
@@ -11,9 +9,11 @@ using Repository.events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using pfapp.body.domain;
+using pfapp.body.providers;
 
 
-namespace afapp.body.test
+namespace pfapp.body.test
 {
 
 	[TestFixture]

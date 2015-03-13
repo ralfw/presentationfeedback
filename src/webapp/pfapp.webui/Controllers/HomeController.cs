@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace afapp.webui.Controllers
+namespace pfapp.webui.Controllers
 {
 	public class HomeController : Controller
 	{

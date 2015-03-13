@@ -1,6 +1,4 @@
-﻿using afapp.body.domain;
-using afapp.body.helpers;
-using afapp.body.providers;
+﻿using pfapp.body.helpers;
 using Contract;
 using Contract.data;
 using log4net;
@@ -8,8 +6,10 @@ using Repository.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using pfapp.body.domain;
+using pfapp.body.providers;
 
-namespace afapp.body
+namespace pfapp.body
 {
 
 	public class Body

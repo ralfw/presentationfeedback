@@ -1,9 +1,4 @@
-﻿
-using afapp.body;
-using afapp.body.domain;
-using afapp.body.providers;
-using afapp.webui.Controllers;
-using EventStore;
+﻿using EventStore;
 using EventStore.Contract;
 using Repository.data;
 using System;
@@ -11,8 +6,12 @@ using System.Collections.Generic;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
+using pfapp.body;
+using pfapp.body.domain;
+using pfapp.body.providers;
+using pfapp.webui.Controllers;
 
-namespace afapp.webui
+namespace pfapp.webui
 {
 	using Providers;
 

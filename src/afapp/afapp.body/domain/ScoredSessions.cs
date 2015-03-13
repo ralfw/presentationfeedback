@@ -1,6 +1,6 @@
 ﻿using Repository.data;
 
-namespace afapp.body.domain
+namespace pfapp.body.domain
 {
 	using providers;
 	using System.Collections.Generic;

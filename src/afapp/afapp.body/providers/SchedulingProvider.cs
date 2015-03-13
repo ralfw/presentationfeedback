@@ -4,7 +4,7 @@ using Quartz.Impl;
 using Quartz.Spi;
 using System;
 
-namespace afapp.body.providers
+namespace pfapp.body.providers
 {
 	public class SchedulingProvider : ISchedulingProvider
 	{

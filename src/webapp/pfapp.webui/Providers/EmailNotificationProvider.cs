@@ -1,5 +1,5 @@
 ﻿
-namespace afapp.webui.Providers
+namespace pfapp.webui.Providers
 {
 	using Contract;
 	using Contract.data;

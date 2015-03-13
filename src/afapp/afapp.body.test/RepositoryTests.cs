@@ -3,7 +3,7 @@
 using Contract.data;
 using Repository.data;
 
-namespace afapp.body.test
+namespace pfapp.body.test
 {
 	using EventStore.Contract;
 	using Moq;

@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization;
 using Repository.events;
 using System.Web.Mvc;
 
-namespace afapp.webui
+namespace pfapp.webui
 {
 	using body;
 	using body.domain;

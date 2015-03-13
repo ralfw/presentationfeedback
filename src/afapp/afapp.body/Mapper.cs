@@ -3,7 +3,7 @@ using Repository.data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace afapp.body
+namespace pfapp.body
 {
 	public class Mapper {
 		public SessionOverview Map(string confId, string confTitle, IEnumerable<ConferenceData.SessionData> activeSessions, 

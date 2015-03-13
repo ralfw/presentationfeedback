@@ -1,6 +1,6 @@
 using System;
 
-namespace afapp.body.providers
+namespace pfapp.body.providers
 {
 
 	public static class TimeProvider {

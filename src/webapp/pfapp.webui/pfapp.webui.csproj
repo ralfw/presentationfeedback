@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>afapp.webui</RootNamespace>
-    <AssemblyName>afapp.webui</AssemblyName>
+    <RootNamespace>pfapp.webui</RootNamespace>
+    <AssemblyName>pfapp.webui</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -153,6 +153,10 @@
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\afapp\afapp.body\afapp.body.csproj">
+      <Project>{938d9ad7-0d94-41dc-a6c1-56ca70da4a4a}</Project>
+      <Name>afapp.body</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\coapp\coapp.body\coapp.body.csproj">
       <Project>{ffbe14a5-f655-42fa-af98-4b40631ceea7}</Project>
       <Name>coapp.body</Name>
@@ -168,10 +172,6 @@
     <ProjectReference Include="..\..\Repository\Repository\Repository.csproj">
       <Project>{A2BFC56E-D90E-4C3D-909F-5F10B9A2ABD7}</Project>
       <Name>Repository</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\afapp.body\afapp.body.csproj">
-      <Project>{938D9AD7-0D94-41DC-A6C1-56CA70DA4A4A}</Project>
-      <Name>afapp.body</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

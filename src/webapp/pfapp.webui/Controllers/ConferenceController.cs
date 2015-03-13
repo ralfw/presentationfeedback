@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Web.Mvc;
 
-namespace afapp.webui.Controllers
+namespace pfapp.webui.Controllers
 {
 
 	[RoutePrefix("Conference")]
