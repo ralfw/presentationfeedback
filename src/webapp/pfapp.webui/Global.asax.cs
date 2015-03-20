@@ -1,13 +1,14 @@
-﻿using EventStore.Internals;
+﻿using Contract.provider;
+using EventStore.Internals;
 using MongoDB.Bson.Serialization;
+using nsapp.body;
+using nsapp.body.domain;
+using nsapp.body.providers;
 using Repository.events;
 using System.Web.Mvc;
 
 namespace pfapp.webui
 {
-	using body;
-	using body.domain;
-	using body.providers;
 	using EventStore;
 	using log4net;
 	using Providers;
@@ -57,12 +58,11 @@ namespace pfapp.webui
 			var database = WebConfigurationManager.AppSettings["MongoDbDatabase"];
 			var es = new MongoEventStore(connString, database);
 			var repo = new Repository.Repository(es);
-			var conferenceFactory = new Func<ConferenceData, Conference>(data => new Conference(data));
 			var scoredSessions = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var mapper = new Mapper();
 			var scheduler = new SchedulingProvider();
 			var notificationProvider = new EmailNotificationProvider();
-			return new Body(repo, conferenceFactory, mapper, scheduler, notificationProvider, scoredSessions);
+			return new Body(repo, mapper, scheduler, notificationProvider, scoredSessions);
 		}
 	}
 }

@@ -1,19 +1,16 @@
-﻿using EventStore;
+﻿using afapp.body;
+using afapp.body.domain;
+using EventStore;
 using EventStore.Contract;
+using pfapp.webui.Controllers;
 using Repository.data;
 using System;
-using System.Collections.Generic;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
-using pfapp.body;
-using pfapp.body.domain;
-using pfapp.body.providers;
-using pfapp.webui.Controllers;
 
 namespace pfapp.webui
 {
-	using Providers;
 
 	public class ControllerFactory : DefaultControllerFactory
 	{
@@ -42,11 +39,8 @@ namespace pfapp.webui
 			var eventStore = BuildEventStore();
 			var repo = new Repository.Repository(eventStore);
 			var conferenceFactory = new Func<ConferenceData, Conference>(data => new Conference(data));
-			var scoredSessions = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var mapper = new Mapper();
-			var scheduler = new SchedulingProvider();
-			var notificationProvider = new EmailNotificationProvider();
-			return new Body(repo, conferenceFactory, mapper, scheduler, notificationProvider, scoredSessions);
+			return new Body(repo, conferenceFactory, mapper);
 		}
 
 		private static coapp.body.Body BuildCoappBody()

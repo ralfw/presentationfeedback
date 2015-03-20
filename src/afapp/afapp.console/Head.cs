@@ -1,7 +1,7 @@
 using afapp.body;
-using afapp.body.providers;
 using CLAP;
 using Contract.data;
+using Contract.provider;
 using System;
 using System.Collections.Generic;
 
@@ -36,7 +36,6 @@ namespace afapp.console
 			Environment.Exit(0);
 		}
 
-
 		[Verb(Aliases = "vote")] 
 		public void Store_feedback(
 			[Required, Aliases("id")]	string sessionId,
@@ -46,41 +45,6 @@ namespace afapp.console
 		{
 			body.Store_feedback (sessionId, score, comment, email);
 			Console.WriteLine("Thank you for your feedback!");
-			Environment.Exit(0);
-		}
-
-
-		[Verb(Aliases = "startspeakernotification")]
-		public void Start_speaker_notification(
-			[Aliases("now,n")]					DateTime fixedNow,
-			[DefaultValue(20), Aliases("f")] 	int feedbackPeriod,
-			[DefaultValue(5), Aliases("s")] 	int schedulerRepeatInterval)
-		{
-			TimeProvider.Configure(fixedNow);
-
-			body.Start_background_speaker_notification(feedbackPeriod, schedulerRepeatInterval);
-
-			Console.WriteLine("Scheduling... - Press any key to stop");
-			Console.ReadKey();
-
-			body.Stop_speaker_notification();
-			Console.WriteLine("Scheduler shutdown!");
-			Environment.Exit(0);
-		}
-
-
-		[Verb]
-		public void Conferences()
-		{
-			var conferences = body.Generate_conference_overview();
-
-			foreach (var conference in conferences) {
-				Console.WriteLine("{0} {1} {2} {3}", 
-									conference.Id, 
-									conference.Title, 
-									conference.Start.ToShortDateString(), 
-									conference.End.ToShortDateString());
-			}
 			Environment.Exit(0);
 		}
 

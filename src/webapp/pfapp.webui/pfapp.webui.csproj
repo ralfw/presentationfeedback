@@ -169,6 +169,10 @@
       <Project>{93FA69C1-B9D7-49A8-8CB0-8BC0B171F507}</Project>
       <Name>EventStore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\nsapp\nsapp.body\nsapp.body.csproj">
+      <Project>{effaa6b8-359a-4ccf-9b6e-07bbdddd798d}</Project>
+      <Name>nsapp.body</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Repository\Repository\Repository.csproj">
       <Project>{A2BFC56E-D90E-4C3D-909F-5F10B9A2ABD7}</Project>
       <Name>Repository</Name>

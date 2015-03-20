@@ -7,10 +7,10 @@ namespace pfapp.webui.Controllers
 	[RoutePrefix("Conference")]
 	public class ConferenceController : Controller
 	{
-		private readonly body.Body afappBody;
+		private readonly afapp.body.Body afappBody;
 		private readonly coapp.body.Body coappBody;
 
-		public ConferenceController(body.Body afappBody, coapp.body.Body coappBody)
+		public ConferenceController(afapp.body.Body afappBody, coapp.body.Body coappBody)
 		{
 			this.afappBody = afappBody;
 			this.coappBody = coappBody;

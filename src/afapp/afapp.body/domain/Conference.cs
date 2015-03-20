@@ -1,10 +1,10 @@
+using Contract.provider;
 using Repository.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using pfapp.body.providers;
 
-namespace pfapp.body.domain
+namespace afapp.body.domain
 {
 	//TODO: What about time zones? This might be checked on a server in a different timezone than the conference.
 	public class Conference {
