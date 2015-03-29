@@ -183,5 +183,5 @@ UpgradeLog*.htm
 FakesAssemblies/
 *.ncrunchproject
 *.ncrunchsolution
-
 *.userprefs
+/src/afapp/packages/FluentAssertions.3.2.2/lib

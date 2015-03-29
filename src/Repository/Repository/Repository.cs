@@ -1,4 +1,5 @@
-﻿using EventStore.Contract;
+﻿using Contract.data;
+using EventStore.Contract;
 using Repository.data;
 using Repository.events;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace Repository
 {
+
 	public class Repository
 	{
 		readonly IEventStore es;
@@ -16,14 +18,13 @@ namespace Repository
 			this.es = es;
 		}
 
-		public void StoreConference(string id, string title)
+		public void Store_conference(string id, string title)
 		{
 			var e = new ConferenceRegistered(id, title);
 			this.es.Record(e);
 		}
 
-
-		public int StoreSessions(string conferenceId, IEnumerable<SessionParsed> sessions)
+		public int Store_sessions(string conferenceId, IEnumerable<SessionParsed> sessions)
 		{
 			var n = 0;
 			foreach (var s in sessions)
@@ -47,6 +48,7 @@ namespace Repository
 					{typeof(ConferenceRegistered), recordedEvent =>
 					{
 						var confRegistered = (ConferenceRegistered)recordedEvent.Event;
+						confdata.Id = confRegistered.ConfId;
 						confdata.Title = confRegistered.Title;
 					}},
 					{typeof(SessionAssigned), recordedEvent =>
@@ -85,7 +87,6 @@ namespace Repository
 			es.Record(new FeedbackGiven(feedback.SessionId, feedback.Score, feedback.Comment, feedback.Email));
 		}
 
-
 		public IEnumerable<ScoredSessionData> Load_scored_sessions()
 		{
 			var recordedEvents = this.es.Replay();
@@ -119,6 +120,7 @@ namespace Repository
 						var sessionAssigned = (SessionAssigned) recordedEvent.Event;
 						var confTitle = conferences[sessionAssigned.ConfId];
 						var scoredSession = scoredSessions[sessionAssigned.SessionId];
+						scoredSession.ConfId = sessionAssigned.ConfId;
 						scoredSession.ConfTitle = confTitle;
 					}},
 					{typeof (SpeakerNotified), recordedEvent =>
@@ -146,10 +148,32 @@ namespace Repository
 			return scoredSessions.Values;
 		}
 
-
 		public void Register_feedback_notification(string sessionId)
 		{
 			es.Record(new SpeakerNotified(sessionId));
+		}
+
+		public IEnumerable<ConferenceData> Load_conferences()
+		{
+			return es.QueryByType(typeof(ConferenceRegistered)).Select(x =>
+			{
+				var confRegistered = (ConferenceRegistered) x.Event;
+				return Load_conference(confRegistered.ConfId);
+			});
+		}
+
+		public Session Get_Session(string sessionId)
+		{
+			var @event = es.QueryByType(typeof (SessionRegistered)).Single(x => x.Event.Context == sessionId).Event;
+			var sessionRegistered = (SessionRegistered)@event;
+			return new Session
+			{
+				Id	= sessionRegistered.SessionId,
+				Title = sessionRegistered.Title,
+				Start = sessionRegistered.Start,
+				End = sessionRegistered.End,
+				SpeakerName = sessionRegistered.SpeakerName
+			};
 		}
 	}
 }

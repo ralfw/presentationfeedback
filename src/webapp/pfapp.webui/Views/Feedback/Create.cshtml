@@ -1,0 +1,54 @@
+﻿@model Contract.data.Session
+
+<link rel="stylesheet" href="/Content/css/session/show.css">
+<script src="/Content/js/session/session-show.js"></script>
+
+<div class="page-header">
+	<h1>Evaluate session: @Model.Title</h1>
+	<h2>Date: @Model.Start.ToShortDateString()</h2>
+	<h2>Time: @Model.Start.ToShortTimeString() - @Model.End.ToShortTimeString()</h2>
+	<h2>Speaker: @Model.SpeakerName</h2>
+</div>
+
+<div class="well">
+	@using (Html.BeginForm("Create", "Feedback", FormMethod.Post, new {  data_toggle="validator" }))
+	{
+		<div class="container">
+			<row>
+				<div class="col-lg-1 col-md-offset-1">
+					<h4>Score:</h4>
+					<div id="light">
+						<span id="red" data-value="Red"></span>
+						<span class="active" id="yellow" data-value="Yellow"></span>
+						<span id="green" data-value="Green"></span>
+					</div>
+				</div>
+				<div class="col-lg-8 col-md-offset-1">
+					<row>
+						<div class="col-lg-10">
+							<div class="form-group">
+								<h4>Email:</h4>
+								<input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required />
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>
+						<div class="col-lg-10">
+							<h4>Comment:</h4>
+							<textarea class="form-control" rows="10" name="comment"></textarea>
+						</div>
+					</row>
+				</div>
+			</row>
+		</div>
+		<div id="submitDiv" class="container">
+			<row>
+				<div class="col-lg-12">
+					<button type="submit" id="submit-button" class="btn btn-lg btn-success center-block">Submit</button>
+				</div>
+			</row>
+		</div>
+		<input type="hidden" id="score" name="score" value="Yellow"/>
+		<input type="hidden" name="sessionId" value="@Model.Id" />
+		<input type="hidden" name="confId" value="@ViewBag.confId" />
+	}
+</div>

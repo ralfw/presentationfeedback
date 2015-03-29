@@ -1,7 +1,7 @@
 using afapp.body;
-using afapp.body.providers;
 using CLAP;
 using Contract.data;
+using Contract.provider;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +26,7 @@ namespace afapp.console
 		{
 			TimeProvider.Configure (fixedNow);
 
-			var vm = this.body.GenerateSessionOverview (confid);
+			var vm = this.body.Generate_session_overview (confid);
 
 			Console.WriteLine ("# Sessions of {0} ({1})", vm.ConfTitle, vm.ConfId);
 			Console.WriteLine ("## Active");
@@ -35,7 +35,6 @@ namespace afapp.console
 			Display_sessions (vm.InactiveSessions);
 			Environment.Exit(0);
 		}
-
 
 		[Verb(Aliases = "vote")] 
 		public void Store_feedback(
@@ -49,26 +48,7 @@ namespace afapp.console
 			Environment.Exit(0);
 		}
 
-		[Verb(Aliases = "startspeakernotification")]
-		public void Start_speaker_notification(
-			[Aliases("now,n")]					DateTime fixedNow,
-			[DefaultValue(20), Aliases("f")] 	int feedbackPeriod,
-			[DefaultValue(5), Aliases("s")] 	int schedulerRepeatInterval)
-		{
-			TimeProvider.Configure(fixedNow);
-
-			body.Start_background_speaker_notification(feedbackPeriod, schedulerRepeatInterval);
-
-			Console.WriteLine("Scheduling... - Press any key to stop");
-			Console.ReadKey();
-
-			body.Stop_speaker_notification();
-			Console.WriteLine("Scheduler shutdown!");
-			Environment.Exit(0);
-		}
-
-
-		private static void Display_sessions(IEnumerable<SessionOverview.Session> sessions) {
+		private static void Display_sessions(IEnumerable<Session> sessions) {
 			foreach (var s in sessions)
 				Console.WriteLine("{0}: {1}, {2}-{3}, {4}", s.Id, s.Title, s.Start, s.End, s.SpeakerName);
 		}

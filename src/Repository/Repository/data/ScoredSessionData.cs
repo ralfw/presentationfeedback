@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Repository.data
 {
-	using System.Collections.Generic;
-
 	public class ScoredSessionData
 	{
+		public string ConfId;
 		public string ConfTitle;
 
 		public string Id;

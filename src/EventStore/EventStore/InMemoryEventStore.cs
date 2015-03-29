@@ -53,5 +53,10 @@ namespace EventStore
 		{
 			return Replay().Where(x => types.Contains(x.Event.GetType()));
 		}
+
+		public void Dispose()
+		{
+
+		}
 	}
 }

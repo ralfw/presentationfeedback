@@ -1,0 +1,95 @@
+﻿@using System.Globalization
+@using System.Web.Configuration
+@using Contract.data
+@using Contract.provider
+@using MongoDB.Driver.Linq
+@model Contract.data.SessionOverview
+<link rel="stylesheet" href="/Content/css/conference/show.css">
+
+<div class="page-header">
+	<h1>@Model.ConfTitle</h1>
+</div>
+@ShowFeedbackResultLink()
+<div class="sessionDiv">
+	
+	<h2>Active sessions</h2>
+	<div class="container">
+		<row>
+			<div class="col-lg-8">
+				@if (Model.ActiveSessions.Length > 0)
+				{
+					@RenderSessions(Model.ActiveSessions, Model.ConfId, true)
+				}
+				else
+				{
+					<div class="bs-callout">
+						<h4>No active sessions</h4>
+					</div>
+				}
+			</div>
+		</row>
+	</div>
+</div>
+
+<div class="sessionDiv">
+	<h2>Inactive sessions</h2>
+	<div class="container">
+		<row>
+			<div class="col-lg-8">
+				@if (Model.InactiveSessions.Length > 0)
+				{
+					@RenderSessions(Model.InactiveSessions, Model.ConfId, false)
+				}
+				else
+				{
+					<div class="bs-callout">
+						<h4>No inactive sessions</h4>
+					</div>
+				}
+			</div>
+		</row>
+	</div>
+</div>
+
+@helper ShowFeedbackResultLink()
+{
+	var feedbackPeriod = int.Parse(WebConfigurationManager.AppSettings["FeedbackPeriod"]);
+	if (@Model.InactiveSessions.Max(x => x.End).AddMinutes(feedbackPeriod) < TimeProvider.Now())
+	{
+		<a class="btn btn-primary btn-success" href="@Url.Action("Feedback", new {id=@Model.ConfId})" role="button">Result as a CSV file</a>
+	}
+}
+
+@helper RenderSessions(IEnumerable<Session> sessions, string confId, bool showLink)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Start</th>
+				<th>End</th>
+				<th>Speaker</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var row in sessions)
+			{
+				<tr>
+					<td>
+						@if (showLink)
+						{
+							<a href="@Url.Action("Create", "Feedback", new {confId, id = row.Id})">@row.Title</a>
+						}
+						else
+						{
+							@row.Title
+						}
+					</td>
+					<td>@String.Format("{0:dd-MM-yyyy HH:mm}", row.Start)</td>
+					<td>@String.Format("{0:dd-MM-yyyy HH:mm}", row.End)</td>
+					<td>@row.SpeakerName</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}

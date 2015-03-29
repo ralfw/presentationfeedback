@@ -1,0 +1,15 @@
+﻿.bs-callout {
+	padding: 20px;
+	border: 1px solid #eee;
+	border-left-width: 5px;
+	border-radius: 3px;
+	border-left-color: #1b809e;
+}
+
+.sessionDiv {
+	margin-top: 40px;
+}
+
+.sessionDiv h2 {
+	margin-bottom: 15px;
+}

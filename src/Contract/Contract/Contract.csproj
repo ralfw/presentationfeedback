@@ -39,12 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="data\ConferenceVm.cs" />
+    <Compile Include="data\ConferenceCvsFeedback.cs" />
     <Compile Include="data\SessionOverview.cs" />
     <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="data\TrafficLightScores.cs" />
     <Compile Include="INotificationProvider.cs" />
     <Compile Include="ISchedulingProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="provider\TimeProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

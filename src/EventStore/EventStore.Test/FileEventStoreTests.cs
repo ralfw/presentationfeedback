@@ -10,14 +10,14 @@ namespace EventStore.Test
 	[TestFixture]
 	public class FileEventStoreTests
 	{
-		private const string DIR_PATH = "eventStoreDir";
+		private const string DirPath = "eventStoreDir";
 
 		[SetUp]
 		public void Init()
 		{
-			if (Directory.Exists(DIR_PATH))
+			if (Directory.Exists(DirPath))
 			{
-				Directory.Delete(DIR_PATH, true);
+				Directory.Delete(DirPath, true);
 			}
 		}
 
@@ -27,7 +27,7 @@ namespace EventStore.Test
 			// arrange
 			var testEvent0 = new AnotherEventHappened("session");
 			var testEvent1 = new EventHappened("conference");
-			var sut = new FileEventStore(DIR_PATH);
+			var sut = new FileEventStore(DirPath);
 			var recordedEvents = new List<IRecordedEvent>();
 			sut.OnRecorded += recordedEvents.Add;
 
@@ -48,7 +48,7 @@ namespace EventStore.Test
 			var testEvent0 = new AnotherEventHappened("session");
 			var testEvent1 = new AnotherEventHappened("conference");
 			var testEvent2 = new AnotherEventHappened("session");
-			var sut = new FileEventStore(DIR_PATH);
+			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -70,7 +70,7 @@ namespace EventStore.Test
 			var testEvent1 = new AnotherEventHappened("conference");
 			var testEvent2 = new EventHappened("session");
 			var testEvent3 = new EventHappened("session");
-			var sut = new FileEventStore(DIR_PATH);
+			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -95,7 +95,7 @@ namespace EventStore.Test
 			var testEvent2 = new EventHappened("session");
 			var testEvent3 = new EventHappened("session");
 			var testEvent4 = new EventHappened("conference");
-			var sut = new FileEventStore(DIR_PATH);
+			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -123,7 +123,7 @@ namespace EventStore.Test
 			var testEvent1 = new AnotherEventHappened(context1);
 			var testEvent2 = new EventHappened("bar context");
 			var testEvent3 = new EventHappened(context2);
-			var sut = new FileEventStore(DIR_PATH);
+			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -148,7 +148,7 @@ namespace EventStore.Test
 			var testEvent1 = new AnotherEventHappened(context1);
 			var testEvent2 = new EventHappened("bar context");
 			var testEvent3 = new EventHappened(context2);
-			var sut = new FileEventStore(DIR_PATH);
+			var sut = new FileEventStore(DirPath);
 			sut.Record(testEvent0);
 			sut.Record(testEvent1);
 			sut.Record(testEvent2);
@@ -163,6 +163,5 @@ namespace EventStore.Test
 			result[1].Event.ShouldBeEquivalentTo(testEvent2);
 			result[2].Event.ShouldBeEquivalentTo(testEvent3);
 		}
-
 	}
 }
