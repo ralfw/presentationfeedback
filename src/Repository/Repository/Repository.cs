@@ -60,7 +60,10 @@ namespace Repository
 				@switch[(e.Event.GetType())](e);
 			}
 
-			recordedEvents = this.es.QueryByType(typeof(SessionRegistered)).Where(e => sessionIds.Contains(e.Event.Context));
+			recordedEvents = this.es.QueryByType(typeof(SessionRegistered))
+				.Where(e => sessionIds.Contains(e.Event.Context))
+				.GroupBy(x => x.Event.Context)
+				.Select(grp => grp.OrderBy(x => x.Timestamp).Last());
 			var confSessions = new List<ConferenceData.SessionData>();
 
 			foreach (var e in recordedEvents)
@@ -155,7 +158,10 @@ namespace Repository
 
 		public IEnumerable<ConferenceData> Load_conferences()
 		{
-			return es.QueryByType(typeof(ConferenceRegistered)).Select(x =>
+			var conferences = es.QueryByType(typeof (ConferenceRegistered))
+				.GroupBy(x => x.Event.Context)
+				.Select(grp => grp.OrderBy(x => x.Timestamp).Last());
+			return conferences.Select(x =>
 			{
 				var confRegistered = (ConferenceRegistered) x.Event;
 				return Load_conference(confRegistered.ConfId);

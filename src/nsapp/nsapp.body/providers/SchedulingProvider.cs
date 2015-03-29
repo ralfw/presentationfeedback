@@ -59,8 +59,9 @@ namespace nsapp.body.providers
 				return job;
 			}
 
-			public void ReturnJob(IJob j) {
-				throw new System.NotImplementedException();
+			public void ReturnJob(IJob j)
+			{
+				// Intentionally empty.
 			}
 		}
 	}
