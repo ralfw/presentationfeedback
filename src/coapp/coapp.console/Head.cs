@@ -19,8 +19,8 @@ namespace coapp.console
 		[Verb]
 		public void Upload(
 			[Required, Aliases("id")] string confId,
-			[Required, Aliases("title, t")] string confTitle,
-			[Required, Aliases("filename, f")] string csvfilename
+			[Required, Aliases("t,title")] string confTitle,
+			[Required, Aliases("f,filename")] string csvfilename
 		) {
 			var csvSessions = File.ReadAllText (csvfilename);
 
