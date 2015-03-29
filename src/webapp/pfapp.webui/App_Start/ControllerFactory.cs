@@ -51,7 +51,7 @@ namespace pfapp.webui
 
 		private static IEventStore BuildEventStore()
 		{
-			var connString = WebConfigurationManager.AppSettings["MongoDbConn"];
+			var connString = WebConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
 			var database = WebConfigurationManager.AppSettings["MongoDbDatabase"];
 			return new MongoEventStore(connString, database);
 		}

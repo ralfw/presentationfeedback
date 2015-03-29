@@ -54,7 +54,7 @@ namespace pfapp.webui
 
 		private static Body BuildBody()
 		{
-			var connString = WebConfigurationManager.AppSettings["MongoDbConn"];
+			var connString = WebConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
 			var database = WebConfigurationManager.AppSettings["MongoDbDatabase"];
 			var es = new MongoEventStore(connString, database);
 			var repo = new Repository.Repository(es);
