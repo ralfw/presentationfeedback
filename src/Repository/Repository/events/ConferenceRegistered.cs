@@ -8,12 +8,14 @@ namespace Repository.events
 	{
 		public string Title;
 		public string ConfId;
+		public string TimeZone; 
 
-		public ConferenceRegistered(string confId, string title)
+		public ConferenceRegistered(string confId, string title, string timeZone)
 			: base(confId, "ConferenceRegistered")
 		{
 			ConfId = confId;
 			Title = title;
+			TimeZone = timeZone;
 		}
 	}
 }

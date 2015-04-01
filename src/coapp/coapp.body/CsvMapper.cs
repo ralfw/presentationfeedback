@@ -1,10 +1,7 @@
 
-using EventStore.Contract;
-using Repository.data;
 
 namespace coapp.body
 {
-	using Contract.data;
 	using data;
 	using System.Collections.Generic;
 	using System.Globalization;
@@ -39,8 +36,8 @@ namespace coapp.body
 			var stringBuilder = new StringBuilder();
 			stringBuilder.Append(session.Id).Append("\t");
 			stringBuilder.Append(session.Title).Append("\t");
-			stringBuilder.Append(session.Start.ToString("s",DateTimeFormatInfo.InvariantInfo)).Append("\t");
-			stringBuilder.Append(session.End.ToString("s", DateTimeFormatInfo.InvariantInfo)).Append("\t");
+			stringBuilder.Append(session.Start.LocalTime.ToString("s",DateTimeFormatInfo.InvariantInfo)).Append("\t");
+			stringBuilder.Append(session.End.LocalTime.ToString("s", DateTimeFormatInfo.InvariantInfo)).Append("\t");
 			stringBuilder.Append(session.SpeakerName).Append("\t");
 			stringBuilder.Append(session.SpeakerEmail).Append("\t");
 			stringBuilder.Append(session.Greens).Append("\t");

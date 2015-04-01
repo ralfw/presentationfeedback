@@ -11,6 +11,8 @@ namespace pfapp.webui
 {
 	using EventStore;
 	using log4net;
+	using MongoDB.Bson.Serialization.Options;
+	using MongoDB.Bson.Serialization.Serializers;
 	using Providers;
 	using Repository.data;
 	using System;
@@ -27,13 +29,14 @@ namespace pfapp.webui
 			AreaRegistration.RegisterAllAreas();
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			ControllerBuilder.Current.SetControllerFactory(new ControllerFactory());
-			RegisterEventsInMongoDb();
+			Setup_mongo_db();
 			TimeProvider.Configure();
 			Start_background_speaker_notification();
 		}
 
-		private static void RegisterEventsInMongoDb()
+		private static void Setup_mongo_db()
 		{
+			BsonSerializer.RegisterSerializer(typeof(DateTime), new DateTimeSerializer(DateTimeSerializationOptions.LocalInstance));
 			BsonClassMap.RegisterClassMap<RecordedEvent>();
 			BsonClassMap.RegisterClassMap<ConferenceRegistered>();
 			BsonClassMap.RegisterClassMap<FeedbackGiven>();

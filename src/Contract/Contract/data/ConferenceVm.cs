@@ -7,7 +7,8 @@ namespace Contract.data
 	{
 		public string Id;
 		public string Title;
-		public DateTime Start;
-		public DateTime End;
+		public TimeZoneInfo TimeZone;
+		public DateTimeWithZone Start;
+		public DateTimeWithZone End;
 	}
 }

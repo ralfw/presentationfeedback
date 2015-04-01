@@ -1,12 +1,12 @@
-﻿@model Contract.data.Session
+﻿@model Repository.data.ConferenceData.SessionData
 
 <link rel="stylesheet" href="/Content/css/session/show.css">
 <script src="/Content/js/session/session-show.js"></script>
 
 <div class="page-header">
 	<h1>Evaluate session: @Model.Title</h1>
-	<h2>Date: @Model.Start.ToShortDateString()</h2>
-	<h2>Time: @Model.Start.ToShortTimeString() - @Model.End.ToShortTimeString()</h2>
+	<h2>Date: @Model.Start.LocalTime.ToShortDateString()</h2>
+	<h2>Time: @Model.Start.LocalTime.ToShortTimeString() - @Model.End.LocalTime.ToShortTimeString()</h2>
 	<h2>Speaker: @Model.SpeakerName</h2>
 </div>
 

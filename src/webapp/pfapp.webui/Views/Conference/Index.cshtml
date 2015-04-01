@@ -8,6 +8,7 @@
 
 <div class="page-header">
 	<h1>@Model.ConfTitle</h1>
+	<h4>@Model.TimeZone.DisplayName</h4>
 </div>
 @ShowFeedbackResultLink()
 <div class="sessionDiv">
@@ -54,7 +55,7 @@
 @helper ShowFeedbackResultLink()
 {
 	var feedbackPeriod = int.Parse(WebConfigurationManager.AppSettings["FeedbackPeriod"]);
-	if (@Model.InactiveSessions.Max(x => x.End).AddMinutes(feedbackPeriod) < TimeProvider.Now())
+	if (@Model.InactiveSessions.Max(x => x.End.UtcTime).AddMinutes(feedbackPeriod) < TimeProvider.Now())
 	{
 		<a class="btn btn-primary btn-success" href="@Url.Action("Feedback", new {id=@Model.ConfId})" role="button">Result as a CSV file</a>
 	}
@@ -85,8 +86,8 @@
 							@row.Title
 						}
 					</td>
-					<td>@String.Format("{0:dd-MM-yyyy HH:mm}", row.Start)</td>
-					<td>@String.Format("{0:dd-MM-yyyy HH:mm}", row.End)</td>
+					<td>@String.Format("{0:dd-MM-yyyy HH:mm}", row.Start.LocalTime)</td>
+					<td>@String.Format("{0:dd-MM-yyyy HH:mm}", row.End.LocalTime)</td>
 					<td>@row.SpeakerName</td>
 				</tr>
 			}

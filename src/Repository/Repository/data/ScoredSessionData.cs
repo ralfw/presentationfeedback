@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Repository.data
 {
+	using System;
+	using Contract.data;
+
 	public class ScoredSessionData
 	{
 		public string ConfId;
@@ -11,8 +13,9 @@ namespace Repository.data
 
 		public string Id;
 		public string Title;
+		public string TimeZone;
 
-		public DateTime Start, End;
+		public DateTimeWithZone Start, End;
 
 		public string SpeakerName;
 		public string SpeakerEmail;

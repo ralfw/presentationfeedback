@@ -6,15 +6,18 @@ using System.Linq;
 
 namespace afapp.body
 {
+	using System;
+
 	public class Mapper
 	{
-		public SessionOverview Map(string confId, string confTitle, IEnumerable<ConferenceData.SessionData> activeSessions,
+		public SessionOverview Map(string confId, string confTitle, string timeZoneString, IEnumerable<ConferenceData.SessionData> activeSessions,
 								   IEnumerable<ConferenceData.SessionData> inactiveSessions)
 		{
 			return new SessionOverview
 			{
 				ConfId = confId,
 				ConfTitle = confTitle,
+				TimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneString),
 
 				ActiveSessions = activeSessions.Select(s => new Session
 				{

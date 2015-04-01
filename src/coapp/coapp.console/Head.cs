@@ -11,20 +11,22 @@ namespace coapp.console
 		public Head(Body body) {
 			this.body = body;
 		}
-
+		
 		public void Run(string[] args) {
 			Parser.Run (args, this);
 		}
 
+		// Time zone strings: https://msdn.microsoft.com/en-us/library/cc749073.aspx
 		[Verb]
 		public void Upload(
 			[Required, Aliases("id")] string confId,
 			[Required, Aliases("t,title")] string confTitle,
+			[Required, Aliases("z")] string timeZone,
 			[Required, Aliases("f,filename")] string csvfilename
 		) {
 			var csvSessions = File.ReadAllText (csvfilename);
 
-			var n = this.body.Register_conference (confId, confTitle, csvSessions);
+			var n = this.body.Register_conference (confId, confTitle, timeZone, csvSessions);
 
 			Console.WriteLine ("Conference {0} registered with {1} sessions.", confId, n);
 		}

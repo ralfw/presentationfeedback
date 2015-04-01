@@ -14,17 +14,21 @@ namespace coapp.body.test
 		public void Generate_conference_overview()
 		{
 			// arrange
+			const string timeZone = "FLE Standard Time";
 			const string confId = "c1";
 			var es = new EventStore.InMemoryEventStore();
 			var su = new Body(es);
 			var expectedContent = Build_expected_content();
-			es.Record(new ConferenceRegistered("c1", "conf1"));
-			es.Record(new SessionRegistered("c1s1", "Session1", new DateTime(2015, 02, 08, 09, 00, 00), new DateTime(2015, 02, 08, 10, 00, 00), "speaker 1", "speaker1@mail.com"));
+			es.Record(new ConferenceRegistered("c1", "conf1", timeZone));
+			es.Record(new SessionRegistered("c1s1", "Session1", new DateTime(2015, 02, 08, 09, 00, 00),
+				new DateTime(2015, 02, 08, 10, 00, 00), timeZone, "speaker 1", "speaker1@mail.com"));
 			es.Record(new SessionAssigned("c1", "c1s1"));
-			es.Record(new SessionRegistered("c1s2", "Session2", new DateTime(2015, 02, 08, 10, 00, 00), new DateTime(2015, 02, 08, 11, 00, 00), "speaker 2", "speaker2@mail.com"));
+			es.Record(new SessionRegistered("c1s2", "Session2", new DateTime(2015, 02, 08, 10, 00, 00),
+				new DateTime(2015, 02, 08, 11, 00, 00), timeZone, "speaker 2", "speaker2@mail.com"));
 			es.Record(new SessionAssigned("c1", "c1s2"));
-			es.Record(new ConferenceRegistered("c2", "conf2"));
-			es.Record(new SessionRegistered("c2s1", "sess21", new DateTime(2015, 02, 08, 09, 15, 00), new DateTime(2015, 02, 08, 10, 15, 00), "name3", "name3@gmail.com"));
+			es.Record(new ConferenceRegistered("c2", "conf2", timeZone));
+			es.Record(new SessionRegistered("c2s1", "sess21", new DateTime(2015, 02, 08, 09, 15, 00),
+				new DateTime(2015, 02, 08, 10, 15, 00), timeZone, "name3", "name3@gmail.com"));
 			es.Record(new SessionAssigned("c2", "c2s1"));
 
 			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Green, "Great session", "anttendee1@mail.com"));

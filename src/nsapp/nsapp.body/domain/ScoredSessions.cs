@@ -19,7 +19,7 @@ namespace nsapp.body.domain
 		public IEnumerable<ScoredSessionData> Get_sessions_due_for_notification(int feedbackPeriod)
 		{
 			return sessions.Where(x => !x.SpeakerNotified &&
-									   TimeProvider.Now() > x.End.AddMinutes(feedbackPeriod));
+									   TimeProvider.Now() > x.End.UtcTime.AddMinutes(feedbackPeriod));
 		}
 	}
 }

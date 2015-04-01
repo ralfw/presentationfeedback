@@ -19,7 +19,7 @@ namespace pfapp.webui.Controllers
 		{
 			ViewBag.confId = confid;
 			ViewBag.SelectedMenuItem = "Conference";
-			return View(body.Get_Session(id));
+			return View(body.Get_Session(confid, id));
 		}
 
 		[HttpPost]

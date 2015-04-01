@@ -17,7 +17,7 @@ namespace afapp.console
 			const string database = "trafficlightfeedback";
 			var es = new MongoEventStore(connectionString, database);
 			var repo = new Repository.Repository (es);
-			var conferenceFactory = new Func<ConferenceData, Conference> (data => new Conference(data));
+			var conferenceFactory = new Func<ConferenceData, Conference> (data => new Conference(data, 20));
 			var mapper = new Mapper ();
 			var body = new Body (repo, conferenceFactory, mapper);
 			var head = new Head (body);

@@ -1,10 +1,12 @@
-using System;
 
 namespace Contract.data
 {
+	using System;
+
 	public struct SessionOverview {
 		public string ConfId;
 		public string ConfTitle;
+		public TimeZoneInfo TimeZone;
 		public Session[] ActiveSessions;
 		public Session[] InactiveSessions;
 	}
@@ -12,7 +14,7 @@ namespace Contract.data
 	public struct Session {
 		public string Id;
 		public string Title;
-		public DateTime Start, End;
+		public DateTimeWithZone Start, End;
 		public string SpeakerName;
 	}
 }

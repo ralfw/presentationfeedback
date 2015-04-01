@@ -3,6 +3,7 @@ namespace coapp.body.data
 {
 	using System;
 	using System.Collections.Generic;
+	using Contract.data;
 
 	public class ConferenceFeedbackData
 	{
@@ -13,7 +14,7 @@ namespace coapp.body.data
 		{
 			public string Id;
 			public string Title;
-			public DateTime Start, End;
+			public DateTimeWithZone Start, End;
 			public string SpeakerName;
 			public string SpeakerEmail;
 			public int Greens;

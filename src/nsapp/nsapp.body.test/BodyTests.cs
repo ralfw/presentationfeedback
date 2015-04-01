@@ -14,11 +14,20 @@ using System.Linq;
 
 namespace nsapp.body.test
 {
+	using MongoDB.Bson.Serialization;
+	using MongoDB.Bson.Serialization.Options;
+	using MongoDB.Bson.Serialization.Serializers;
+
 	[TestFixture]
 	public class BodyTests
 	{
 		private const string ConnectionString = "mongodb://admin:admin@dogen.mongohq.com:10097/trafficlightfeedback_test";
 		private const string Database = "trafficlightfeedback_test";
+
+		static BodyTests()
+		{
+			BsonSerializer.RegisterSerializer(typeof(DateTime), new DateTimeSerializer(DateTimeSerializationOptions.LocalInstance));
+		}
 
 		[SetUp]
 		public void Init()
@@ -33,40 +42,40 @@ namespace nsapp.body.test
 		public void Speaker_notification_calculates_correct_due_sessions()
 		{
 			// arrange
+			const string timeZone = "FLE Standard Time";
 			var es = new MongoEventStore(ConnectionString, Database);
 			var repo = new Repository.Repository(es);
 			var map = new Mapper();
 			var fakeScheduler = new FakeSchedulingProvider();
 			var fakeNotifier = new FakeNotificationProvider();
 			var scoredSessionsFactory = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
-
 			var body = new Body(repo, map, fakeScheduler, fakeNotifier, scoredSessionsFactory);
 
-			// It would have been nice to have the coapp Repository{} available.
-			es.Record(new ConferenceRegistered("c1", "conf1"));
-			es.Record(new SessionRegistered("c1s1", "sess11", new DateTime(2015, 02, 08, 09, 00, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 10, 00, 00, DateTimeKind.Utc), "name1", "name1@gmail.com"));
+			es.Record(new ConferenceRegistered("c1", "conf1", "FLE Standard Time"));
+			es.Record(new SessionRegistered("c1s1", "sess11", new DateTime(2015, 02, 08, 09, 00, 00),
+				new DateTime(2015, 02, 08, 10, 00, 00), timeZone, "name1", "name1@gmail.com"));
 			es.Record(new SessionAssigned("c1", "c1s1"));
-			es.Record(new SessionRegistered("c1s2", "sess12", new DateTime(2015, 02, 08, 10, 00, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 11, 00, 00, DateTimeKind.Utc), "name2", "name2@gmail.com"));
+			es.Record(new SessionRegistered("c1s2", "sess12", new DateTime(2015, 02, 08, 10, 00, 00),
+				new DateTime(2015, 02, 08, 11, 00, 00), timeZone, "name2", "name2@gmail.com"));
 			es.Record(new SessionAssigned("c1", "c1s2"));
-			es.Record(new SessionRegistered("c1s3", "sess13", new DateTime(2015, 02, 08, 11, 00, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 12, 00, 00, DateTimeKind.Utc), "name1", "name1@gmail.com"));
+			es.Record(new SessionRegistered("c1s3", "sess13", new DateTime(2015, 02, 08, 11, 00, 00),
+				new DateTime(2015, 02, 08, 12, 00, 00), timeZone, "name1", "name1@gmail.com"));
 			es.Record(new SessionAssigned("c1", "c1s3"));
 
-			es.Record(new ConferenceRegistered("c2", "conf2"));
-			es.Record(new SessionRegistered("c2s1", "sess21", new DateTime(2015, 02, 08, 09, 15, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 10, 15, 00, DateTimeKind.Utc), "name3", "name3@gmail.com"));
+			es.Record(new ConferenceRegistered("c2", "conf2", "FLE Standard Time"));
+			es.Record(new SessionRegistered("c2s1", "sess21", new DateTime(2015, 02, 08, 09, 15, 00),
+				new DateTime(2015, 02, 08, 10, 15, 00), timeZone, "name3", "name3@gmail.com"));
 			es.Record(new SessionAssigned("c2", "c2s1"));
-			es.Record(new SessionRegistered("c2s2", "sess22", new DateTime(2015, 02, 08, 10, 15, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 11, 15, 00, DateTimeKind.Utc), "name3", "name3@gmail.com"));
+			es.Record(new SessionRegistered("c2s2", "sess22", new DateTime(2015, 02, 08, 10, 15, 00),
+				new DateTime(2015, 02, 08, 11, 15, 00), timeZone, "name3", "name3@gmail.com"));
 			es.Record(new SessionAssigned("c2", "c2s2"));
-			es.Record(new SessionRegistered("c2s3", "sess23", new DateTime(2015, 02, 08, 11, 15, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 12, 15, 00, DateTimeKind.Utc), "name4", "name4@gmail.com"));
+			es.Record(new SessionRegistered("c2s3", "sess23", new DateTime(2015, 02, 08, 11, 15, 00),
+				new DateTime(2015, 02, 08, 12, 15, 00), timeZone, "name4", "name4@gmail.com"));
 			es.Record(new SessionAssigned("c2", "c2s2"));
 			var nEventsBefore = es.Replay().Count();
 
-			TimeProvider.Configure(new DateTime(2015, 2, 8, 11, 0, 0, DateTimeKind.Utc));
+			TimeProvider.Configure(TimeZoneInfo.ConvertTimeToUtc(new DateTime(2015, 2, 8, 11, 0, 0), 
+				TimeZoneInfo.FindSystemTimeZoneById(timeZone)));
 
 			// act
 			fakeNotifier.Clear();
@@ -80,14 +89,14 @@ namespace nsapp.body.test
 			Assert.AreEqual("sess11", notificationsSent[0].Title);
 			Assert.AreEqual("name1@gmail.com", notificationsSent[0].SpeakerEmail);
 			Assert.AreEqual("name1", notificationsSent[0].SpeakerName);
-			Assert.AreEqual(new DateTime(2015, 2, 8, 9, 0, 0), notificationsSent[0].Start);
-			Assert.AreEqual(new DateTime(2015, 2, 8, 10, 0, 0), notificationsSent[0].End);
+			Assert.AreEqual(new DateTime(2015, 2, 8, 9, 0, 0), notificationsSent[0].Start.LocalTime);
+			Assert.AreEqual(new DateTime(2015, 2, 8, 10, 0, 0), notificationsSent[0].End.LocalTime);
 
 			Assert.AreEqual("sess21", notificationsSent[1].Title);
 			Assert.AreEqual("name3@gmail.com", notificationsSent[1].SpeakerEmail);
 			Assert.AreEqual("name3", notificationsSent[1].SpeakerName);
-			Assert.AreEqual(new DateTime(2015, 2, 8, 9, 15, 0), notificationsSent[1].Start);
-			Assert.AreEqual(new DateTime(2015, 2, 8, 10, 15, 0), notificationsSent[1].End);
+			Assert.AreEqual(new DateTime(2015, 2, 8, 9, 15, 0), notificationsSent[1].Start.LocalTime);
+			Assert.AreEqual(new DateTime(2015, 2, 8, 10, 15, 0), notificationsSent[1].End.LocalTime);
 
 			// act again
 			fakeNotifier.Clear();
@@ -102,6 +111,7 @@ namespace nsapp.body.test
 		public void Speaker_notification_calculates_correct_feedback()
 		{
 			// arrange
+			const string timeZone = "FLE Standard Time";
 			var es = new MongoEventStore(ConnectionString, Database);
 			var repo = new Repository.Repository(es);
 			var map = new Mapper();
@@ -110,12 +120,12 @@ namespace nsapp.body.test
 			var scoredSessionsFactory = new Func<IEnumerable<ScoredSessionData>, ScoredSessions>(data => new ScoredSessions(data));
 			var body = new Body(repo, map, fakeScheduler, fakeNotifier, scoredSessionsFactory);
 
-			es.Record(new ConferenceRegistered("c1", "conf1"));
-			es.Record(new SessionRegistered("c1s1", "sess11", new DateTime(2015, 02, 08, 09, 00, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 10, 00, 00, DateTimeKind.Utc), "name1", "name1@gmail.com"));
+			es.Record(new ConferenceRegistered("c1", "conf1", timeZone));
+			es.Record(new SessionRegistered("c1s1", "sess11", new DateTime(2015, 02, 08, 09, 00, 00),
+				new DateTime(2015, 02, 08, 10, 00, 00), timeZone, "name1", "name1@gmail.com"));
 			es.Record(new SessionAssigned("c1", "c1s1"));
-			es.Record(new SessionRegistered("c1s2", "sess12", new DateTime(2015, 02, 08, 10, 00, 00, DateTimeKind.Utc),
-				new DateTime(2015, 02, 08, 11, 00, 00, DateTimeKind.Utc), "name2", "name2@gmail.com"));
+			es.Record(new SessionRegistered("c1s2", "sess12", new DateTime(2015, 02, 08, 10, 00, 00),
+				new DateTime(2015, 02, 08, 11, 00, 00), timeZone, "name2", "name2@gmail.com"));
 			es.Record(new SessionAssigned("c1", "c1s2"));
 
 			es.Record(new FeedbackGiven("c1s1", TrafficLightScores.Green, "Great session", "john@doe.com"));
@@ -127,7 +137,8 @@ namespace nsapp.body.test
 			es.Record(new FeedbackGiven("c1s2", TrafficLightScores.Green, "", "peter@mail.com"));
 			es.Record(new FeedbackGiven("c1s2", TrafficLightScores.Yellow, "", "peter@mail.com"));
 
-			TimeProvider.Configure(new DateTime(2015, 2, 8, 11, 0, 0, DateTimeKind.Utc));
+			TimeProvider.Configure(TimeZoneInfo.ConvertTimeToUtc(new DateTime(2015, 2, 8, 11, 0, 0),
+				TimeZoneInfo.FindSystemTimeZoneById(timeZone)));
 			fakeNotifier.Clear();
 
 			// act

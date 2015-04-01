@@ -23,29 +23,28 @@ namespace pfapp.webui
 			}
 			if (controllerType == typeof (ConferenceController))
 			{
-				return new ConferenceController(BuildAfappBody(), BuildCoappBody());
+				var eventStore = BuildEventStore();
+				return new ConferenceController(BuildAfappBody(eventStore), BuildCoappBody(eventStore));
 			}
 			if (controllerType == typeof(FeedbackController))
 			{
-
-				return new FeedbackController(BuildAfappBody());
+				return new FeedbackController(BuildAfappBody(BuildEventStore()));
 			}
 
 			throw new Exception("Unknown controller type: " + controllerType);
 		}
 
-		private static Body BuildAfappBody()
+		private static Body BuildAfappBody(IEventStore eventStore)
 		{
-			var eventStore = BuildEventStore();
+			var feedbackPeriod = int.Parse(WebConfigurationManager.AppSettings["FeedbackPeriod"]);
 			var repo = new Repository.Repository(eventStore);
-			var conferenceFactory = new Func<ConferenceData, Conference>(data => new Conference(data));
+			var conferenceFactory = new Func<ConferenceData, Conference>(data => new Conference(data, feedbackPeriod));
 			var mapper = new Mapper();
 			return new Body(repo, conferenceFactory, mapper);
 		}
 
-		private static coapp.body.Body BuildCoappBody()
+		private static coapp.body.Body BuildCoappBody(IEventStore eventStore)
 		{
-			var eventStore = BuildEventStore();
 			return new coapp.body.Body(eventStore);
 		}
 

@@ -28,9 +28,8 @@ namespace afapp.body
 			var activeSessions = conf.DetermineActiveSessions;
 			var inactiveSessions = conf.DetermineInactiveSessions;
 
-			return mapper.Map (confdata.Id, confdata.Title, activeSessions, inactiveSessions);
+			return mapper.Map (confdata.Id, confdata.Title, confdata.TimeZone, activeSessions, inactiveSessions);
 		}
-
 
 		public void Store_feedback(string sessionId, TrafficLightScores score, string comment, string email)
 		{
@@ -54,14 +53,15 @@ namespace afapp.body
 					Id = conferenceData.Id,
 					Title = conferenceData.Title,
 					Start = conference.StartDate,
-					End = conference.EndDate
+					End = conference.EndDate,
+					TimeZone = TimeZoneInfo.FindSystemTimeZoneById(conferenceData.TimeZone)
 				};
 			});
 		}
 
-		public Session Get_Session(string sessionId)
+		public ConferenceData.SessionData Get_Session(string confid, string id)
 		{
-			return repo.Get_Session(sessionId);
+			return repo.Load_conference(confid).Sessions.Single(x => x.Id == id);
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using Contract.data;
-using EventStore.Contract;
+﻿using EventStore.Contract;
 using Repository.data;
 using Repository.events;
 using System;
@@ -8,6 +7,7 @@ using System.Linq;
 
 namespace Repository
 {
+	using Contract.data;
 
 	public class Repository
 	{
@@ -18,18 +18,18 @@ namespace Repository
 			this.es = es;
 		}
 
-		public void Store_conference(string id, string title)
+		public void Store_conference(string id, string title, string timeZone)
 		{
-			var e = new ConferenceRegistered(id, title);
+			var e = new ConferenceRegistered(id, title, timeZone);
 			this.es.Record(e);
 		}
 
-		public int Store_sessions(string conferenceId, IEnumerable<SessionParsed> sessions)
+		public int Store_sessions(string conferenceId, string timeZone, IEnumerable<SessionParsed> sessions)
 		{
 			var n = 0;
 			foreach (var s in sessions)
 			{
-				this.es.Record(new SessionRegistered(s.Id, s.Title, s.Start, s.End, s.SpeakerName, s.SpeakerEmail));
+				this.es.Record(new SessionRegistered(s.Id, s.Title, s.Start, s.End, timeZone, s.SpeakerName, s.SpeakerEmail));
 				this.es.Record(new SessionAssigned(conferenceId, s.Id));
 				n++;
 			}
@@ -50,6 +50,7 @@ namespace Repository
 						var confRegistered = (ConferenceRegistered)recordedEvent.Event;
 						confdata.Id = confRegistered.ConfId;
 						confdata.Title = confRegistered.Title;
+						confdata.TimeZone = confRegistered.TimeZone;
 					}},
 					{typeof(SessionAssigned), recordedEvent =>
 					{
@@ -68,15 +69,16 @@ namespace Repository
 
 			foreach (var e in recordedEvents)
 			{
-				var @event = (SessionRegistered) e.Event;
+				var sessionRegistered = (SessionRegistered) e.Event;
+				var timeZone = TimeZoneInfo.FindSystemTimeZoneById(sessionRegistered.TimeZone);
 				var sessiondata = new ConferenceData.SessionData
 				{
-					Id = @event.SessionId,
-					Title = @event.Title,
-					Start = @event.Start,
-					End = @event.End,
-					SpeakerName = @event.SpeakerName,
-					SpeakerEmail = @event.SpeakerEmail
+					Id = sessionRegistered.SessionId,
+					Title = sessionRegistered.Title,
+					Start = new DateTimeWithZone(sessionRegistered.Start, timeZone),
+					End = new DateTimeWithZone(sessionRegistered.End, timeZone),
+					SpeakerName = sessionRegistered.SpeakerName,
+					SpeakerEmail = sessionRegistered.SpeakerEmail
 				};
 				confSessions.Add(sessiondata);
 			}
@@ -107,12 +109,13 @@ namespace Repository
 					{typeof (SessionRegistered), recordedEvent =>
 					{
 						var sessionRegistered = (SessionRegistered) recordedEvent.Event;
+						var timeZone = TimeZoneInfo.FindSystemTimeZoneById(sessionRegistered.TimeZone);
 						var scoredSession = new ScoredSessionData
 						{
 							Id = sessionRegistered.SessionId,
 							Title = sessionRegistered.Title,
-							Start = sessionRegistered.Start,
-							End = sessionRegistered.End,
+							Start = new DateTimeWithZone(sessionRegistered.Start, timeZone),
+							End = new DateTimeWithZone(sessionRegistered.End, timeZone),
 							SpeakerName = sessionRegistered.SpeakerName,
 							SpeakerEmail = sessionRegistered.SpeakerEmail
 						};
@@ -121,10 +124,9 @@ namespace Repository
 					{typeof (SessionAssigned), recordedEvent =>
 					{
 						var sessionAssigned = (SessionAssigned) recordedEvent.Event;
-						var confTitle = conferences[sessionAssigned.ConfId];
 						var scoredSession = scoredSessions[sessionAssigned.SessionId];
 						scoredSession.ConfId = sessionAssigned.ConfId;
-						scoredSession.ConfTitle = confTitle;
+						scoredSession.ConfTitle = conferences[sessionAssigned.ConfId];
 					}},
 					{typeof (SpeakerNotified), recordedEvent =>
 					{
@@ -166,20 +168,6 @@ namespace Repository
 				var confRegistered = (ConferenceRegistered) x.Event;
 				return Load_conference(confRegistered.ConfId);
 			});
-		}
-
-		public Session Get_Session(string sessionId)
-		{
-			var @event = es.QueryByType(typeof (SessionRegistered)).Single(x => x.Event.Context == sessionId).Event;
-			var sessionRegistered = (SessionRegistered)@event;
-			return new Session
-			{
-				Id	= sessionRegistered.SessionId,
-				Title = sessionRegistered.Title,
-				Start = sessionRegistered.Start,
-				End = sessionRegistered.End,
-				SpeakerName = sessionRegistered.SpeakerName
-			};
 		}
 	}
 }

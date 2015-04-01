@@ -13,6 +13,7 @@
 						<th>Title</th>
 						<th>Start date</th>
 						<th>End date</th>
+						<th>Time zone</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -20,8 +21,9 @@
 					{
 						<tr>
 							<td><a href="@Url.Action("Index", new { id = row.Id })">@row.Title</a></td>
-							<td>@String.Format("{0:dd-MM-yyyy}", row.Start)</td>
-							<td>@String.Format("{0:dd-MM-yyyy}", row.End)</td>
+							<td>@String.Format("{0:dd-MM-yyyy}", row.Start.LocalTime)</td>
+							<td>@String.Format("{0:dd-MM-yyyy}", row.End.LocalTime)</td>
+							<td>@row.TimeZone.DisplayName</td>
 						</tr>
 					}
 				</tbody>

@@ -22,9 +22,9 @@ namespace pfapp.webui.Providers
 			builder.AppendFormat("Dear {0}\n\n", data.SpeakerName);
 			builder.AppendFormat("Thank you for speaking at '{0}'.\n\n", data.ConfTitle);
 			builder.AppendFormat("Your session '{0}' on the {1} from {2} to {3} received the follows scores:\n",
-								data.Title, data.Start.ToShortDateString(),
-								data.Start.ToShortTimeString(),
-								data.End.ToShortTimeString());
+								data.Title, data.Start.LocalTime.ToShortDateString(),
+								data.Start.LocalTime.ToShortTimeString(),
+								data.End.LocalTime.ToShortTimeString());
 			builder.AppendFormat("  Red: {0}\n", data.Reds);
 			builder.AppendFormat("  Yellow: {0}\n", data.Yellows);
 			builder.AppendFormat("  Green: {0}\n\n", data.Greens);

@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Repository.data
 {
+
 	public struct SessionParsed {
 		public string Id;
 		public string Title;
@@ -13,15 +14,16 @@ namespace Repository.data
 	}
 
 	public class CSVParser {
-		public IEnumerable<SessionParsed> ParseSessions(string text) {
+		public IEnumerable<SessionParsed> ParseSessions(string text)
+		{
 			return text.Split (new[]{ '\n' }, StringSplitOptions.RemoveEmptyEntries)
 					   .Select (line => {
 							var fields = line.Split('\t');
 							return new SessionParsed{
 								Id = fields[0],
 								Title = fields[1],
-								Start = DateTime.Parse(fields[2]).ToUniversalTime(),
-								End = DateTime.Parse(fields[3]).ToUniversalTime(),
+								Start = DateTime.Parse(fields[2]),
+								End = DateTime.Parse(fields[3]),
 								SpeakerName = fields[4],
 								SpeakerEmail = fields[5].Replace("\r", "")
 							};

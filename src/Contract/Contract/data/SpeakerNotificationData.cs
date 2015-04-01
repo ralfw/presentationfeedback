@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Contract.data
 
 {
@@ -7,7 +6,7 @@ namespace Contract.data
 	{
 		public string ConfTitle;
 		public string Title;
-		public DateTime Start, End;
+		public DateTimeWithZone Start, End;
 		public string SpeakerName;
 		public string SpeakerEmail;
 		public int Greens;

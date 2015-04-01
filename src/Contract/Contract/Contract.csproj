@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="data\ConferenceVm.cs" />
     <Compile Include="data\ConferenceCvsFeedback.cs" />
+    <Compile Include="data\DateTimeWithZone.cs" />
     <Compile Include="data\SessionOverview.cs" />
     <Compile Include="data\SpeakerNotificationData.cs" />
     <Compile Include="data\TrafficLightScores.cs" />
