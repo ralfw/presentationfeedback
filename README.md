@@ -4,7 +4,7 @@ An application kata to apply Flow Design principles to a more elaborate scenario
 ## Scenario
 A web portal to give feedback to speakers at a conference.
 
-A conference consists of a number of sessions. Attendees can give feedback to each session in a simple way: by selecting a color from a traffic light (red, yellow, green) and optionally a comment.
+A conference consists of a number of sessions. Attendees can give feedback to each session in a simple way: by selecting a color from a traffic light (red, yellow, green) and optionally adding a comment.
 
 Sessions can be scored from 15min after they started until maybe 1h after they finished.
 
