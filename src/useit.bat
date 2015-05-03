@@ -1,7 +1,7 @@
 rmdir app.events /s /q
 
 REM coapp.console.exe upload -id:conf1 -title:"conference #1" -filename:"conf1 - conference number one.txt"
-coapp.console.exe upload -id:conf1 -title:"conference #2" -timezone:"FLE Standard Time" -filename:"conf1 - conference number one.txt"
+coapp.console.exe upload -id:conf1 -title:"conference #3" -timezone:"FLE Standard Time" -filename:"conf2.txt"
  
 REM afapp.console.exe overview -id:conf1 -now:"2015-01-23T09:55:00"
 
