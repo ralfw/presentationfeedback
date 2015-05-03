@@ -6,8 +6,8 @@ namespace coapp.console
 	{
 		public static void Main (string[] args)
 		{
-			const string connectionString = "mongodb://admin:admin@dogen.mongohq.com:10046/trafficlightfeedback";
-			const string database = "trafficlightfeedback";
+			const string connectionString = "mongodb://admin:admin@ds063769.mongolab.com:63769/presentationfeedback"; 
+			const string database = "presentationfeedback";
 			var es = new EventStore.MongoEventStore(connectionString, database);
 			var body = new Body (es);
 			var head = new Head (body);
