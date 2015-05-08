@@ -21,8 +21,8 @@ namespace nsapp.body.test
 	[TestFixture]
 	public class BodyTests
 	{
-		private const string ConnectionString = "mongodb://admin:admin@dogen.mongohq.com:10097/trafficlightfeedback_test";
-		private const string Database = "trafficlightfeedback_test";
+		const string ConnectionString = "mongodb://admin:admin@ds031932.mongolab.com:31932/presentationfeedback_test";
+		private const string Database = "presentationfeedback_test";
 
 		static BodyTests()
 		{

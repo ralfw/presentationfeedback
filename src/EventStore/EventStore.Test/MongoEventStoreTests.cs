@@ -13,8 +13,8 @@ namespace EventStore.Test
 	[TestFixture]
 	public class MongoEventStoreTests
 	{
-		private const string CONNECTION_STRING = "mongodb://admin:admin@dogen.mongohq.com:10097/trafficlightfeedback_test";
-		private const string DATABASE = "trafficlightfeedback_test";
+		private const string CONNECTION_STRING = "mongodb://admin:admin@ds031932.mongolab.com:31932/presentationfeedback_test";
+		private const string DATABASE = "presentationfeedback_test";
 		private readonly MongoEventStore sut = new MongoEventStore(CONNECTION_STRING, DATABASE); 
 
 		[SetUp]
